@@ -1,0 +1,37 @@
+<div class="header">
+    <div class="menu">
+        <a href="#"><span class="glyphicon glyphicon-menu-hamburger"/></a>
+    </div>
+</div>
+<form name="blockForm" class="form body" ng-class="{submitted:trySubmit}" novalidate>
+    <h4>Editing: Block</h4>
+    <div class="form-group">
+        <label for="blockName">Name</label>
+        <input type="text" class="form-control" required id="blockName" ng-model="editBlock.name" placeholder="Required"/>
+    </div>
+    <div class="form-group">
+        <label for="blockId">Block Id (Read-Only)</label>
+        <input type="text" class="form-control" id="blockId"
+               ng-model="editBlock.id" disabled placeholder="System Generated"/>
+    </div>
+    <div class="form-group">
+        <label for="owner">Owner</label>
+        <select class="form-control" id="owner" required ng-model="editBlock.owner"
+                ng-options="user.username as user.fullName for user in users">
+            <option ng-selected="selected" value="">Please Select...</option>
+        </select>
+    </div>
+    <div class="form-group">
+        <label for="description">Description</label>
+        <textarea class="form-control" id="description" ng-model="editBlock.description" placeholder="Optional"></textarea>
+    </div>
+    <div class="form-group">
+        <label for="tags">Tags</label>
+        <input type="text" class="form-control" id="tags" placeholder="Optional/Not Implemented" value="" disabled/>
+    </div>
+    <div class="form-group text-right">
+        <button class="btn btn-default" ng-click="goto('/blocks')">Cancel</button>
+        <button class="btn btn-primary" type="submit" ng-click="validate() && blockForm.$valid && submitBlock(editBlock)">Submit</button>
+    </div>
+
+</form>

@@ -1,0 +1,88 @@
+@canvas-width: 300px;
+
+@c_glyphlink: black;
+
+@c_a: darkblue;
+@c_a_hover: default;
+
+body {
+
+}
+
+a {
+  color: @c_a;
+  text-decoration: none;
+}
+
+a > .glyphicon {
+  color: @c_glyphlink;
+}
+
+a:hover {
+  color: @c_a_hover;
+  text-decoration: none;
+}
+
+a.removeMode span {
+  font-size: .5em;
+  color: red;
+  vertical-align: super;
+}
+
+label:after {
+  content: ":";
+}
+
+.header {
+  width: @canvas-width;
+  padding: 10px;
+
+
+  .menu {
+    float: left;
+  }
+
+  .toolbar {
+    float: right;
+
+    a {
+      margin-left: 10px;
+    }
+  }
+}
+
+.body {
+  padding: 10px;
+  width: @canvas-width;
+
+  .block {
+    border: 2px solid #333;
+    margin: 3px 0px;
+    padding: 10px;
+
+    min-height: 120px;
+
+    h3 {
+      margin: 0px 0px 10px 0px;
+    }
+
+    .blockBody {
+      min-height: 90px;
+    }
+
+    .blockFooter {
+      height: 20px;
+      .left { float: left; }
+      .right { float: right; }
+    }
+  }
+}
+
+// angularjs support
+form.submitted input.ng-invalid, form.ng-dirty input.ng-invalid {
+  border: 2px solid indianred;
+}
+
+form.submitted select.ng-invalid, form.ng-dirty select.ng-invalid {
+  border: 2px solid indianred;
+}
