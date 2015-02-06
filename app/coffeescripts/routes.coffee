@@ -2,7 +2,7 @@
 vprApp.config ['$routeProvider', ($routeProvider) ->
 
   $routeProvider
-    .when '/blocks', {
+    .when '/blocks/:activeBlock?', {
       controller: 'BlockCtrl'
       templateUrl: 'blockList.template'
     }
@@ -13,6 +13,10 @@ vprApp.config ['$routeProvider', ($routeProvider) ->
     .when '/editBlock/:blockId', {
       controller: 'BlockEditCtrl'
       templateUrl: 'editBlock.template'
+    }
+    .when '/editBlockRevision/:blockId/:revisionId', {
+      controller: 'BlockRevisionEditCtrl'
+      templateUrl: 'editBlockRevision.template'
     }
     .otherwise {
       controller: 'HomeCtrl'

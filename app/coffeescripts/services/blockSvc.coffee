@@ -25,5 +25,11 @@ vprAppServices.factory 'blockSvc', [ '$log', '$q', 'dataSvc', 'utilSvc',  ($log,
     asyncRmBlock: (id) ->
       utilSvc.handleAsync dataSvc.asyncRemove "blocks", id
 
+    asyncRevisionsForBlock: (block_id) ->
+      utilSvc.handleAsync dataSvc.asyncFind "block_revisions", { block_id: block_id }
+
+    asyncBlockRevision: (id) ->
+      utilSvc.handleAsync dataSvc.asyncFindOne "block_revisions", { id: id }
+
   new BlockSvc()
 ]

@@ -1,42 +1,103 @@
-<div class="header">
-    <div class="menu">
-           <a href="#"><span class="glyphicon glyphicon-menu-hamburger"/></a>
-    </div>
-    <div class="toolbar" ng-if="!removeMode">
-        <a href="" ng-click="tglRemoveMode()">
-            <span class="glyphicon glyphicon-minus"></span> Remove
-        </a>
+<div class="blocks canvas">
+    <div class="header">
+        <div class="menu">
+               <a href="#"><span class="glyphicon glyphicon-menu-hamburger"/></a>
+        </div>
+        <div class="toolbar" ng-if="!removeMode && !activeBlock">
+            <a href="" ng-click="tglRemoveMode()">
+                <span class="glyphicon glyphicon-minus"></span> Remove Block
+            </a>
 
-        <a href="#/editBlock/new" ng-click="newBlock()">
-            <span class="glyphicon glyphicon-plus"></span> Add Block
-        </a>
+            <a href="#/editBlock/new" ng-click="newBlock()">
+                <span class="glyphicon glyphicon-plus"></span> Add Block
+            </a>
+        </div>
+        <div class="toolbar" ng-if="removeMode">
+            <a href="" ng-click="tglRemoveMode()">
+                <span class="glyphicon glyphicon-menu-left"></span> Done
+            </a>
+        </div>
+        <div class="toolbar" >
+        </div>
     </div>
-    <div class="toolbar" ng-if="removeMode">
-        <a href="" ng-click="tglRemoveMode()">
-            <span class="glyphicon glyphicon-menu-left"></span> Done
-        </a>
-    </div>
-</div>
-<div class="body">
-    <div class="block" ng-repeat="block in blocks">
-        <div class="blockBody">
-            <h3>{{block.name}}
-                <a class="removeMode" ng-if="removeMode" href="" ng-click="removeBlock(block.id)">
-                    <span class="glyphicon glyphicon-remove"></span>
-                </a>
-            </h3>
-            <div class="summary">
-                {{block.description||"no description set."}}
+    <div class="body">
+        <div class="block" ng-class="{active: block.id == activeBlock, inactive: (activeBlock) && block.id != activeBlock}" ng-repeat="block in blocks">
+
+            <div class="blockBody">
+                <h3>{{block.name}}
+                    <a class="super removeMode" ng-if="removeMode" href="" ng-click="removeBlock(block.id)">
+                        <span class="glyphicon glyphicon-remove"></span>
+                    </a>
+                    <a class="super editBlock" ng-if="!removeMode" href="#/editBlock/{{block.id}}">
+                        <span class="glyphicon glyphicon-edit"></span>
+                    </a>
+                </h3>
+                <div class="summary">
+                    {{block.description||"no description set."}}
+                </div>
+            </div>
+            <div class="blockFooter">
+                <div class="left">
+                    <label>Owner</label>
+                    <span class="field">{{block.owner}}</span>
+                </div>
+                <div class="right">
+                    <a href="" ng-if="!activeBlock" ng-click="loadBlock(block.id)"><span class="glyphicon glyphicon-menu-right"></span></a>
+                    <a ng-if="activeBlock" href="" ng-click="removeActive()">
+                        <span class="glyphicon glyphicon-menu-left"></span>
+                    </a>
+                </div>
+
             </div>
         </div>
-        <div class="blockFooter">
-            <div class="left">
-                <label>Owner</label>
-                <span class="field">{{block.owner}}</span>
+    </div>
+</div>
+<div class="block-revisions canvas" ng-if="activeBlock">
+    <div class="header">
+        <div class="menu">
+            <a href="#"><span class="glyphicon glyphicon-menu-hamburger"/></a>
+        </div>
+        <div class="toolbar" ng-if="!rev_removeMode">
+            <a href="" ng-click="tglRevRemoveMode()">
+                <span class="glyphicon glyphicon-minus"></span> Remove Revision
+            </a>
+
+            <a href="#/editBlockRevision/{{activeBlock}}/new">
+                <span class="glyphicon glyphicon-plus"></span> Add Revision
+            </a>
+        </div>
+        <div class="toolbar" ng-if="rev_removeMode">
+            <a href="" ng-click="tglRevRemoveMode()">
+                <span class="glyphicon glyphicon-menu-left"></span> Done
+            </a>
+        </div>
+    </div>
+    <div class="body">
+        <div class="block-revision" ng-repeat="revision in block_revisions">
+            <div class="blockBody">
+                <h3>{{revision.major_revision}}{{revision.minor_revision}}
+                    <a class="super removeMode" ng-if="rev_removeMode" href="" ng-click="removeRevision(revision.id)">
+                        <span class="glyphicon glyphicon-remove"></span>
+                    </a>
+                    <a href="#/editBlockRevision/{{activeBlock}}/{{revision.id}}" class="super editBlock"
+                       ng-if="!rev_removeMode && !revision.locked">
+                        <span class="glyphicon glyphicon-edit"></span>
+                    </a>
+                </h3>
+                <div class="summary">
+                    {{revision.description||"no description set."}}
+                </div>
             </div>
-            <div class="right">
-                <a href="#/editBlock/{{block.id}}"><span class="glyphicon glyphicon-menu-right"></span></a>
+            <div class="blockFooter">
+                <div class="left">
+                    <label>Last Updated</label>
+                    <span class="field">{{revision.modified_on | date: 'mediumDate' }}</span>
+                </div>
+                <div class="right">
+                    <a href=""><span class="glyphicon glyphicon-menu-right"></span></a>
+                </div>
             </div>
+        </div>
         </div>
     </div>
 </div>
