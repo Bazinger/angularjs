@@ -2,7 +2,7 @@
   {
     "id": "9c22e540-ec51-491d-be96-ffc1a1fc1802",
     "block_id": "17a7308c-9f2a-42d8-b72f-8850ae896b2a",
-    "major_revision": "A",
+    "major_revision": 1,
     "minor_revision": 0,
     "description": "Initial import from spreadsheet",
     "created_on": "1321043413000",
@@ -12,7 +12,7 @@
   {
     "id": "928a9c7c-27ba-41ab-9edf-e7ca8f20ef89",
     "block_id": "17a7308c-9f2a-42d8-b72f-8850ae896b2a",
-    "major_revision": "A",
+    "major_revision": 1,
     "minor_revision": 1,
     "description": "Updated clock test / Made voltage adjustment",
     "created_on": "1357999933000",
@@ -22,7 +22,7 @@
   {
     "id": "99e785aa-20f5-4d0b-87e5-97a585e7077e",
     "block_id": "17a7308c-9f2a-42d8-b72f-8850ae896b2a",
-    "major_revision": "B",
+    "major_revision": 2,
     "minor_revision": 0,
     "description": "New test format for Silicene chips",
     "created_on": "1363887923000",
@@ -32,7 +32,7 @@
   {
     "id": "ce0a7de8-5717-41ed-9433-f1df5188e03c",
     "block_id": "33fd3461-522d-4c82-9323-7d7623f4327d",
-    "major_revision": "A",
+    "major_revision": 1,
     "minor_revision": 0,
     "description": "Initial import from spreadsheet",
     "created_on": "1321043413000",
@@ -42,7 +42,7 @@
   {
     "id": "3add2625-a4f9-4805-bb10-c26417a23ece",
     "block_id": "33fd3461-522d-4c82-9323-7d7623f4327d",
-    "major_revision": "A",
+    "major_revision": 1,
     "minor_revision": 1,
     "description": "Initial import from spreadsheet",
     "created_on": "1321043413000",
@@ -52,7 +52,7 @@
   {
     "id": "f5f603e6-1698-4fdc-83e0-08012d2b35d1",
     "block_id": "cd3df8ff-0940-405d-9d72-32cb30ab3075",
-    "major_revision": "A",
+    "major_revision": 1,
     "minor_revision": 0,
     "description": "Initial import from spreadsheet",
     "created_on": "1321043413000",
@@ -62,7 +62,7 @@
   {
     "id": "0d81b849-db2d-44b3-9d73-ab907d44380e",
     "block_id": "cd3df8ff-0940-405d-9d72-32cb30ab3075",
-    "major_revision": "B",
+    "major_revision": 2,
     "minor_revision": 0,
     "description": "Initial import from spreadsheet",
     "created_on": "1321043413000",

@@ -22,11 +22,15 @@
     <script type="text/ng-template" id="editBlockRevision.template">
         @@include('./partials/editBlockRevision.html')
     </script>
+    <link rel="stylesheet" href="stylesheets/vendor.css" type="text/css" media="screen" />
+    <link rel="stylesheet" href="stylesheets/all.css" type="text/css" media="screen" />
 </head>
 <body data-ng-cloak>
-<link rel="stylesheet" href="stylesheets/vendor.css" type="text/css" media="screen" />
-<link rel="stylesheet" href="stylesheets/all.css" type="text/css" media="screen" />
 
+
+<div class="mainmenu">
+    <a href="#"><span class="glyphicon glyphicon-menu-hamburger"></span></a> VPRS: The Validation Plan Reusability System
+</div>
 <div class="stage" ng-view >
 </div>
 <!--

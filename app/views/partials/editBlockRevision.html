@@ -1,17 +1,15 @@
-<div class="header">
-    <div class="menu">
-        <a href="#"><span class="glyphicon glyphicon-menu-hamburger"/></a>
-    </div>
+<div class="statusbar">
+    <span class="glyphicon glyphicon-triangle-right"></span>
+    Editing: <strong ng-if="newRevision">New </strong>Block Revision
 </div>
 <form name="blockRevisionForm" class="form body" ng-class="{submitted:trySubmit}" novalidate>
-    <h4>Editing: Block Revision</h4>
     <div class="form-group form-inline">
         <label for="revision">Revision</label>
         <div ng-if="newRevision">
             <input ng-if="newRevision" type="radio" name="revsionType"
-                   ng-value="M" ng-model="revisionType"/> Major
+                   value="M" ng-model="revisionType"/> Major
             <input ng-if="newRevision" type="radio" name="revisionType"
-                   ng-value="i" ng-model="revisionType"/> Minor
+                   value="i" ng-model="revisionType"/> Minor
         </div>
         <input type="text" class="form-control" disabled
                id="revision" value="{{revision}}" />
