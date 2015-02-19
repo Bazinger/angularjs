@@ -3,8 +3,10 @@ vprAppDirectives.directive 'tags', () ->
     require: 'ngModel',
     link: (scope, element, attrs, ngModelController) ->
       ngModelController.$parsers.push (data) -> # space separated list: convert to array
-        data.split ' '
+        if data? then data.split ' '
+        else []
 
       ngModelController.$formatters.push (data) -> # array: convert to space separated list
-        data.join ' '
+        if data? then data.join ' '
+        else ''
   }

@@ -1,55 +1,57 @@
-<div class="statusbar">
-    <span class="glyphicon glyphicon-triangle-right"></span>
-    Editing: <strong ng-if="newTest">New </strong>Test
-</div>
-
-<form name="testForm" class="form body" ng-class="{submitted:trySubmit}" novalidate>
-    <fieldset>
-        <div class="form-group">
-            <label for="title">Title</label>
-            <input type="text" class="form-control" id="title" ng-model="editTest.title"/>
-        </div>
-        <div class="form-group">
-            <label for="testId">Id</label>
-            <input type="text" class="form-control" disabled id="testId" ng-model="editTest.id"/>
-        </div>
-        <div class="form-group">
-            <label for="component">Component</label>
-            <input type="text" class="form-control" id="component" ng-model="editTest.component"/>
-        </div>
-        <div class="form-group">
-            <label for="tags">Tags</label>
-            <input type="text" class="form-control" tags id="tags" ng-model="editTest.tags"/>
-        </div>
-    </fieldset>
-    <fieldset>
-        <div class="form-group">
-            <label for="instructions">Instructions</label>
-            <textarea class="form-control" id="instructions"
-                      ng-model="editTest.instructions"></textarea>
-        </div>
-        <div class="form-group">
-            <label for="testScript">Test Script</label>
-            <input type="text" class="form-control" id="testScript" ng-model="editTest.test_script"/>
-        </div>
-        <div class="form-group">
-            <label for="testConfig">Test Config</label>
-            <input type="text" class="form-control" id="testConfig" ng-model="editTest.test_config_link"/>
-        </div>
-        <div class="form-group">
-            <label for="measPlan">Measurement Plan</label>
-            <input type="text" class="form-control" id="measPlan" ng-model="editTest.meas_plan"/>
-        </div>
-        <div class="form-group">
-            <label for="spotfireTemplate">Spotfire Template</label>
-            <input type="text" class="form-control" id="spotfireTemplate" ng-model="editTest.spotfire_template"/>
-        </div>
-    </fieldset>
-
-    <div class="form-group text-right">
-        <button class="btn btn-default"
-                ng-click="cancelEdit()">Cancel</button>
-        <button class="btn btn-primary" type="submit"
-                ng-click="validate() && testForm.$valid && submitTest(editTest)">Submit</button>
+<div class="testEdit">
+    <div class="statusbar">
+        <span class="glyphicon glyphicon-triangle-right"></span>
+        Editing: <strong ng-if="newTest">New </strong>Test
     </div>
-</form>
+
+    <form name="testForm" class="form body" ng-class="{submitted:trySubmit}" novalidate>
+        <fieldset>
+            <div class="form-group">
+                <label for="title">Title</label>
+                <input type="text" required class="form-control" id="title" ng-model="editTest.title"/>
+            </div>
+            <div class="form-group">
+                <label for="testId">Id</label>
+                <input type="text" class="form-control" disabled id="testId" ng-model="editTest.id"/>
+            </div>
+            <div class="form-group">
+                <label for="component">Component</label>
+                <input type="text" class="form-control" id="component" ng-model="editTest.component"/>
+            </div>
+            <div class="form-group">
+                <label for="tags">Tags</label>
+                <input type="text" class="form-control" tags id="tags" ng-model="editTest.tags"/>
+            </div>
+        </fieldset>
+        <fieldset>
+            <div class="form-group">
+                <label for="instructions">Instructions</label>
+                <textarea class="form-control" id="instructions"
+                          ng-model="editTest.instructions"></textarea>
+            </div>
+            <div class="form-group">
+                <label for="testScript">Test Script</label>
+                <input type="text" class="form-control" id="testScript" ng-model="editTest.test_script"/>
+            </div>
+            <div class="form-group">
+                <label for="testConfig">Test Config</label>
+                <input type="text" class="form-control" id="testConfig" ng-model="editTest.test_config_link"/>
+            </div>
+            <div class="form-group">
+                <label for="measPlan">Measurement Plan</label>
+                <input type="text" class="form-control" id="measPlan" ng-model="editTest.meas_plan"/>
+            </div>
+            <div class="form-group">
+                <label for="spotfireTemplate">Spotfire Template</label>
+                <input type="text" class="form-control" id="spotfireTemplate" ng-model="editTest.spotfire_template"/>
+            </div>
+        </fieldset>
+
+        <div class="form-group text-right">
+            <button class="btn btn-default"
+                    ng-click="cancelEdit()">Cancel</button>
+            <button class="btn btn-primary" type="submit"
+                    ng-click="validate() && testForm.$valid && submitTest(editTest)">Submit</button>
+        </div>
+    </form>
+</div>
