@@ -24,16 +24,20 @@ a:hover {
 }
 
 a.removeMode span {
-  color: red;
+  color: red !important;
 }
 
 a.editBlock span {
   color: blue;
 }
 
-a.super span {
-  font-size: .5em;
+.super {
+  font-size: .75em;
   vertical-align: super;
+}
+
+h3 .super {
+  font-size: .5em;
 }
 
 label:after {
@@ -74,6 +78,10 @@ label:after {
   margin: 17px 0px 0px 10px;
   padding: 5px 10px;
   border: 1px solid #333;
+
+  a {
+    color: orange;
+  }
 }
 
 .stage {
@@ -84,7 +92,7 @@ label:after {
   padding: 10px;
   width: @canvas-width;
 
-  .block, .block-revision {
+  .block, .block-revision, .test {
     border: 2px solid #333;
     margin: 3px 0px;
     padding: 10px;
@@ -107,6 +115,49 @@ label:after {
 
     .blockBody {
       min-height: 90px;
+
+    }
+
+    .testBody {
+
+      .details {
+        margin-top: 10px;
+
+        .documentation > a, .documentation > span  {
+          display: inline-block;
+          vertical-align: top;
+          margin-left: 25px;
+
+          &:first-child {
+            margin-left: 0px;
+          }
+        }
+
+        .params {
+          position: relative;
+
+          .param {
+
+            width: 32%;
+
+            float: left;
+
+            border: 1px solid #eee;
+
+            padding: 3px;
+            margin: 1px;
+
+            strong {
+              font-weight: 500;
+            }
+
+            .controls {
+              float: right;
+              margin-top: 5px;
+            }
+          }
+        }
+      }
     }
 
     .blockFooter {
@@ -119,6 +170,16 @@ label:after {
     }
   }
 
+}
+
+.canvas .tags {
+  margin-top: 10px;
+  text-transform: uppercase;
+  font-size: 11px;
+}
+
+.canvas.tests > div {
+  width: @canvas-width + (@canvas-width * 1);
 }
 
 .canvas {

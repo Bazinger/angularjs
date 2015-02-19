@@ -1,11 +1,17 @@
 # global app
-vprApp = angular.module 'vprApp', [ 'ngRoute', 'vprAppControllers', 'vprAppServices' ]
+vprApp = angular.module 'vprApp', [ 'ngRoute', 'vprAppControllers', 'vprAppServices', 'vprAppFilters', 'vprAppDirectives' ]
 
 # controllers
 vprAppControllers = angular.module 'vprAppControllers', [ 'vprAppServices' ]
 
 # services
 vprAppServices = angular.module 'vprAppServices', []
+
+#filters
+vprAppFilters = angular.module 'vprAppFilters', []
+
+#directives
+vprAppDirectives = angular.module 'vprAppDirectives', []
 
 # the sessionStorage is even simpler
 vprAppServices.value 'storageSvc', sessionStorage

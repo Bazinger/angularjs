@@ -5,11 +5,11 @@
 <form name="blockRevisionForm" class="form body" ng-class="{submitted:trySubmit}" novalidate>
     <div class="form-group form-inline">
         <label for="revision">Revision</label>
-        <div ng-if="newRevision">
-            <input ng-if="newRevision" type="radio" name="revsionType"
-                   value="M" ng-model="revisionType"/> Major
-            <input ng-if="newRevision" type="radio" name="revisionType"
-                   value="i" ng-model="revisionType"/> Minor
+        <div ng-if="newRevision" class="revisionTypeSelect">
+            <input type="radio" name="revisionType"
+                   value="M" ng-model="revisionType" id="revisionType_M" /> Major
+            <input type="radio" name="revisionType"
+                   value="i" ng-model="revisionType" id="revisionType_i" /> Minor
         </div>
         <input type="text" class="form-control" disabled
                id="revision" value="{{revision}}" />
@@ -33,6 +33,6 @@
         <button class="btn btn-default"
                 ng-click="cancelEdit()">Cancel</button>
         <button class="btn btn-primary" type="submit"
-                ng-click="validate() && blockForm.$valid && submitBlock(editBlock)">Submit</button>
+                ng-click="validate() && blockRevisionForm.$valid && submitBlockRevision(editBlockRevision)">Submit</button>
     </div>
 </form>

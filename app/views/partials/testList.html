@@ -1,0 +1,102 @@
+<div class="tests canvas">
+    <div class="header">
+
+        <div class="toolbar" ng-if="!removeMode && !activeTest">
+            <a href="" ng-click="tglRemoveMode()">
+                <span class="glyphicon glyphicon-minus"></span> Remove Test
+            </a>
+
+            <a href="#/editTest/new" ng-click="newTest()">
+                <span class="glyphicon glyphicon-plus"></span> Add Test
+            </a>
+        </div>
+        <div class="toolbar" ng-if="removeMode">
+            <a href="" ng-click="tglRemoveMode()">
+                <span class="glyphicon glyphicon-menu-left"></span> Done
+            </a>
+        </div>
+
+    </div>
+    <div class="statusbar">
+        <span class="glyphicon glyphicon-triangle-right"></span>
+        <span>Tests for <strong><a href="#/blocks/{{currentParent.id}}">{{currentParent.name}} {{currentRev.major_revision}}.{{currentRev.minor_revision}}</a></strong></span>
+
+    </div>
+    <div class="body">
+        <div class="test" ng-class="{active: test.id == activeTest, inactive: (activeTest) && test.id != activeTest}" ng-repeat="test in tests">
+
+            <div class="testBody">
+                <h5>{{test.title}}
+                    <a class="super removeMode" ng-if="removeMode" href="" ng-click="removeTest(test.id)">
+                        <span class="glyphicon glyphicon-remove"></span>
+                    </a>
+                    <a class="super editTest" ng-if="!removeMode" href="#/editTest/{{type}}/{{test.id}}">
+                        <span class="glyphicon glyphicon-edit"></span>
+                    </a>
+                </h5>
+                <div class="summary">
+                    {{test.instructions||"no instructions set."}}
+                </div>
+                <div class="tags">
+                    Tags: {{ formatTags(test.tags) }}
+                </div>
+                <div class="details" ng-if="showDetails(test.id)">
+                    <h6>Documentation</h6>
+                    <div class="documentation small">
+                        <span ng-if="test.test_script">Script<br/><span class="small">{{test.test_script}}</span></span>
+                        <span>Test Config<br/><a class="nw" href="{{test.test_config_link}}" ng-if="test.test_config_link" target="_new"><span class="small">{{test.test_config_link | ellipsis:24:true }}</span></a></span>
+                        <a class="nw" href="{{test.meas_plan}}" ng-if="test.meas_plan" target="_new">Measurement Plan</a>
+                        <a class="nw" href="{{test.spotfire_template}}" ng-if="test.spotfire_template" target="_new">Spotfire Template</a>
+                    </div>
+                    <h6>Paramaters</h6>
+                    <div class="params">
+                        <div class="param" ng-repeat="param in test.test_params">
+                            <div class="controls">
+                                <button class="btn btn-xs btn-success"><span class="glyphicon glyphicon-edit"></span></button>
+                                <button class="btn btn-xs btn-danger"><span class="glyphicon glyphicon-remove"></span></button>
+                            </div>
+                            <div class="small">{{param.name}}</div>
+                            <strong>{{param.value}}</strong>
+                        </div>
+                    </div>
+                    <div class="clearfix"></div>
+                </div>
+            </div>
+            <div class="blockFooter text-center">
+               <a href="" ng-click="tglDetails(test.id)" ng-if="!showDetails(test.id)">Show Details</a>
+               <a href="" ng-click="tglDetails(test.id)" ng-if="showDetails(test.id)">Hide Details</a>
+            </div>
+        </div>
+    </div>
+</div>
+<!--
+<div class="test-params canvas" ng-if="activeTest">
+    <div class="header">
+
+        <div class="toolbar" ng-if="!rev_removeMode">
+            <a href="" ng-click="tglParamRemoveMode()">
+                <span class="glyphicon glyphicon-minus"></span> Remove Param
+            </a>
+
+            <a href="">
+                <span class="glyphicon glyphicon-plus"></span> Add Param
+            </a>
+        </div>
+        <div class="toolbar" ng-if="rev_removeMode">
+            <a href="" ng-click="tglParamRemoveMode()">
+                <span class="glyphicon glyphicon-menu-left"></span> Done
+            </a>
+        </div>
+    </div>
+    <div class="statusbar">
+        <span class="glyphicon glyphicon-triangle-right"></span>
+        <span>Test Params</span>
+    </div>
+    <div class="body">
+        <div class="test-param" ng-repeat="param in currentTest.test_params">
+            <div class="blockBody">
+                <h3>{{param.name}} ==> {{param.value}}</h3>
+            </div>
+        </div>
+    </div>
+</div>-->

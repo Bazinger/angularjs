@@ -1,5 +1,15 @@
 vprAppControllers.controller 'BlockRevisionEditCtrl', [ '$scope', '$routeParams', '$log', 'blockSvc', ($scope, $routeParams, $log, blockSvc) ->
 
+  $scope.nextRevision = () ->
+    switch $scope.revisionType
+      when 'M'
+        "#{$scope.mmr+1}.0"
+      when 'i'
+        "#{$scope.mmr}.#{$scope.mir+1}"
+
+  $scope.$watch 'revisionType', (newValue, oldValue) ->
+    $scope.revision = do $scope.nextRevision
+
   if $routeParams.revisionId == 'new'
     $scope.editBlockRevision = {
       block_id: $routeParams.blockId,
@@ -12,23 +22,17 @@ vprAppControllers.controller 'BlockRevisionEditCtrl', [ '$scope', '$routeParams'
     # load the parent block and all it's
     # revisions
 
-    blockSvc.asyncRevisionsForBlock($routeParams.block_id).then (revisions) ->
+    blockSvc.asyncRevisionsForBlock($routeParams.blockId).then (revisions) ->
       if revisions?
-        $scope.max_mjr_revision = _.max _.pluck(revisions, 'major_revision')
-        $scope.max_min_revision = _.max _.pluck(revisions, 'minor_revision')
+        $scope.mmr = _.max _.pluck(revisions, 'major_revision')
+        this_mjr = (r) -> r.major_revision == $scope.mmr
+        $scope.mir = _.max _.pluck(_.filter(revisions, this_mjr), 'minor_revision')
 
         $scope.revisionType = "i"
-        $scope.revision = () ->
-          switch $scope.revisionType
-            when 'M'
-              "#{$scope.max_mjr_revision+1}.0"
-            when 'i'
-              mir = $scope.max_min_revision
-              nir = mir + 1
-              # return
-              "#{$scope.max_mjr_revision}.#{nir}"
+        $scope.revision = do $scope.nextRevision
 
         $scope.newRevision = true;
+
   else
     $scope.newRevision = false
     blockSvc.asyncBlockRevision $routeParams.revisionId
@@ -42,9 +46,9 @@ vprAppControllers.controller 'BlockRevisionEditCtrl', [ '$scope', '$routeParams'
 
   $scope.submitBlockRevision = (editForm) ->
     blockSvc.asyncSaveBlockRevision angular.copy editForm
-    .then () -> $scope.goto '/blocks'
+    .then () -> $scope.goto "/blocks/#{$scope.editBlockRevision.block_id}"
 
   $scope.cancelEdit = () ->
-    $scope.goto("/blocks/#{$scope.editBlockRevision.block_id}")
+    $scope.goto "/blocks/#{$scope.editBlockRevision.block_id}"
 
 ]

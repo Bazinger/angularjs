@@ -1,0 +1,187 @@
+[
+  {
+    "id" : "79c2c4a1-9fd6-4dc2-8e85-9293196e71f6",
+    "title" : "Filter Characteristics - magnitude",
+    "rev_id" : "99e785aa-20f5-4d0b-87e5-97a585e7077e",
+    "component" : "HP",
+    "tags" : [ "Response", "Func", "Room", "Typ" ],
+    "instructions" : "Verify all datasheet magnitude responses in datasheet, including HPF responses",
+    "test_script" : "hp_freq_resp",
+    "test_config_link" :  "http://docs.cirrus.com/display/JANI/HP+Loads",
+    "test_params" : [
+      {
+        "name" : "Voltage(s)",
+        "type" : "string",
+        "value" : "typ"
+      },
+      {
+        "name" : "Temps",
+        "type" : "string",
+        "value" : "room"
+      },
+      {
+        "name" : "Part Quantity",
+        "type" : "int",
+        "value" : "1"
+      },
+      {
+        "name" : "Sample Rate (kHz)",
+        "type" : "int",
+        "value" : "48"
+      },
+      {
+        "name" : "MCLK (Mhz)",
+        "type" : "int",
+        "value" : "12"
+      }
+    ]
+  },
+  {
+    "id" : "b12936a9-5f8d-4fcb-b33d-6fa3ebe6ea0e",
+    "title" : "Filter Characteristics - group delay",
+    "rev_id" : "99e785aa-20f5-4d0b-87e5-97a585e7077e",
+    "component" : "HP",
+    "tags" : [ "Response", "Func", "Room", "Typ" ],
+    "instructions" : "Verify all datasheet group delay in datasheet",
+    "test_script" : "hp_time_resp",
+    "test_config_link" :  "http://docs.cirrus.com/display/JANI/HP+Loads",
+    "test_params" : [
+      {
+        "name" : "Voltage(s)",
+        "type" : "string",
+        "value" : "typ"
+      },
+      {
+        "name" : "Temps",
+        "type" : "string",
+        "value" : "room"
+      },
+      {
+        "name" : "Part Quantity",
+        "type" : "int",
+        "value" : "1"
+      },
+      {
+        "name" : "Sample Rate (kHz)",
+        "type" : "int",
+        "value" : "48"
+      },
+      {
+        "name" : "MCLK (Mhz)",
+        "type" : "int",
+        "value" : "12"
+      }
+    ]
+  },
+  {
+    "id" : "4e556f61-5f1f-426d-9c69-1a333b47cacb",
+    "title" : "HPOUT_PDN",
+    "rev_id" : "99e785aa-20f5-4d0b-87e5-97a585e7077e",
+    "component" : "HP",
+    "tags" : [ "Controls", "Func", "Room", "Typ" ],
+    "instructions" : "Verify HPOUT_PDN expected current consumption change and output state.",
+    "test_script" : "hp_misc",
+    "test_config_link" :  "http://docs.cirrus.com/display/JANI/HP+Loads",
+    "test_params" : [
+      {
+        "name" : "Voltage(s)",
+        "type" : "string",
+        "value" : "typ"
+      },
+      {
+        "name" : "Temps",
+        "type" : "string",
+        "value" : "room"
+      },
+      {
+        "name" : "Part Quantity",
+        "type" : "int",
+        "value" : "1"
+      },
+      {
+        "name" : "Sample Rate (kHz)",
+        "type" : "int",
+        "value" : "48"
+      },
+      {
+        "name" : "MCLK (Mhz)",
+        "type" : "int",
+        "value" : "12"
+      }
+    ]
+  },
+  {
+    "id" : "2a03a5d1-d1eb-4551-926f-f4826d5352ff",
+    "title" : "HPOUT, Class AB modes (ADPTPWR = 010)",
+    "rev_id" : "99e785aa-20f5-4d0b-87e5-97a585e7077e",
+    "component" : "HP",
+    "tags" : [ "Class_AB", "Func", "Room", "Typ" ],
+    "instructions" : "Verify that when ADPTPWR = 010, mode = VCP, no mode switching",
+    "test_script" : "hp_misc_pl",
+    "test_config_link" :  "http://docs.cirrus.com/display/JANI/HP+Loads",
+    "test_params" : [
+      {
+        "name" : "Voltage(s)",
+        "type" : "string",
+        "value" : "typ"
+      },
+      {
+        "name" : "Temps",
+        "type" : "string",
+        "value" : "room"
+      },
+      {
+        "name" : "Part Quantity",
+        "type" : "int",
+        "value" : "1"
+      },
+      {
+        "name" : "Sample Rate (kHz)",
+        "type" : "int",
+        "value" : "48"
+      },
+      {
+        "name" : "MCLK (Mhz)",
+        "type" : "int",
+        "value" : "12"
+      }
+    ]
+  },
+  {
+    "id" : "c2516106-d097-4c7d-8123-ce8dc3950633",
+    "title" : "Measure A-weighted dynamic range, 24-bit",
+    "rev_id" : "99e785aa-20f5-4d0b-87e5-97a585e7077e",
+    "component" : "HP",
+    "tags" : [ "Serial_Port_to_HP", "PERF", "VOLT", "TEMP" ],
+    "instructions" : "Input resolution: 24-bit. 997 Hz sine, 1 LSB PDF (See datasheet for load)",
+    "test_script" : "hp_perf",
+    "test_config_link" :  "http://docs.cirrus.com/display/JANI/HP+Loads",
+    "test_params" : [
+      {
+        "name" : "Voltage(s)",
+        "type" : "string",
+        "value" : "min, typ, max"
+      },
+      {
+        "name" : "Temps",
+        "type" : "string",
+        "value" : "cold, room, hot"
+      },
+      {
+        "name" : "Part Quantity",
+        "type" : "int",
+        "value" : "3"
+      },
+      {
+        "name" : "Sample Rate (kHz)",
+        "type" : "int",
+        "value" : "48"
+      },
+      {
+        "name" : "MCLK (Mhz)",
+        "type" : "int",
+        "value" : "12"
+      }
+    ]
+  }
+]

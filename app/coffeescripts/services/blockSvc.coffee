@@ -2,6 +2,20 @@ vprAppServices.factory 'blockSvc', [ '$log', '$q', 'dataSvc', 'utilSvc',  ($log,
 
   class BlockSvc
 
+    asyncBlockRevisionWithParent: (revId) ->
+
+      deferred = do $q.defer
+
+      _this = this
+
+      _this.asyncBlockRevision revId
+        .then (rev) ->
+          _this.asyncBlock rev.block_id
+            .then (block) ->
+              deferred.resolve [block, rev]
+
+      deferred.promise
+
     asyncBlockCount: () ->
       deferred = do $q.defer
 
@@ -30,6 +44,9 @@ vprAppServices.factory 'blockSvc', [ '$log', '$q', 'dataSvc', 'utilSvc',  ($log,
 
     asyncBlockRevision: (id) ->
       utilSvc.handleAsync dataSvc.asyncFindOne "block_revisions", { id: id }
+
+    asyncSaveBlockRevision: (blockRevision) ->
+      utilSvc.handleAsync dataSvc.asyncSave "block_revisions", blockRevision
 
   new BlockSvc()
 ]

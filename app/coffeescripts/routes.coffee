@@ -18,6 +18,14 @@ vprApp.config ['$routeProvider', ($routeProvider) ->
       controller: 'BlockRevisionEditCtrl'
       templateUrl: 'editBlockRevision.template'
     }
+    .when '/tests/:type/:revisionId', {
+      controller: 'TestCtrl'
+      templateUrl: 'testList.template'
+    }
+    .when '/editTest/:type/:testId/:revId?', {
+      controller: 'TestEditCtrl'
+      templateUrl: 'editTest.template'
+    }
     .otherwise {
       controller: 'HomeCtrl'
       templateUrl: 'home.template'

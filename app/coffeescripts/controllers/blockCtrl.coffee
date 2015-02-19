@@ -18,7 +18,7 @@ vprAppControllers.controller 'BlockCtrl', [ '$scope', '$routeParams', 'blockSvc'
 
     # Block Revision Support
     $scope.rev_removeMode = false;
-    $scope.rev_tglRemoveMode = () -> $scope.rev_removeMode = !$scope.rev_removeMode
+    $scope.tglRevRemoveMode = () -> $scope.rev_removeMode = !$scope.rev_removeMode
 
     $scope.loadBlock = (block_id) ->
 

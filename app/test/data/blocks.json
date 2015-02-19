@@ -1,5 +1,5 @@
 [
-  { "id": "17a7308c-9f2a-42d8-b72f-8850ae896b2a", "name": "ADC", "description": "Analog to Digital Convertor", "owner": "dnye", "tags": [ "analog", "digital" ] },
+  { "id": "17a7308c-9f2a-42d8-b72f-8850ae896b2a", "name": "HP", "description": "Headphone", "owner": "dnye", "tags": [ "analog", "HP" ] },
   { "id": "33fd3461-522d-4c82-9323-7d7623f4327d", "name": "DAC", "description": "Digital to Analog Convertor", "owner": "dnye", "tags": [ "analog", "digital" ] },
   { "id": "cd3df8ff-0940-405d-9d72-32cb30ab3075", "name": "ANC", "description": "Active/Adaptive Noise Cancellation", "owner": "dnye", "tags": [ "ip", "noise_cancelling" ] }
 ]
