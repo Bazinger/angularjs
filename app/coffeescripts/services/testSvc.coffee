@@ -11,5 +11,8 @@ vprAppServices.factory 'testSvc', [ '$log', '$q', 'dataSvc', 'utilSvc',  ($log, 
     asyncSaveTest: (test) ->
       utilSvc.handleAsync dataSvc.asyncSave "tests", test
 
+    asyncRmTest: (testId) ->
+      utilSvc.handleAsync dataSvc.asyncRemove "tests", testId
+
   new TestSvc()
 ]

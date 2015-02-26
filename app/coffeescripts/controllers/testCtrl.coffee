@@ -29,4 +29,20 @@ vprAppControllers.controller 'TestCtrl', [ '$scope', '$routeParams', 'blockSvc',
   $scope.showDetails = (testId) ->
     (openTests.indexOf testId) != -1
 
+  $scope.confirmRemove = (testId) ->
+    testToRemove = _.find $scope.tests, (test) -> test.id == testId
+
+    if testToRemove? then $scope.alert = {
+      type: "warning",
+      msg: "Are you sure you want to remove #{testToRemove.title}"
+      data: testId
+    }
+
+  $scope.cancelAlert = () -> delete $scope.alert
+  $scope.remove = (testId) ->
+    testSvc.asyncRmTest testId
+      .then () ->
+        $scope.tests = _.reject $scope.tests, (test) -> test.id == testId
+        do $scope.cancelAlert
+
 ]

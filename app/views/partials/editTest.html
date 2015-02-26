@@ -1,11 +1,13 @@
-<div class="testEdit">
+<div class="canvas testEdit">
     <div class="statusbar">
         <span class="glyphicon glyphicon-triangle-right"></span>
-        Editing: <strong ng-if="newTest">New </strong>Test
+        Editing: <strong ng-if="newTest">New Test</strong><strong ng-if="!newTest">{{editTest.title}}</strong>
+        [ Next Revision {{nextRevision}} ]
     </div>
 
     <form name="testForm" class="form body" ng-class="{submitted:trySubmit}" novalidate>
         <fieldset>
+            <legend>General Information</legend>
             <div class="form-group">
                 <label for="title">Title</label>
                 <input type="text" required class="form-control" id="title" ng-model="editTest.title"/>
@@ -22,8 +24,17 @@
                 <label for="tags">Tags</label>
                 <input type="text" class="form-control" tags id="tags" ng-model="editTest.tags"/>
             </div>
+            <fieldset>
+                <legend>Revision Information</legend>
+                <div class="form-group">
+                    <label for="comments">Revision Comments</label>
+                    <textarea class="form-control" id="comments" placeholder="What did you change?"
+                              ng-model="editTest.comment"></textarea>
+                </div>
+            </fieldset>
         </fieldset>
         <fieldset>
+            <legend>Test Details</legend>
             <div class="form-group">
                 <label for="instructions">Instructions</label>
                 <textarea class="form-control" id="instructions"
@@ -45,12 +56,12 @@
                 <label for="spotfireTemplate">Spotfire Template</label>
                 <input type="text" class="form-control" id="spotfireTemplate" ng-model="editTest.spotfire_template"/>
             </div>
-        </fieldset>
 
-        <div class="form-group text-right">
+        </fieldset>
+        <div class="form-group  text-right">
             <button class="btn btn-default"
                     ng-click="cancelEdit()">Cancel</button>
-            <button class="btn btn-primary" type="submit"
+            <button class="btn btn-primary" type="submit" ng-disable="! testForm.$dirty"
                     ng-click="validate() && testForm.$valid && submitTest(editTest)">Submit</button>
         </div>
     </form>

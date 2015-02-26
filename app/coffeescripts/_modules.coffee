@@ -1,5 +1,5 @@
 # global app
-vprApp = angular.module 'vprApp', [ 'ngRoute', 'vprAppControllers', 'vprAppServices', 'vprAppFilters', 'vprAppDirectives' ]
+vprApp = angular.module 'vprApp', [ 'ngRoute', 'ui.bootstrap', 'vprAppControllers', 'vprAppServices', 'vprAppFilters', 'vprAppDirectives' ]
 
 # controllers
 vprAppControllers = angular.module 'vprAppControllers', [ 'vprAppServices' ]

@@ -178,8 +178,22 @@ label:after {
   font-size: 11px;
 }
 
-.canvas.tests > div {
-  width: @canvas-width + (@canvas-width * 1);
+.canvas.tests > *, .canvas.testEdit > * {
+  width: @canvas-width + (@canvas-width * 1.2);
+}
+
+.canvas.tests > div.statusbar, .canvas.testEdit > div.statusbar {
+  width: (@canvas-width * 2) - 20; // accounting for the padding
+}
+
+.canvas.testEdit form > fieldset {
+  width: @canvas-width - 20;
+  float: left;
+  margin-left: 10px;
+}
+
+.testEdit textarea {
+  height: 100px;
 }
 
 .canvas {
