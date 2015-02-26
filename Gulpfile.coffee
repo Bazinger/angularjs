@@ -60,8 +60,7 @@ vendor = {
     "#{vroot}/angular/angular.min.js",
     "#{vroot}/angular-route/angular-route.min.js",
     "#{vroot}/angular-sanitize/angular-sanitize.min.js",
-    "#{vroot}/showdown/src/showdown.js",
-    "#{vroot}/angular-markdown-directive/markdown.js",
+    "#{vroot}/angular-bootstrap/ui-bootstrap-tpls.min.js",
     "#{vroot}/lodash/dist/lodash.min.js"
   ]
 }

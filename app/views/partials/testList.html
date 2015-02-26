@@ -2,36 +2,30 @@
     <div class="header">
 
         <div class="toolbar" ng-if="!removeMode && !activeTest">
-            <a href="" ng-click="tglRemoveMode()">
-                <span class="glyphicon glyphicon-minus"></span> Remove Test
-            </a>
-
             <a href="#/editTest/{{type}}/new/{{currentRev.id}}">
                 <span class="glyphicon glyphicon-plus"></span> Add Test
             </a>
         </div>
-        <div class="toolbar" ng-if="removeMode">
-            <a href="" ng-click="tglRemoveMode()">
-                <span class="glyphicon glyphicon-menu-left"></span> Done
-            </a>
-        </div>
-
     </div>
     <div class="statusbar">
         <span class="glyphicon glyphicon-triangle-right"></span>
         <span>Tests for <strong><a href="#/blocks/{{currentParent.id}}">{{currentParent.name}} {{currentRev.major_revision}}.{{currentRev.minor_revision}}</a></strong></span>
-
     </div>
     <div class="body">
+        <alert ng-if="alert" type="{{alert.type}}" close="cancelAlert()">
+            <p>{{alert.msg}}</p>
+            <button type="button" class="btn btn-sm btn-default" ng-click="cancelAlert()">Cancel</button>
+            <button type="button" class="btn btn-sm btn-danger" ng-click="remove(alert.data)">Remove</button>
+        </alert>
         <div class="test" ng-class="{active: test.id == activeTest, inactive: (activeTest) && test.id != activeTest}" ng-repeat="test in tests">
 
             <div class="testBody">
                 <h5>{{test.title}}
-                    <a class="super removeMode" ng-if="removeMode" href="" ng-click="removeTest(test.id)">
-                        <span class="glyphicon glyphicon-remove"></span>
-                    </a>
-                    <a class="super editTest" ng-if="!removeMode" href="#/editTest/{{type}}/{{test.id}}">
+                    <a class="super editTest"  href="#/editTest/{{type}}/{{test.id}}">
                         <span class="glyphicon glyphicon-edit"></span>
+                    </a>
+                    <a class="super removeMode"  href="" ng-click="confirmRemove(test.id)">
+                        <span class="glyphicon glyphicon-remove"></span>
                     </a>
                 </h5>
                 <div class="summary">
