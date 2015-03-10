@@ -21,7 +21,8 @@ vprAppControllers.controller 'TestEditCtrl', [ '$scope', '$routeParams', '$log',
     $scope.trySubmit = true
 
   $scope.submitTest= (editForm) ->
-    testSvc.asyncSaveTest angular.copy editForm
+
+    testSvc.asyncSaveAndRevisionTest angular.copy editForm
       .then () -> $scope.goto "/tests/#{type}/#{$scope.rev_id}"
 
 ]

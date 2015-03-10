@@ -26,6 +26,10 @@ vprApp.config ['$routeProvider', ($routeProvider) ->
       controller: 'TestEditCtrl'
       templateUrl: 'editTest.template'
     }
+    .when '/testHistory/:type/:testId', {
+      controller: 'TestHistoryCtrl',
+      templateUrl: 'testHistory.template'
+    }
     .otherwise {
       controller: 'HomeCtrl'
       templateUrl: 'home.template'

@@ -1,15 +1,17 @@
+<!-- #TODO Convert this to be list of test revisions with branch selection -->
 <div class="tests canvas">
     <div class="header">
 
-        <div class="toolbar" ng-if="!removeMode && !activeTest">
-            <a href="#/editTest/{{type}}/new/{{currentRev.id}}">
-                <span class="glyphicon glyphicon-plus"></span> Add Test
-            </a>
+        <div class="toolbar">
+            Branch:
+            <select ngModel="currentBranch">
+                <option ng-repeat="branch in branches">{{branch}}</option>
+            </select>
         </div>
     </div>
     <div class="statusbar">
         <span class="glyphicon glyphicon-triangle-right"></span>
-        <span>Tests for <strong><a href="#/blocks/{{currentParent.id}}">{{currentParent.name}} {{currentRev.major_revision}}.{{currentRev.minor_revision}}</a></strong></span>
+        <span>History for Test <strong><a href="#/tests/{{type}}/{{currentTest.rev_id}}">{{currentTest.id}}</a></strong></span>
     </div>
     <div class="body">
         <alert ng-if="alert" type="{{alert.type}}" close="cancelAlert()">
@@ -17,17 +19,17 @@
             <button type="button" class="btn btn-sm btn-default" ng-click="cancelAlert()">Cancel</button>
             <button type="button" class="btn btn-sm btn-danger" ng-click="remove(alert.data)">Remove</button>
         </alert>
-        <div class="test" ng-class="{active: test.id == activeTest, inactive: (activeTest) && test.id != activeTest}" ng-repeat="test in tests">
+        <div class="test"
+             ng-class="{active: test.id == activeTest, inactive: (activeTest) && test.id != activeTest}"
+             ng-repeat="test in tests">
 
             <div class="testBody">
                 <h5>{{test.title}}
-                    <a class="super editTest"  href="#/editTest/{{type}}/{{test.id}}">
-                        <span class="glyphicon glyphicon-edit"></span>
+                    <a class="super editTest"
+                       ng-if="! isCurrent(test.id, test.revision, test.branch)" href="" ng-click="makeCurrent(test)">
+                        Use This Revision
                     </a>
-                    <a class="super removeMode"  href="" ng-click="confirmRemove(test.id)">
-                        <span class="glyphicon glyphicon-remove"></span>
-                    </a>
-                    <span class="right" ng-if="test.revision">Revision: {{test.revision}}/{{test.branch}} <a href="#/testHistory/{{type}}/{{test.id}}">(View History)</a></span>
+                    <span class="right" ng-if="test.revision">Revision: {{test.revision}}/{{test.branch}}</span>
                 </h5>
                 <div class="summary">
                     {{test.instructions||"no instructions set."}}
@@ -35,7 +37,7 @@
                 <div class="tags">
                     Tags: {{ formatTags(test.tags) }}
                 </div>
-                <div class="details" ng-if="showDetails(test.id)">
+                <div class="details" ng-if="showDetails(test.id, test.revision, test.branch)">
                     <h6>Documentation</h6>
                     <div class="documentation small">
                         <span ng-if="test.test_script">Script<br/><span class="small">{{test.test_script}}</span></span>
@@ -58,40 +60,10 @@
                 </div>
             </div>
             <div class="blockFooter text-center">
-               <a href="" ng-click="tglDetails(test.id)" ng-if="!showDetails(test.id)">Show Details</a>
-               <a href="" ng-click="tglDetails(test.id)" ng-if="showDetails(test.id)">Hide Details</a>
+               <a href="" ng-click="tglDetails(test.id, test.revision, test.branch)" ng-if="!showDetails(test.id, test.revision, test.branch)">Show Details</a>
+               <a href="" ng-click="tglDetails(test.id, test.revision, test.branch)" ng-if="showDetails(test.id, test.revision, test.branch)">Hide Details</a>
             </div>
         </div>
     </div>
 </div>
-<!--
-<div class="test-params canvas" ng-if="activeTest">
-    <div class="header">
 
-        <div class="toolbar" ng-if="!rev_removeMode">
-            <a href="" ng-click="tglParamRemoveMode()">
-                <span class="glyphicon glyphicon-minus"></span> Remove Param
-            </a>
-
-            <a href="">
-                <span class="glyphicon glyphicon-plus"></span> Add Param
-            </a>
-        </div>
-        <div class="toolbar" ng-if="rev_removeMode">
-            <a href="" ng-click="tglParamRemoveMode()">
-                <span class="glyphicon glyphicon-menu-left"></span> Done
-            </a>
-        </div>
-    </div>
-    <div class="statusbar">
-        <span class="glyphicon glyphicon-triangle-right"></span>
-        <span>Test Params</span>
-    </div>
-    <div class="body">
-        <div class="test-param" ng-repeat="param in currentTest.test_params">
-            <div class="blockBody">
-                <h3>{{param.name}} ==> {{param.value}}</h3>
-            </div>
-        </div>
-    </div>
-</div>-->

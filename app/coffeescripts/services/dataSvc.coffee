@@ -42,6 +42,21 @@ vprAppServices.factory 'dataSvc', [ '$log', '$q', '$http', ($log, $q, $http) ->
 
       deferred.promise
 
+    asyncComplexSave: (collection, names, values, types, data) ->
+
+      deferred = do $q.defer
+
+      names_s      = names.join "::"
+      values_s    = values.join "::"
+      types_s     = types.join "::"
+
+      unless (names.length == values.length == types.length)
+        deferred.reject( { msg: "names (#{names.length}), values (#{values.length}) and type (#{types.length}) arrays must all be the same length" })
+      else
+        @_handlePost "/api/v1/saveJsonComplexId/#{collection}/#{names_s}/#{values_s}/#{types_s}", data, deferred
+
+      deferred.promise
+
     asyncRemove: (collection, id) ->
 
       deferred = do $q.defer

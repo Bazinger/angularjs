@@ -12,6 +12,7 @@ vprAppServices.factory 'utilSvc', [ '$log', '$q', ($log, $q) ->
       promise.then (response) ->
         deferred.resolve response
       , (error) ->
+        console.log error?.msg
         deferred.reject error
 
       deferred.promise

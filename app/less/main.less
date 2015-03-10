@@ -43,7 +43,9 @@ h3 .super {
 label:after {
   content: ":";
 }
-
+.clearfix {
+  clear: both;
+}
 .mainmenu {
   font-size: 1.5em;
   padding: 10px;
@@ -71,7 +73,7 @@ label:after {
 
 .statusbar {
   clear: both;
-  width: @canvas-width - 20;
+  width: @canvas-width;
   background: #333;
   color: #fff;
   font-size: 1em;
@@ -119,6 +121,24 @@ label:after {
     }
 
     .testBody {
+
+      h5 span.right {
+        display: inline-block;
+        float: right;
+
+        margin: -3px 10px 0px 0px;
+        padding: 5px;
+
+        background: #000;
+        color: #fff;
+
+        font-size: 12px;
+        //font-weight: 400;
+
+        a {
+          color: orange;
+        }
+      }
 
       .details {
         margin-top: 10px;
@@ -179,13 +199,16 @@ label:after {
 }
 
 .canvas.tests > *, .canvas.testEdit > * {
-  width: @canvas-width + (@canvas-width * 1.2);
+  width: @canvas-width + (@canvas-width );
 }
 
-.canvas.tests > div.statusbar, .canvas.testEdit > div.statusbar {
+.canvas.tests > div.statusbar, {
+  width: (@canvas-width * 2) + 40; // accounting for the padding
+}
+.canvas.testEdit > div.statusbar {
+
   width: (@canvas-width * 2) - 20; // accounting for the padding
 }
-
 .canvas.testEdit form > fieldset {
   width: @canvas-width - 20;
   float: left;
@@ -194,6 +217,10 @@ label:after {
 
 .testEdit textarea {
   height: 100px;
+}
+
+.testEdit #comments {
+  width: 60%;
 }
 
 .canvas {

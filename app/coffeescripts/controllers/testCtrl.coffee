@@ -16,8 +16,13 @@ vprAppControllers.controller 'TestCtrl', [ '$scope', '$routeParams', 'blockSvc',
 
       testSvc.asyncTestsForRev revId
         .then (tests) ->
-          tests.forEach (test) -> test.showDetails = false
-          $scope.tests = tests
+          currentTests = _.map(_.groupBy( tests, "id" ), (testGroup) ->
+            testSvc.getCurrentTest testGroup
+          )
+
+
+          currentTests.forEach (test) -> test.showDetails = false
+          $scope.tests = currentTests
 
   openTests = []
 
