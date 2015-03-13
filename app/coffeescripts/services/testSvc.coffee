@@ -51,9 +51,18 @@ vprAppServices.factory 'testSvc', [ '$log', '$q', 'dataSvc', 'utilSvc',  ($log, 
     asyncMaxRevision: (test, branch) ->
       deferred = do $q.defer
 
-      dataSvc.asyncFind "tests", { id: test.id, branch: brach }
+      dataSvc.asyncFind "tests", { id: test.id, branch: branch }
         .then (tests) ->
           deferred.resolve( _.max tests, (t) -> t.revision )
+
+    asyncBranchesForTest: (testId) ->
+      deferred = do $q.defer
+
+      dataSvc.asyncFind "tests", { id: testId }
+        .then (tests) ->
+          deferred.resolve _.uniq _.pluck( tests, "branch" )
+
+      deferred.promise
 
     asyncTestsForRevAndBranch: (revId, branch) ->
       utilSvc.handleAsync dataSvc.asyncFind "tests", { "rev_id" : revId, "branch" : branch }
@@ -78,10 +87,10 @@ vprAppServices.factory 'testSvc', [ '$log', '$q', 'dataSvc', 'utilSvc',  ($log, 
       _that = this
 
       # demote the original test from current and get the max revision
-      $q.all [
+      $q.all( [
         @asyncMaxRevision(test.id, newTest.branch),
         @asyncTest(test.id, test.branch, test.revision)
-      ].then (results) ->
+      ]).then (results) ->
         maxRevision = results[0]
         oldTest = results[1]
         delete oldTest.is_current

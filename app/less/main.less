@@ -215,23 +215,36 @@ label:after {
   margin-left: 10px;
 }
 
-.testEdit textarea {
-  height: 100px;
+.testEdit {
+
+  textarea {
+    height: 100px;
+  }
+
+  #comments {
+    width: 60%;
+  }
+
+  .branch-select {
+    margin: 10px 0px;
+
+
+  }
+
+  #comments {
+  }
 }
 
-.testEdit #comments {
-  width: 60%;
-}
+  .canvas {
+    float: left;
+  }
 
-.canvas {
-  float: left;
-}
+  // angularjs support
+  form.submitted input.ng-invalid, form.ng-dirty input.ng-invalid {
+    border: 2px solid indianred;
+  }
 
-// angularjs support
-form.submitted input.ng-invalid, form.ng-dirty input.ng-invalid {
-  border: 2px solid indianred;
-}
+  form.submitted select.ng-invalid, form.ng-dirty select.ng-invalid {
+    border: 2px solid indianred;
+  }
 
-form.submitted select.ng-invalid, form.ng-dirty select.ng-invalid {
-  border: 2px solid indianred;
-}

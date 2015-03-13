@@ -24,6 +24,7 @@ vprAppControllers.controller 'TestCtrl', [ '$scope', '$routeParams', 'blockSvc',
           currentTests.forEach (test) -> test.showDetails = false
           $scope.tests = currentTests
 
+  # TODO: add async call to get branches -- maybe move code to TestSvc
   openTests = []
 
   $scope.tglDetails = (testId) ->

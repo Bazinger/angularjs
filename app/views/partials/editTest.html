@@ -48,10 +48,36 @@
             </div>
 
         </fieldset>
-        <div class="form-group form-inline text-right clearfix">
-            <span ng-if="testForm.$dirty">Comments: <input type="text" class="form-control input" id="comments" placeholder="What did you change?"
-                ng-model="editTest.comment"/></span>
+        <div class="text-right branch-select" ng-if="!newBranchAdd">
+            Select the branch to save this test revision to:
+            <div class="btn-group" dropdown>
+                <button type="button" class="btn  btn-default" disabled>{{editTest.branch}}</button>
+                <button type="button" class="btn  btn-default dropdown-toggle" dropdown-toggle>
+                    <span class="caret"></span>
+                    <span class="sr-only">Split Button</span>
+                </button>
 
+                <ul class="dropdown-menu" role="menu">
+                    <li><a href="" ng-click="toggleBranchAdd()">New Branch...</a></li>
+                    <li ng-repeat="b in branches">
+                        <a href="" ng-click="selectBranch(b)">{{b}}</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="text-right form-group form-inline branch-add" ng-if="newBranchAdd">
+            <label for="newBranchName">New Branch Name</label>
+            <input type="text" class="form-control" id="newBranchName" ng-model="newBranchName"/>
+            <button type="button" class="btn btn-default" ng-click="toggleBranchAdd()">Clear</button>
+        </div>
+        <div class="form-group form-inline text-right">
+            <div class="form-group text-left">
+
+                <label for="comments">Revision Comments</label>
+                <input ng-if="testForm.$dirty" type="text" class="form-control input" id="comments" placeholder="What did you change?"
+                    ng-model="newComment"/>
+                <span ng-if="!testForm.$dirty">{{testForm.comments}}</span>
+            </div>
             <button class="btn btn-default"
                     ng-click="cancelEdit()">Cancel</button>
             <button class="btn btn-primary" type="submit" ng-disabled="!testForm.$dirty"
