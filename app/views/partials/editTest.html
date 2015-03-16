@@ -1,7 +1,7 @@
 <div class="canvas testEdit">
     <div class="statusbar">
         <span class="glyphicon glyphicon-triangle-right"></span>
-        Editing: <strong ng-if="newTest">New Test</strong><strong ng-if="!newTest">{{editTest.title}}</strong>
+        Editing: <strong ng-if="newTest">New Test</strong><strong ng-if="!newTest">{{editTest.title}}</strong> (Revision {{editTest.revision}})
     </div>
     <form name="testForm" class="form body" ng-class="{submitted:trySubmit}" novalidate>
         <fieldset>
@@ -65,9 +65,8 @@
                 </ul>
             </div>
         </div>
-        <div class="text-right form-group form-inline branch-add" ng-if="newBranchAdd">
-            <label for="newBranchName">New Branch Name</label>
-            <input type="text" class="form-control" id="newBranchName" ng-model="newBranchName"/>
+        <div class="text-right branch-add form-group form-inline clearfix" ng-if="newBranchAdd">
+            <input type="text" placeholder="New Branch Name..." class="form-control" id="newBranchName" ng-model="newBranchName"/>
             <button type="button" class="btn btn-default" ng-click="toggleBranchAdd()">Clear</button>
         </div>
         <div class="form-group form-inline text-right">
@@ -76,7 +75,7 @@
                 <label for="comments">Revision Comments</label>
                 <input ng-if="testForm.$dirty" type="text" class="form-control input" id="comments" placeholder="What did you change?"
                     ng-model="newComment"/>
-                <span ng-if="!testForm.$dirty">{{testForm.comments}}</span>
+                <span ng-if="!testForm.$dirty">{{editTest.comment}}</span>
             </div>
             <button class="btn btn-default"
                     ng-click="cancelEdit()">Cancel</button>

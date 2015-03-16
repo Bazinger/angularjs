@@ -53,7 +53,9 @@ vprAppServices.factory 'testSvc', [ '$log', '$q', 'dataSvc', 'utilSvc',  ($log, 
 
       dataSvc.asyncFind "tests", { id: test.id, branch: branch }
         .then (tests) ->
-          deferred.resolve( _.max tests, (t) -> t.revision )
+          deferred.resolve _.max( tests, "revision" ).revision
+
+      deferred.promise
 
     asyncBranchesForTest: (testId) ->
       deferred = do $q.defer
@@ -90,17 +92,17 @@ vprAppServices.factory 'testSvc', [ '$log', '$q', 'dataSvc', 'utilSvc',  ($log, 
       $q.all( [
         @asyncMaxRevision(test.id, newTest.branch),
         @asyncTest(test.id, test.branch, test.revision)
-      ]).then (results) ->
+      ] ).then (results) ->
         maxRevision = results[0]
         oldTest = results[1]
         delete oldTest.is_current
 
         newTest.revision = maxRevision + 1
 
-        $q.all [
+        $q.all([
           _that.asyncSaveTest(newTest),
           _that.asyncSaveTest(oldTest)
-        ].then (results) ->
+        ]).then (results) ->
           deferred.resolve results[0]
 
       deferred.promise
