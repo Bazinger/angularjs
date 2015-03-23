@@ -4,7 +4,7 @@ vprAppControllers.controller 'TestHistoryCtrl', [ '$scope', '$routeParams', '$q'
   testId        = $routeParams.testId
   $scope.type   = $routeParams.type
 
-  _init = () ->
+  _init = (forBranch) ->
     testSvc.asyncTestHistory testId
       .then (history) ->
         branchGroups = _.groupBy history, "branch"
@@ -13,12 +13,18 @@ vprAppControllers.controller 'TestHistoryCtrl', [ '$scope', '$routeParams', '$q'
         )
 
         $scope.currentTest = testSvc.getCurrentTest history
-        $scope.currentBranch = $scope.currentTest.branch
 
+        if !forBranch?
+          $scope.currentBranch = $scope.currentTest.branch
+        else
+          $scope.currentBranch = forBranch
 
         $scope.tests = _.sortBy(_.find branchGroups, (group) ->
-          group[0].branch == $scope.currentTest.branch
+          group[0].branch == $scope.currentBranch
         , (test) -> test.revision).reverse()
+
+  # show history for selected branch
+  $scope.selectBranch = () -> $scope.tests = _init $scope.currentBranch
 
   openTests = []
 

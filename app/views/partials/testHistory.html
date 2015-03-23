@@ -4,7 +4,7 @@
 
         <div class="toolbar">
             Branch:
-            <select ngModel="currentBranch">
+            <select ng-model="currentBranch" ng-change="selectBranch()">
                 <option ng-repeat="branch in branches">{{branch}}</option>
             </select>
         </div>
