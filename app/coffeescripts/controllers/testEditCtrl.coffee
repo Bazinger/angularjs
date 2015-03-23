@@ -23,6 +23,8 @@ vprAppControllers.controller 'TestEditCtrl', [ '$scope', '$routeParams', '$log',
   $scope.validate = () ->
     $scope.trySubmit = true
 
+  $scope.branchObj = {}
+
   $scope.newBranchAdd = false
   $scope.toggleBranchAdd = () -> $scope.newBranchAdd = !$scope.newBranchAdd
 
@@ -30,7 +32,7 @@ vprAppControllers.controller 'TestEditCtrl', [ '$scope', '$routeParams', '$log',
 
   $scope.submitTest= (editForm) ->
 
-    testSvc.asyncSaveAndRevisionTest angular.copy editForm
+    testSvc.asyncSaveAndRevisionTest angular.copy( editForm ), $scope.branchObj.newBranch
       .then () -> $scope.goto "/tests/#{type}/#{$scope.rev_id}"
 
 ]

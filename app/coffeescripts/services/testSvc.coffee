@@ -53,7 +53,7 @@ vprAppServices.factory 'testSvc', [ '$log', '$q', 'dataSvc', 'utilSvc',  ($log, 
 
       dataSvc.asyncFind "tests", { id: test.id, branch: branch }
         .then (tests) ->
-          deferred.resolve _.max( tests, "revision" ).revision
+          deferred.resolve if tests? and tests.length then _.max( tests, "revision" ).revision else 0
 
       deferred.promise
 
