@@ -22,6 +22,39 @@
                 <label for="tags">Tags</label>
                 <input type="text" class="form-control" tags id="tags" ng-model="editTest.tags"/>
             </div>
+            <div class="plist">
+                <div class="plist-heading">Parameters</div>
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th></th>
+                            <th>Name</th>
+                            <th>Value</th>
+                        </tr>
+                    </thead>
+                    <tfoot>
+                        <tr>
+                            <td colspan="3">
+                                <button class="btn btn-success" type="button" ng-click="paramAdd()">
+                                    <span class="glyphicon glyphicon-plus"></span>
+                                </button>
+                            </td>
+                        </tr>
+                    </tfoot>
+                    <tbody>
+                        <tr data-ng-repeat="param in editTest.test_params">
+                            <td>
+                                <button class="btn btn-xs btn-danger" ng-click="paramRemove(editTest.test_params,param)">
+                                    <span class="glyphicon glyphicon-remove"></span>
+                                </button>
+                            </td>
+                            <td><input type="text" class="form-control"  ng-model="param.name"/></td>
+                            <td><input type="text" class="form-control"  ng-model="param.value"/></td>
+                        </tr>
+
+                    </tbody>
+                </table>
+            </div>
         </fieldset>
         <fieldset>
             <legend>Test Details</legend>

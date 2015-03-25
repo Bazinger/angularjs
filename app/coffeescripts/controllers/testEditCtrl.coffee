@@ -2,10 +2,12 @@ vprAppControllers.controller 'TestEditCtrl', [ '$scope', '$routeParams', '$log',
 
   type = $routeParams.type
 
+
   if $routeParams.testId == 'new'
     $scope.rev_id = $routeParams.revId
     $scope.editTest = {
-      rev_id : $routeParams.revId
+      rev_id : $routeParams.revId,
+      test_params: []
     }
   else
     testSvc.asyncTest $routeParams.testId
@@ -29,6 +31,16 @@ vprAppControllers.controller 'TestEditCtrl', [ '$scope', '$routeParams', '$log',
   $scope.toggleBranchAdd = () -> $scope.newBranchAdd = !$scope.newBranchAdd
 
   $scope.selectBranch = (branch) -> $scope.editTest.branch = branch
+
+  $scope.paramAdd = () ->
+    $scope.editTest.test_params.push({name: '',value: ''})
+
+  $scope.paramRemove = ( params, param) ->
+    _.find params, (p,i) ->
+      if p.name==param.name
+        params.splice i, 1
+        $scope.testForm.$setDirty
+
 
   $scope.editBranch = (branchToEdit) ->
     $scope.newBranchAdd = true

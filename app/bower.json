@@ -30,6 +30,7 @@
     "angular-markdown-directive": "^0.3.0",
     "normalize-css": "^3.0.1",
     "lesshat": "^3.0.2",
-    "jquery": "^2.1.1"
+    "jquery": "^2.1.1",
+    "angular-bootstrap": "~0.12.1"
   }
 }
