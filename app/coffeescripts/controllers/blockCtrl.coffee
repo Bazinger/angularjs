@@ -16,6 +16,13 @@ vprAppControllers.controller 'BlockCtrl', [ '$scope', '$routeParams', 'blockSvc'
       blockSvc.asyncRmBlock blockId
         .then do init
 
+    $scope.removeRevision = (revisionId) ->
+      blockSvc.asyncRmBlockRevision revisionId
+      .then () ->
+        do init
+
+        if $scope.activeBlock? then $scope.loadBlock($scope.activeBlock)
+
     # Block Revision Support
     $scope.rev_removeMode = false;
     $scope.tglRevRemoveMode = () -> $scope.rev_removeMode = !$scope.rev_removeMode
