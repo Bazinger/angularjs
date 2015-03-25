@@ -1,4 +1,4 @@
-vprAppServices.factory 'dataSvc', [ '$log', '$q', '$http', ($log, $q, $http) ->
+vprAppServices.factory 'dataSvc', [ '$log', '$q', '$http', 'configSvc', ($log, $q, $http, configSvc) ->
 
   class DataSvc
 
@@ -57,6 +57,14 @@ vprAppServices.factory 'dataSvc', [ '$log', '$q', '$http', ($log, $q, $http) ->
 
       deferred.promise
 
+    asyncUpdate: (collection, query, update) ->
+
+      deferred = do $q.defer
+
+      @_handlePost "/api/v1/updateJson/#{collection}", { query: query, update: update }, deferred
+
+      deferred.promise
+
     asyncRemove: (collection, id) ->
 
       deferred = do $q.defer
@@ -75,7 +83,7 @@ vprAppServices.factory 'dataSvc', [ '$log', '$q', '$http', ($log, $q, $http) ->
 
     _handlePost: (path, data, deferred, resolveToPassedData = false) ->
 
-      $http.post "http://localhost:9000#{path}", data
+      $http.post "#{configSvc.cbaseServer}#{path}", data
       .success (result, status, headers, config) ->
         if resolveToPassedData then deferred.resolve data
         else deferred.resolve result
@@ -84,7 +92,7 @@ vprAppServices.factory 'dataSvc', [ '$log', '$q', '$http', ($log, $q, $http) ->
 
     _handleGet: (path, deferred) ->
 
-      $http.get "http://localhost:9000#{path}"
+      $http.get "#{configSvc.cbaseServer}#{path}"
       .success (result, status, headers, config) ->
         deferred.resolve result
       .error (result, status, headers, config) ->

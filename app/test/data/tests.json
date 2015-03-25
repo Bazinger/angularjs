@@ -13,27 +13,22 @@
     "test_params" : [
       {
         "name" : "Voltage(s)",
-        "type" : "string",
         "value" : "min/typ/max"
       },
       {
         "name" : "Temps",
-        "type" : "string",
         "value" : "room"
       },
       {
         "name" : "Part Quantity",
-        "type" : "int",
         "value" : "1"
       },
       {
         "name" : "Sample Rate (kHz)",
-        "type" : "int",
         "value" : "48"
       },
       {
         "name" : "MCLK (Mhz)",
-        "type" : "int",
         "value" : "12"
       }
     ]

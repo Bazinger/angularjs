@@ -57,6 +57,12 @@ vprAppServices.factory 'testSvc', [ '$log', '$q', 'dataSvc', 'utilSvc',  ($log, 
 
       deferred.promise
 
+    asyncChangeBranch: (id, oldBranch, newBranch) ->
+      query = { id: id, branch: oldBranch }
+      update = { $set: { branch: newBranch } }
+
+      dataSvc.asyncUpdate "tests", query, update
+
     asyncBranchesForTest: (testId) ->
       deferred = do $q.defer
 
@@ -80,13 +86,15 @@ vprAppServices.factory 'testSvc', [ '$log', '$q', 'dataSvc', 'utilSvc',  ($log, 
 
       deferred = do $q.defer
 
-       # copy and sanitize the new test
+      # copy and sanitize the new test
       newTest = angular.copy test
       delete newTest._id
       newTest.is_current = true
       if newBranch? then newTest.branch = newBranch
 
       _that = this
+
+
 
       # demote the original test from current and get the max revision
       $q.all( [
@@ -103,6 +111,7 @@ vprAppServices.factory 'testSvc', [ '$log', '$q', 'dataSvc', 'utilSvc',  ($log, 
           _that.asyncSaveTest(newTest),
           _that.asyncSaveTest(oldTest)
         ]).then (results) ->
+
           deferred.resolve results[0]
 
       deferred.promise

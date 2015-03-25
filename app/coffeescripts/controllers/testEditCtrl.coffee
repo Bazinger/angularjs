@@ -30,9 +30,31 @@ vprAppControllers.controller 'TestEditCtrl', [ '$scope', '$routeParams', '$log',
 
   $scope.selectBranch = (branch) -> $scope.editTest.branch = branch
 
+  $scope.editBranch = (branchToEdit) ->
+    $scope.newBranchAdd = true
+    $scope.branchObj.newBranch = branchToEdit
+    $scope.branchObj.branchToChange = angular.copy branchToEdit
+
+  $scope.cancelEditBranch = () ->
+    delete $scope.branchObj.newBranch
+    delete $scope.branchObj.branchToChange
+
+    do $scope.toggleBranchAdd
+
   $scope.submitTest= (editForm) ->
 
-    testSvc.asyncSaveAndRevisionTest angular.copy( editForm ), $scope.branchObj.newBranch
+    saveTest = () ->
+
+      testSvc.asyncSaveAndRevisionTest angular.copy( editForm ), $scope.branchObj.newBranch, $scope.branchObj.branchToChange
       .then () -> $scope.goto "/tests/#{type}/#{$scope.rev_id}"
+
+    if $scope.branchObj.branchToChange? # then we have changed our branch name! so update everywhere before proceeding
+      testSvc.asyncChangeBranch(
+        editForm.id, $scope.branchObj.branchToChange, $scope.branchObj.newBranch
+      ).then () ->
+        editForm.branch = $scope.branchObj.newBranch
+        do saveTest
+    else
+      do saveTest
 
 ]

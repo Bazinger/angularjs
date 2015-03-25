@@ -51,7 +51,7 @@
         <div class="text-right branch-select" ng-if="!newBranchAdd">
             Select the branch to save this test revision to:
             <div class="btn-group" dropdown>
-                <button type="button" class="btn  btn-default" disabled>{{editTest.branch}}</button>
+                <button type="button" class="btn  btn-default" ng-click="editBranch(editTest.branch)" ng-disabled="editTest.branch == 'default'">{{editTest.branch}}</button>
                 <button type="button" class="btn  btn-default dropdown-toggle" dropdown-toggle>
                     <span class="caret"></span>
                     <span class="sr-only">Split Button</span>
@@ -67,7 +67,7 @@
         </div>
         <div class="text-right branch-add form-group form-inline clearfix" ng-if="newBranchAdd">
             <input type="text" placeholder="New Branch Name..." class="form-control" id="newBranchName" ng-model="branchObj.newBranch"/>
-            <button type="button" class="btn btn-default" ng-click="toggleBranchAdd()">Clear</button>
+            <button type="button" class="btn btn-default" ng-click="cancelEditBranch()">Clear</button>
         </div>
         <div class="form-group form-inline text-right">
             <div class="form-group text-left">
