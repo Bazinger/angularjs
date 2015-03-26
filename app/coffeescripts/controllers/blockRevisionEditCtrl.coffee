@@ -1,22 +1,17 @@
 vprAppControllers.controller 'BlockRevisionEditCtrl', [ '$scope', '$routeParams', '$log', 'blockSvc', ($scope, $routeParams, $log, blockSvc) ->
 
   $scope.nextRevision = (revisionType) ->
-    switch $scope.revisionType
+    mmr = Number($scope.mmr)
+    mir = Number($scope.mir)
+
+    switch revisionType
       when 'M'
-        "#{$scope.mmr+1}.0"
+        "#{mmr+1}.0"
       when 'i'
-        "#{$scope.mmr}.#{$scope.mir+1}"
+        "#{mmr}.#{mir+1}"
 
   $scope.changeRevision = (revisionType) ->
-    $scope.revision = switch revisionType
-      when 'M'
-        "#{$scope.mmr+1}.0"
-      when 'i'
-        "#{$scope.mmr}.#{$scope.mir+1}"
-
-  $scope.$watch 'revisionType', (newValue) ->
-    console.log(newValue)
-    $scope.revision = do $scope.nextRevision
+    $scope.revision = $scope.nextRevision revisionType
 
   if $routeParams.revisionId == 'new'
     $scope.editBlockRevision = {
@@ -34,12 +29,12 @@ vprAppControllers.controller 'BlockRevisionEditCtrl', [ '$scope', '$routeParams'
       if revisions?
         $scope.mmr = _.max _.pluck(revisions, 'major_revision')
         this_mjr = (r) -> r.major_revision == $scope.mmr
-        $scope.mir = _.max _.pluck(_.filter(revisions, this_mjr), 'minor_revision')
+        $scope.mir =  _.max _.pluck(_.filter(revisions, this_mjr), 'minor_revision')
 
         $scope.revisionType = "i"
-        $scope.revision = do $scope.nextRevision
+        $scope.revision = $scope.nextRevision 'i'
 
-        $scope.newRevision = true;
+        $scope.newRevision = true
 
   else
     $scope.newRevision = false
