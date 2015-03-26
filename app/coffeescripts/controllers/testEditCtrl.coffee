@@ -6,7 +6,7 @@ vprAppControllers.controller 'TestEditCtrl', [ '$scope', '$routeParams', '$log',
     $scope.rev_id = $routeParams.revId
     dataSvc.asyncNewId().then (id) ->
       $scope.editTest = {
-        testId : id
+        id : id
         rev_id : $routeParams.revId
         branch : "default"
       }
