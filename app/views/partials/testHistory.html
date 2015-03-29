@@ -13,7 +13,7 @@
         <span class="glyphicon glyphicon-triangle-right"></span>
         <span>History for Test <strong><a href="#/tests/{{type}}/{{currentTest.rev_id}}">{{currentTest.id}}</a></strong></span>
     </div>
-    <div class="body">
+    <div  class="body">
         <alert ng-if="alert" type="{{alert.type}}" close="cancelAlert()">
             <p>{{alert.msg}}</p>
             <button type="button" class="btn btn-sm btn-default" ng-click="cancelAlert()">Cancel</button>
@@ -23,8 +23,8 @@
              ng-class="{active: test.id == activeTest, inactive: (activeTest) && test.id != activeTest}"
              ng-repeat="test in tests">
 
-            <div class="testBody">
-                <h5>{{test.title}}
+            <div ng-attr-id="{{ 'rev-' + test.revision }}" class="testBody">
+                <h5 class="title">{{test.title}}
                     <a class="super editTest"
                        ng-if="! isCurrent(test.id, test.revision, test.branch)" href="" ng-click="makeCurrent(test)">
                         Use This Revision
@@ -40,8 +40,8 @@
                 <div class="details" ng-if="showDetails(test.id, test.revision, test.branch)">
                     <h6>Documentation</h6>
                     <div class="documentation small">
-                        <span ng-if="test.test_script">Script<br/><span class="small">{{test.test_script}}</span></span>
-                        <span>Test Config<br/><a class="nw" href="{{test.test_config_link}}" ng-if="test.test_config_link" target="_new"><span class="small">{{test.test_config_link | ellipsis:24:true }}</span></a></span>
+                        <span ng-if="test.test_script" class="test-script">Script<br/><span class="small">{{test.test_script}}</span></span>
+                        <span class="test-config">Test Config<br/><a class="nw" href="{{test.test_config_link}}" ng-if="test.test_config_link" target="_new"><span class="small">{{test.test_config_link | ellipsis:24:true }}</span></a></span>
                         <a class="nw" href="{{test.meas_plan}}" ng-if="test.meas_plan" target="_new">Measurement Plan</a>
                         <a class="nw" href="{{test.spotfire_template}}" ng-if="test.spotfire_template" target="_new">Spotfire Template</a>
                     </div>
@@ -58,6 +58,10 @@
             <div class="blockFooter text-center">
                <a href="" ng-click="tglDetails(test.id, test.revision, test.branch)" ng-if="!showDetails(test.id, test.revision, test.branch)">Show Details</a>
                <a href="" ng-click="tglDetails(test.id, test.revision, test.branch)" ng-if="showDetails(test.id, test.revision, test.branch)">Hide Details</a>
+               <span class="right" ng-if="showDetails(test.id, test.revision, test.branch)">
+                   Current Rev: {{test.revision}} Compare To: {{diffTest.revision}}
+                   <select ng-model="diffTest" ng-change="diffRevision($parent.test,diffTest)" ng-options="t.revision for t in tests"></select>
+               </span>
             </div>
         </div>
     </div>

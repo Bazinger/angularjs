@@ -57,6 +57,7 @@ vendor = {
     "#{vroot}/bootstrap/dist/fonts/**/*.*"
   ]
   js          : [
+    "#{vroot}/jquery/dist/jquery.min.js",
     "#{vroot}/angular/angular.min.js",
     "#{vroot}/angular-route/angular-route.min.js",
     "#{vroot}/angular-sanitize/angular-sanitize.min.js",

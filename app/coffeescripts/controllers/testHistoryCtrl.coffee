@@ -23,6 +23,7 @@ vprAppControllers.controller 'TestHistoryCtrl', [ '$scope', '$routeParams', '$q'
           group[0].branch == $scope.currentBranch
         , (test) -> test.revision).reverse()
 
+
   # show history for selected branch
   $scope.selectBranch = () -> $scope.tests = _init $scope.currentBranch
 
@@ -57,6 +58,47 @@ vprAppControllers.controller 'TestHistoryCtrl', [ '$scope', '$routeParams', '$q'
     (openTests.indexOf JSON.stringify({ id: testId, revision: revision, branch })) != -1
 
   $scope.cancelAlert = () -> delete $scope.alert
+
+
+  $scope.diffRevision = (rev1, rev2) ->
+    clearDiff(rev1)
+    diffFields rev1,rev2
+    diffTags rev1,rev2
+    diffParams(rev1,rev2)
+
+  clearDiff = (rev) ->
+    $("#rev-"+rev.revision).children().removeClass("updated created")
+    $("#rev-"+rev.revision+" .params").children().removeClass("updated created")
+    $("#rev-"+rev.revision+" .params").children().remove(".deleted")
+
+  diffFields = (a,b) ->
+    spec = {"title":"title","instructions":"summary","test_config":"test-config","test_script":"test-script"}
+    _.forIn (_.pick a,_.keys(spec)), (v,k) ->
+      if a[k] isnt b[k]
+        $("#rev-"+a.revision+" ."+spec[k]).addClass("updated")
+
+  diffTags = (a,b) ->
+    if not (a.tags.length is b.tags.length and a.tags.every (el, i) -> el is b.tags[i])
+      $("#rev-"+a.revision+" .tags").addClass("updated")
+
+  diffParams = (a,b) ->
+    _.forEach a.test_params,(a_param) ->
+      result = _.find b.test_params, (b_param) ->
+        b_param.name is a_param.name
+      if !result
+        $("#rev-"+a.revision+" .param:contains('"+a_param.name+"')").addClass("created")
+        console.log 'param ' + a_param.name + ' has been added.'
+      else if a_param.value is result.value
+        console.log a_param.name + ' has not been updated.'
+      else if a_param.value isnt result.value
+        $("#rev-"+a.revision+" .param:contains('"+a_param.name+"')").addClass("updated")
+        console.log a_param.name + ' has been updated.'
+    _.forEach b.test_params,(b_param) ->
+      result = _.find a.test_params, (a_param) ->
+        b_param.name is a_param.name
+      if !result
+        $('<div class="param deleted"><div class="small">'+b_param.name+'</div><strong>'+b_param.value+'</strong></div>').appendTo("#rev-"+a.revision+" .params")
+        console.log 'param ' + b_param.name + ' has been deleted.'
 
   do _init
 
