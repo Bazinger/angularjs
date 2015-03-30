@@ -29,7 +29,16 @@
                        ng-if="! isCurrent(test.id, test.revision, test.branch)" href="" ng-click="makeCurrent(test)">
                         Use This Revision
                     </a>
-                    <span class="right" ng-if="test.revision">Revision: {{test.revision}}/{{test.branch}}</span>
+                    <span class="right" ng-if="test.revision && !showDetails(test.id, test.revision, test.branch)">Revision: {{test.revision}}/{{test.branch}}</span>
+                    <span class="right dropdown" dropdown ng-if="showDetails(test.id, test.revision, test.branch)">
+                       <span class="dropdown-toggle" dropdown-toggle>Revision: {{test.revision}}/{{test.branch}}</span>
+                       <ul class="dropdown-menu">
+                           <li ng-repeat="t in getRevisions(test)">
+                               <a href ng-click="diffRevision($parent.test,t)">{{t.revision}}</a>
+                           </li>
+                       </ul>
+                    </span>
+                    <span class="right" ng-if="diffMode && $index == 0" ng-click="reset()">Reset</span>
                 </h5>
                 <div class="summary">
                     {{test.instructions||"no instructions set."}}
@@ -42,8 +51,8 @@
                     <div class="documentation small">
                         <span ng-if="test.test_script" class="test-script">Script<br/><span class="small">{{test.test_script}}</span></span>
                         <span class="test-config">Test Config<br/><a class="nw" href="{{test.test_config_link}}" ng-if="test.test_config_link" target="_new"><span class="small">{{test.test_config_link | ellipsis:24:true }}</span></a></span>
-                        <a class="nw" href="{{test.meas_plan}}" ng-if="test.meas_plan" target="_new">Measurement Plan</a>
-                        <a class="nw" href="{{test.spotfire_template}}" ng-if="test.spotfire_template" target="_new">Spotfire Template</a>
+                        <a class="nw meas-plan" href="{{test.meas_plan}}" ng-if="test.meas_plan" target="_new">Measurement Plan</a>
+                        <a class="nw spotfire-template" href="{{test.spotfire_template}}" ng-if="test.spotfire_template" target="_new">Spotfire Template</a>
                     </div>
                     <h6>Paramaters</h6>
                     <div class="params">
@@ -58,17 +67,17 @@
             <div class="blockFooter text-center">
                <a href="" ng-click="tglDetails(test.id, test.revision, test.branch)" ng-if="!showDetails(test.id, test.revision, test.branch)">Show Details</a>
                <a href="" ng-click="tglDetails(test.id, test.revision, test.branch)" ng-if="showDetails(test.id, test.revision, test.branch)">Hide Details</a>
-               <span class="dropdown" dropdown ng-if="showDetails(test.id, test.revision, test.branch)">
-                   <a href class="dropdown-toggle" dropdown-toggle>
-                       Diff with revision
-                   </a>
-                   <ul class="dropdown-menu">
-                       <li ng-repeat="t in getRevisions(test)">
-                           <a href ng-click="diffRevision($parent.test,t)">{{t.revision}}</a>
-                       </li>
-                   </ul>
-                   <!--<select ng-model="diffTest" ng-change="diffRevision($parent.test,diffTest)" ng-options="t.revision for t in tests |filter:foo"></select>-->
-               </span>
+               <!--<span class="dropdown" dropdown ng-if="showDetails(test.id, test.revision, test.branch)">-->
+                   <!--<a href class="dropdown-toggle" dropdown-toggle>-->
+                       <!--Diff with revision-->
+                   <!--</a>-->
+                   <!--<ul class="dropdown-menu">-->
+                       <!--<li ng-repeat="t in getRevisions(test)">-->
+                           <!--<a href ng-click="diffRevision($parent.test,t)">{{t.revision}}</a>-->
+                       <!--</li>-->
+                   <!--</ul>-->
+                   <!--&lt;!&ndash;<select ng-model="diffTest" ng-change="diffRevision($parent.test,diffTest)" ng-options="t.revision for t in tests |filter:foo"></select>&ndash;&gt;-->
+               <!--</span>-->
             </div>
         </div>
     </div>
