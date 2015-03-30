@@ -202,12 +202,10 @@ label:after {
   width: @canvas-width + (@canvas-width );
   .plist {
 
-    .table td {
-      border:0px;
-      padding: 3px;
-    }
-    .plist-heading {
-      display: inline-block;
+
+
+    .plist-heading,
+    .field-heading{
       max-width: 100%;
       margin-bottom: 5px;
       font-weight: bold;
@@ -215,6 +213,30 @@ label:after {
     .plist-heading:after {
       content: ":"
     }
+    .name-heading,
+    .value-heading {
+      display: inline-block;
+      width: 40%;
+    }
+    .name-heading {
+
+    }
+
+    .value-heading {
+
+    }
+    .name, .value {
+      display: inline-block;
+      width: 40%;
+    }
+//    .controls {
+//      position:relative;
+//      > div,
+//      > button {
+//        position: absolute;
+//        bottom: 0;
+//      }
+//    }
 //    display: inline-block;
 //    .name, .value { width: 40%; }
 //    .delete { width: 10%;}
