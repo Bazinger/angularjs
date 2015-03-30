@@ -69,13 +69,15 @@ vprAppControllers.controller 'TestHistoryCtrl', [ '$scope', '$routeParams', '$q'
   $scope.diffRevision = (rev1, rev2) ->
     $scope.diffMode = true
     $scope.tests = [rev1,rev2]
-#    if not $scope.showDetails rev1.id, rev1.revision, rev1.branch
-#      $scope.tglDetails rev1.id, rev1.revision, rev1.branch
+    if not $scope.showDetails rev1.id, rev1.revision, rev1.branch
+      $scope.tglDetails rev1.id, rev1.revision, rev1.branch
     $scope.tglDetails rev2.id, rev2.revision, rev2.branch
-    clearDiff(rev1,rev2)
-    diffFields rev1,rev2
-    diffTags rev1,rev2
-    diffParams rev1,rev2
+    callback = () ->
+      clearDiff rev1,rev2
+      diffFields rev1,rev2
+      diffTags rev1,rev2
+      diffParams rev1,rev2
+    setTimeout callback, 50
 
   $scope.reset = () ->
     $scope.diffMode = false
