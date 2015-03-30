@@ -29,8 +29,8 @@
                        ng-if="! isCurrent(test.id, test.revision, test.branch)" href="" ng-click="makeCurrent(test)">
                         Use This Revision
                     </a>
-                    <span class="right" ng-if="test.revision && !showDetails(test.id, test.revision, test.branch)">Revision: {{test.revision}}/{{test.branch}}</span>
-                    <span class="right dropdown" dropdown ng-if="showDetails(test.id, test.revision, test.branch)">
+                    <span class="right" ng-if="test.revision && diffMode">Revision: {{test.revision}}/{{test.branch}}</span>
+                    <span class="right dropdown" dropdown ng-if="test.revision && !diffMode">
                        <span class="dropdown-toggle" dropdown-toggle>Revision: {{test.revision}}/{{test.branch}}</span>
                        <ul class="dropdown-menu">
                            <li ng-repeat="t in getRevisions(test)">
