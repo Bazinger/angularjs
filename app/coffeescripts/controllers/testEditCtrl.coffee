@@ -39,7 +39,7 @@ vprAppControllers.controller 'TestEditCtrl', [ '$scope', '$routeParams', '$log',
     _.find params, (p,i) ->
       if p.name==param.name
         params.splice i, 1
-        $scope.testForm.$setDirty
+        $scope.testForm.$dirty = true
 
 
   $scope.editBranch = (branchToEdit) ->
