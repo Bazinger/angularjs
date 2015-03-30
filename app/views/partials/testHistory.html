@@ -29,16 +29,16 @@
                        ng-if="! isCurrent(test.id, test.revision, test.branch)" href="" ng-click="makeCurrent(test)">
                         Use This Revision
                     </a>
-                    <span class="right" ng-if="test.revision && diffMode">Revision: {{test.revision}}/{{test.branch}}</span>
-                    <span class="right dropdown" dropdown ng-if="test.revision && !diffMode">
-                       <span class="dropdown-toggle" dropdown-toggle>Revision: {{test.revision}}/{{test.branch}}</span>
+                    <span class="right" ng-if="test.revision">Revision: {{test.revision}}/{{test.branch}}</span>
+                    <span class="right diff" ng-if="test.revision && diffMode && $index == 0" ng-click="reset()">Reset</span>
+                    <span class="right diff dropdown" dropdown ng-if="test.revision && !diffMode">
+                       <span class="dropdown-toggle" dropdown-toggle>Diff</span>
                        <ul class="dropdown-menu">
                            <li ng-repeat="t in getRevisions(test)">
                                <a href ng-click="diffRevision($parent.test,t)">{{t.revision}}</a>
                            </li>
                        </ul>
                     </span>
-                    <span class="right" ng-if="diffMode && $index == 0" ng-click="reset()">Reset</span>
                 </h5>
                 <div class="summary">
                     {{test.instructions||"no instructions set."}}
