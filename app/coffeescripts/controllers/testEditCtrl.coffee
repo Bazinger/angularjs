@@ -33,7 +33,7 @@ vprAppControllers.controller 'TestEditCtrl', [ '$scope', '$routeParams', '$log',
   $scope.selectBranch = (branch) -> $scope.editTest.branch = branch
 
   $scope.paramAdd = () ->
-    $scope.editTest.test_params.push({name: '',value: ''})
+    $scope.editTest.test_params.unshift({name: '',value: ''})
 
   $scope.paramRemove = ( params, param) ->
     _.find params, (p,i) ->
