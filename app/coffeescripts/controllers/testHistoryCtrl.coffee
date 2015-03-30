@@ -59,6 +59,11 @@ vprAppControllers.controller 'TestHistoryCtrl', [ '$scope', '$routeParams', '$q'
 
   $scope.cancelAlert = () -> delete $scope.alert
 
+  $scope.getRevisions = (test) ->
+    revisions = []
+    _.forEach $scope.tests, (t) ->
+      revisions.push t unless t.revision is test.revision
+    return revisions
 
   $scope.diffRevision = (rev1, rev2) ->
     clearDiff(rev1)
