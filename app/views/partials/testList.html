@@ -43,6 +43,10 @@
                         <a class="nw" href="{{test.meas_plan}}" ng-if="test.meas_plan" target="_new">Measurement Plan</a>
                         <a class="nw" href="{{test.spotfire_template}}" ng-if="test.spotfire_template" target="_new">Spotfire Template</a>
                     </div>
+                    <h6>Modifed On</h6>
+                    <div class="modified-on">
+                        <span class="small">{{test.modified_on | date:'yyyy-MM-dd HH:mm:ss Z'}}</span>
+                    </div>
                     <h6>Paramaters</h6>
                     <div class="params">
                         <div class="param" ng-repeat="param in test.test_params">

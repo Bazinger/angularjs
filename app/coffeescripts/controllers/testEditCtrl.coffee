@@ -54,7 +54,7 @@ vprAppControllers.controller 'TestEditCtrl', [ '$scope', '$routeParams', '$log',
     do $scope.toggleBranchAdd
 
   $scope.submitTest= (editForm) ->
-
+    editForm.modified_on = new Date().getTime()
     saveTest = () ->
 
       testSvc.asyncSaveAndRevisionTest angular.copy( editForm ), $scope.branchObj.newBranch, $scope.branchObj.branchToChange
