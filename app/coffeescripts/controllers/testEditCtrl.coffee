@@ -14,6 +14,7 @@ vprAppControllers.controller 'TestEditCtrl', [ '$scope', '$routeParams', '$log',
       .then (test) ->
         $scope.rev_id = test.rev_id
         $scope.editTest = angular.copy test
+        $scope.test_params_counter = $scope.editTest.test_params.length
 
     testSvc.asyncBranchesForTest $routeParams.testId
       .then (branches) -> $scope.branches = branches
@@ -28,6 +29,22 @@ vprAppControllers.controller 'TestEditCtrl', [ '$scope', '$routeParams', '$log',
   $scope.branchObj = {}
 
   $scope.newBranchAdd = false
+  $scope.multiples = []
+  $scope.checkMultiples = (params) ->
+    multiples = []
+    singles = []
+    _.forEach params, (v,k) ->
+      if (_.where params, {'name': v.name}).length > 1
+        multiples.push({name: v.name,index: k})
+      else
+        singles.push({name: v.name,index: k})
+    _.forEach multiples, (v) ->
+      $(".testEdit .plist .plist-body:nth-child("+(v.index+3)+") .name").addClass("ng-invalid")
+    _.forEach singles, (v) ->
+      $(".testEdit .plist .plist-body:nth-child("+(v.index+3)+") .name").removeClass("ng-invalid")
+    $scope.multiples = multiples
+
+
   $scope.toggleBranchAdd = () -> $scope.newBranchAdd = !$scope.newBranchAdd
 
   $scope.selectBranch = (branch) -> $scope.editTest.branch = branch
@@ -70,3 +87,21 @@ vprAppControllers.controller 'TestEditCtrl', [ '$scope', '$routeParams', '$log',
       do saveTest
 
 ]
+
+#app.value 'detectDup', (test_params) ->
+#  console.log test_params
+#  sorted = undefined
+#  i = undefined
+#  sorted = test_params.concat().sort((a, b) ->
+#    if a.name > b.name
+#      return 1
+#    if a.name < b.name
+#      return -1
+#    0
+#  )
+#  i = 0
+#  while i < test_params.length
+#    sorted[i].isDuplicate = sorted[i - 1] and sorted[i - 1].name == sorted[i].name or sorted[i + 1] and sorted[i + 1].name == sorted[i].name
+#    i++
+#  return
+

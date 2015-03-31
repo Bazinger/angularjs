@@ -36,7 +36,7 @@
                     <button class="btn btn-xs btn-danger" ng-click="paramRemove(editTest.test_params,param)">
                         <span class="glyphicon glyphicon-remove"></span>
                     </button>
-                    <input type="text" class="form-control name" required ng-model="param.name"/>
+                    <input type="text" class="form-control name" required ng-model="param.name" ng-change="checkMultiples(editTest.test_params)"/>
                     <input type="text" class="form-control value "  ng-model="param.value"/>
                 </div>
             </div>
@@ -97,7 +97,7 @@
             </div>
             <button class="btn btn-default"
                     ng-click="cancelEdit()">Cancel</button>
-            <button class="btn btn-primary" type="submit" ng-disabled="!testForm.$dirty"
+            <button class="btn btn-primary" type="submit" ng-disabled="!testForm.$dirty || multiples.length"
                     ng-click="validate() && testForm.$valid && submitTest(editTest)">Submit</button>
         </div>
     </form>
