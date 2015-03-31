@@ -6,9 +6,9 @@
     <div class="form-group form-inline">
         <label for="revision">Revision</label>
         <div ng-if="newRevision" class="revisionTypeSelect">
-            <input type="radio" name="revisionType"
+            <input type="radio" name="revisionType" ng-change="changeRevision('M')"
                    value="M" ng-model="revisionType" id="revisionType_M" /> Major
-            <input type="radio" name="revisionType"
+            <input type="radio" name="revisionType" ng-change="changeRevision('i')"
                    value="i" ng-model="revisionType" id="revisionType_i" /> Minor
         </div>
         <input type="text" class="form-control" disabled

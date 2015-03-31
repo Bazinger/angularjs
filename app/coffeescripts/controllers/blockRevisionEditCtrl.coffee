@@ -1,14 +1,17 @@
 vprAppControllers.controller 'BlockRevisionEditCtrl', [ '$scope', '$routeParams', '$log', 'blockSvc', ($scope, $routeParams, $log, blockSvc) ->
 
-  $scope.nextRevision = () ->
-    switch $scope.revisionType
-      when 'M'
-        "#{$scope.mmr+1}.0"
-      when 'i'
-        "#{$scope.mmr}.#{$scope.mir+1}"
+  $scope.nextRevision = (revisionType) ->
+    mmr = Number($scope.mmr)
+    mir = Number($scope.mir)
 
-  $scope.$watch 'revisionType', (newValue, oldValue) ->
-    $scope.revision = do $scope.nextRevision
+    switch revisionType
+      when 'M'
+        "#{mmr+1}.0"
+      when 'i'
+        "#{mmr}.#{mir+1}"
+
+  $scope.changeRevision = (revisionType) ->
+    $scope.revision = $scope.nextRevision revisionType
 
   if $routeParams.revisionId == 'new'
     $scope.editBlockRevision = {
@@ -26,12 +29,12 @@ vprAppControllers.controller 'BlockRevisionEditCtrl', [ '$scope', '$routeParams'
       if revisions?
         $scope.mmr = _.max _.pluck(revisions, 'major_revision')
         this_mjr = (r) -> r.major_revision == $scope.mmr
-        $scope.mir = _.max _.pluck(_.filter(revisions, this_mjr), 'minor_revision')
+        $scope.mir =  _.max _.pluck(_.filter(revisions, this_mjr), 'minor_revision')
 
         $scope.revisionType = "i"
-        $scope.revision = do $scope.nextRevision
+        $scope.revision = $scope.nextRevision 'i'
 
-        $scope.newRevision = true;
+        $scope.newRevision = true
 
   else
     $scope.newRevision = false
@@ -45,6 +48,10 @@ vprAppControllers.controller 'BlockRevisionEditCtrl', [ '$scope', '$routeParams'
     $scope.trySubmit = true
 
   $scope.submitBlockRevision = (editForm) ->
+    revisionParts = $scope.revision.split '.'
+    editForm.major_revision = revisionParts[0]
+    editForm.minor_revision = revisionParts[1]
+
     blockSvc.asyncSaveBlockRevision angular.copy editForm
     .then () -> $scope.goto "/blocks/#{$scope.editBlockRevision.block_id}"
 

@@ -48,5 +48,8 @@ vprAppServices.factory 'blockSvc', [ '$log', '$q', 'dataSvc', 'utilSvc',  ($log,
     asyncSaveBlockRevision: (blockRevision) ->
       utilSvc.handleAsync dataSvc.asyncSave "block_revisions", blockRevision
 
+    asyncRmBlockRevision: (blockRevision) ->
+      utilSvc.handleAsync dataSvc.asyncRemove "block_revisions", blockRevision
+
   new BlockSvc()
 ]

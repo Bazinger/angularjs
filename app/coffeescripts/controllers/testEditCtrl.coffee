@@ -1,14 +1,17 @@
-vprAppControllers.controller 'TestEditCtrl', [ '$scope', '$routeParams', '$log', 'testSvc', ($scope, $routeParams, $log, testSvc) ->
+vprAppControllers.controller 'TestEditCtrl', [ '$scope', '$routeParams', '$log', 'testSvc', 'dataSvc', ($scope, $routeParams, $log, testSvc, dataSvc) ->
 
   type = $routeParams.type
 
 
   if $routeParams.testId == 'new'
     $scope.rev_id = $routeParams.revId
-    $scope.editTest = {
-      rev_id : $routeParams.revId,
-      test_params: []
-    }
+    dataSvc.asyncNewId().then (id) ->
+      $scope.editTest = {
+        id : id
+        rev_id : $routeParams.revId
+        branch : "default"
+        test_params: []
+      }
   else
     testSvc.asyncTest $routeParams.testId
       .then (test) ->
