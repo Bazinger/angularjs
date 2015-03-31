@@ -3,6 +3,7 @@
     <div class="header">
 
         <div class="toolbar">
+            <a ng-click="removeBranch()">Remove {{currentTest.branch}}</a>
             Branch:
             <select ng-model="currentBranch" ng-change="selectBranch()">
                 <option ng-repeat="branch in branches">{{branch}}</option>
@@ -52,7 +53,7 @@
                         <span ng-if="test.test_script" class="test-script">Script<br/><span class="small">{{test.test_script}}</span></span>
                         <span class="test-config">Test Config<br/><a class="nw" href="{{test.test_config_link}}" ng-if="test.test_config_link" target="_new"><span class="small">{{test.test_config_link | ellipsis:24:true }}</span></a></span>
                         <a class="nw meas-plan" href="{{test.meas_plan}}" ng-if="test.meas_plan" target="_new">Measurement Plan</a>
-                        <a class="nw spotfire-template" href="{{test.spotfire_template}}" ng-if="test.spotfire_template" target="_new">Spotfire Template</a>
+                        <a class="nw spotfire-template" href="{{test.spotfire_template}}" ng-if="test.spotfire_template" target="_new"><div class="circle"></div>Spotfire Template</a>
                     </div>
                     <h6>Paramaters</h6>
                     <div class="params">

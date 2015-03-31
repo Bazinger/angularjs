@@ -14,7 +14,6 @@ vprAppControllers.controller 'TestEditCtrl', [ '$scope', '$routeParams', '$log',
       .then (test) ->
         $scope.rev_id = test.rev_id
         $scope.editTest = angular.copy test
-        $scope.test_params_counter = $scope.editTest.test_params.length
 
     testSvc.asyncBranchesForTest $routeParams.testId
       .then (branches) -> $scope.branches = branches
@@ -87,21 +86,4 @@ vprAppControllers.controller 'TestEditCtrl', [ '$scope', '$routeParams', '$log',
       do saveTest
 
 ]
-
-#app.value 'detectDup', (test_params) ->
-#  console.log test_params
-#  sorted = undefined
-#  i = undefined
-#  sorted = test_params.concat().sort((a, b) ->
-#    if a.name > b.name
-#      return 1
-#    if a.name < b.name
-#      return -1
-#    0
-#  )
-#  i = 0
-#  while i < test_params.length
-#    sorted[i].isDuplicate = sorted[i - 1] and sorted[i - 1].name == sorted[i].name or sorted[i + 1] and sorted[i + 1].name == sorted[i].name
-#    i++
-#  return
 

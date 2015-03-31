@@ -50,7 +50,7 @@ vprAppServices.factory 'testSvc', [ '$log', '$q', 'dataSvc', 'utilSvc',  ($log, 
 
     asyncMaxRevision: (test, branch) ->
       deferred = do $q.defer
-
+      console.log 'asyncMaxRevision',test,branch
       dataSvc.asyncFind "tests", { id: test.id, branch: branch }
         .then (tests) ->
           deferred.resolve if tests? and tests.length then _.max( tests, "revision" ).revision else 0
@@ -115,6 +115,17 @@ vprAppServices.factory 'testSvc', [ '$log', '$q', 'dataSvc', 'utilSvc',  ($log, 
           deferred.resolve results[0]
 
       deferred.promise
+
+    asyncRmBranch: (revId,branch) ->
+      _that = this
+      promises = []
+      @asyncTestsForRevAndBranch revId,branch
+      .then (tests) ->
+        _.forEach tests, (v) ->
+          result =  _that.asyncRmTest(v.id)
+          console.log('result',result)
+        #$q.all(promises)
+        #.then() -> console.log('all tests removed')
 
     asyncRmTest: (testId) ->
       utilSvc.handleAsync dataSvc.asyncRemove "tests", testId

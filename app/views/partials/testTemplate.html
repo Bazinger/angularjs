@@ -1,15 +1,28 @@
 <div class="tests canvas">
     <div class="header">
-
         <div class="toolbar" ng-if="!removeMode && !activeTest">
-            <a href="#/editTest/{{type}}/new/{{currentRev.id}}">
-                <span class="glyphicon glyphicon-plus"></span> Add Test
-            </a>
+            <div ui-if="test-list">
+                <a href="#/editTest/{{type}}/new/{{currentRev.id}}">
+                    <span class="glyphicon glyphicon-plus"></span> Add Test
+                </a>
+            </div>
+            <div ui-if="test-history">
+                Branch:
+                <select ng-model="currentBranch" ng-change="selectBranch()">
+                    <option ng-repeat="branch in branches">{{branch}}</option>
+                </select>
+            </div>
         </div>
     </div>
     <div class="statusbar">
-        <span class="glyphicon glyphicon-triangle-right"></span>
-        <span>Tests for <strong><a href="#/blocks/{{currentParent.id}}">{{currentParent.name}} {{currentRev.major_revision}}.{{currentRev.minor_revision}}</a></strong></span>
+        <div ui-if="test-list">
+            <span class="glyphicon glyphicon-triangle-right"></span>
+            <span>Tests for <strong><a href="#/blocks/{{currentParent.id}}">{{currentParent.name}} {{currentRev.major_revision}}.{{currentRev.minor_revision}}</a></strong></span>
+        </div>
+        <div ui-if="test-history">
+            <span>History for Test <strong><a href="#/tests/{{type}}/{{currentTest.rev_id}}">{{currentTest.id}}</a></strong></span>
+        </div>
+
     </div>
     <div class="body">
         <alert ng-if="alert" type="{{alert.type}}" close="cancelAlert()">
@@ -59,8 +72,8 @@
                 </div>
             </div>
             <div class="blockFooter text-center">
-               <a href="" ng-click="tglDetails(test.id)" ng-if="!showDetails(test.id)">Show Details</a>
-               <a href="" ng-click="tglDetails(test.id)" ng-if="showDetails(test.id)">Hide Details</a>
+                <a href="" ng-click="tglDetails(test.id)" ng-if="!showDetails(test.id)">Show Details</a>
+                <a href="" ng-click="tglDetails(test.id)" ng-if="showDetails(test.id)">Hide Details</a>
             </div>
         </div>
     </div>
