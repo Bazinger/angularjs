@@ -84,7 +84,10 @@ vprAppControllers.controller 'TestHistoryCtrl', [ '$scope', '$routeParams', '$q'
     do _init
 
   $scope.removeBranch = () ->
-    testSvc.asyncRmBranch $scope.currentTest.rev_id, $scope.currentBranch
+    testSvc.asyncRmBranch($scope.currentTest.rev_id, $scope.currentBranch)
+#    .then () ->
+#      console.log('all tests removed')
+
 
   clearDiff = (rev1,rev2) ->
     $("#rev-"+rev1.revision).children().removeClass("updated created")

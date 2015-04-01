@@ -121,15 +121,20 @@ vprAppServices.factory 'testSvc', [ '$log', '$q', 'dataSvc', 'utilSvc',  ($log, 
       deferred.promise
 
     asyncRmBranch: (revId,branch) ->
+      deferred = do $q.defer
       _that = this
       promises = []
       @asyncTestsForRevAndBranch revId,branch
       .then (tests) ->
         _.forEach tests, (v) ->
-          result =  _that.asyncRmTest(v.id)
-          console.log('result',result)
-        #$q.all(promises)
-        #.then() -> console.log('all tests removed')
+          promises.push _that.asyncRmTest(v.id)
+          #console.log('test',v)
+        console.log 'promises',promises
+        $q.all(promises)
+        .then(results) ->
+          deferred.resolve
+
+      return deferred.promise
 
     asyncRmTest: (testId) ->
       utilSvc.handleAsync dataSvc.asyncRemove "tests", testId

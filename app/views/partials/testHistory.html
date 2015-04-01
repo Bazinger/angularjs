@@ -3,7 +3,7 @@
     <div class="header">
 
         <div class="toolbar">
-            <a ng-click="removeBranch()">Remove {{currentTest.branch}}</a>
+            <a href ng-if="currentBranch != 'default'" ng-click="removeBranch()">Remove {{currentTest.branch}}</a>
             Branch:
             <select ng-model="currentBranch" ng-change="selectBranch()">
                 <option ng-repeat="branch in branches">{{branch}}</option>
