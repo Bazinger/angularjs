@@ -26,15 +26,18 @@ vprAppControllers.controller 'BlockRevisionEditCtrl', [ '$scope', '$routeParams'
     # revisions
 
     blockSvc.asyncRevisionsForBlock($routeParams.blockId).then (revisions) ->
-      if revisions?
+      if revisions.length? and revisions.length > 0
         $scope.mmr = _.max _.pluck(revisions, 'major_revision')
         this_mjr = (r) -> r.major_revision == $scope.mmr
         $scope.mir =  _.max _.pluck(_.filter(revisions, this_mjr), 'minor_revision')
+      else
+        $scope.mmr = 0
+        $scope.mir = 0
 
-        $scope.revisionType = "i"
-        $scope.revision = $scope.nextRevision 'i'
+      $scope.revisionType = "i"
+      $scope.revision = $scope.nextRevision 'i'
 
-        $scope.newRevision = true
+      $scope.newRevision = true
 
   else
     $scope.newRevision = false
