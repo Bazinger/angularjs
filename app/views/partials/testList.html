@@ -33,7 +33,7 @@
                     {{test.instructions||"no instructions set."}}
                 </div>
                 <div class="tags">
-                    Tags: {{ formatTags(test.tags) }}
+                    Tags: <span ng-if="test.tags">{{ formatTags(test.tags) }}</span>
                 </div>
                 <div class="details" ng-if="showDetails(test.id)">
                     <h6>Documentation</h6>
