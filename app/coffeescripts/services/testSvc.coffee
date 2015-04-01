@@ -102,15 +102,19 @@ vprAppServices.factory 'testSvc', [ '$log', '$q', 'dataSvc', 'utilSvc',  ($log, 
         @asyncTest(test.id, test.branch, test.revision)
       ] ).then (results) ->
         maxRevision = results[0]
-        oldTest = results[1]
-        delete oldTest.is_current
-
         newTest.revision = maxRevision + 1
 
-        $q.all([
-          _that.asyncSaveTest(newTest),
-          _that.asyncSaveTest(oldTest)
-        ]).then (results) ->
+        savePromiseArray = [ _that.asyncSaveTest newTest ]
+
+        if results[1]?
+          oldTest = results[1]
+          delete oldTest.is_current
+          savePromiseArray.push asyncSaveTest oldTest
+
+
+        $q.all(
+          savePromiseArray
+        ).then (results) ->
 
           deferred.resolve results[0]
 
