@@ -109,7 +109,7 @@ vprAppServices.factory 'testSvc', [ '$log', '$q', 'dataSvc', 'utilSvc',  ($log, 
         if results[1]?
           oldTest = results[1]
           delete oldTest.is_current
-          savePromiseArray.push asyncSaveTest oldTest
+          savePromiseArray.push _that.asyncSaveTest oldTest
 
 
         $q.all(
