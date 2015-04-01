@@ -8,7 +8,8 @@ vprAppControllers.controller 'TestEditCtrl', [ '$scope', '$routeParams', '$log',
       $scope.editTest = {
         id : id
         rev_id : $routeParams.revId
-        branch : "default"
+        branch : "default",
+        tags : []
       }
   else
     testSvc.asyncTest $routeParams.testId
