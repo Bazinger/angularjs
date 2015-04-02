@@ -5,7 +5,7 @@ module.exports = function(config) {
   config.set({
 
     // base path that will be used to resolve all patterns (eg. files, exclude)
-    basePath: 'apps/apapp',
+    basePath: 'app',
 
 
     // frameworks to use
@@ -20,7 +20,8 @@ module.exports = function(config) {
       'bower_components/angular-mocks/angular-mocks.js',
       'bower_components/lodash/dist/lodash.js',
       'coffeescripts/**/*.coffee',
-      'test/**/*.coffee',
+      'tests/**/*.coffee',
+      //'test/**/*.coffee',
     ],
 
     // list of files to exclude
@@ -68,7 +69,7 @@ module.exports = function(config) {
 
 
     // enable / disable watching file and executing tests whenever any file changes
-    autoWatch: true,
+    autoWatch: false,
 
 
     // start these browsers
