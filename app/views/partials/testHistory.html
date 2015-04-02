@@ -3,7 +3,8 @@
     <div class="header">
 
         <div class="toolbar">
-            <a href ng-if="currentBranch != 'default'" ng-click="removeBranch()">Remove {{currentBranch}}</a>
+            <a href ng-if="currentBranch != 'default'" ng-click="confirmRemoveBranch(currentBranch)">Remove
+                {{currentBranch}}</a>
             <select ng-model="currentBranch" ng-change="selectBranch()">
                 <option ng-repeat="branch in branches">{{branch}}</option>
             </select>
@@ -17,7 +18,7 @@
         <alert ng-if="alert" type="{{alert.type}}" close="cancelAlert()">
             <p>{{alert.msg}}</p>
             <button type="button" class="btn btn-sm btn-default" ng-click="cancelAlert()">Cancel</button>
-            <button type="button" class="btn btn-sm btn-danger" ng-click="remove(alert.data)">Remove</button>
+            <button type="button" class="btn btn-sm btn-danger" ng-click="removeBranch(alert.data)">Remove</button>
         </alert>
         <div class="test"
              ng-class="{active: test.id == activeTest, inactive: (activeTest) && test.id != activeTest}"
