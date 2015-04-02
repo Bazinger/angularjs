@@ -25,9 +25,7 @@ vprAppControllers.controller 'TestHistoryCtrl', [ '$scope', '$routeParams', '$q'
 
 
   # show history for selected branch
-  $scope.selectBranch = (branch) ->
-    $scope.selectedBranch = branch
-    $scope.tests = _init $scope.currentBranch
+  $scope.selectBranch = () -> $scope.tests = _init $scope.currentBranch
 
   openTests = []
 
