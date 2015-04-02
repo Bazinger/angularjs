@@ -3,8 +3,19 @@
     <div class="header">
 
         <div class="toolbar">
-            <a href ng-if="currentBranch != 'default'" ng-click="confirmRemoveBranch()">Remove {{currentTest.branch}}</a>
-            Branch:
+            <a href ng-if="currentBranch != 'default'" ng-click="confirmRemoveBranch()">Remove {{currentBranch}}</a>
+            <div class="btn-group" dropdown>
+                <button type="button" class="btn btn-danger">Branch</button>
+                <button type="button" class="btn btn-danger dropdown-toggle" dropdown-toggle>
+                    <span class="caret"></span>
+                    <span class="sr-only">Branch</span>
+                </button>
+                <ul class="dropdown-menu" role="menu">
+                    <li ng-repeat="{{branch}} in branches" ng-class="{selected: branch == selectedBranch}">
+                        <a href="#"   ng-click="selectBranch(branch)">{{branch}}</a>
+                    </li>
+                </ul>
+            </div>
             <select ng-model="currentBranch" ng-change="selectBranch()">
                 <option ng-repeat="branch in branches">{{branch}}</option>
             </select>
