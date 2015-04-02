@@ -3,7 +3,8 @@
     <div class="header">
 
         <div class="toolbar">
-            Branch:
+            <a href ng-if="currentBranch != 'default'" ng-click="confirmRemoveBranch(currentBranch)">Remove
+                {{currentBranch}}</a>
             <select ng-model="currentBranch" ng-change="selectBranch()">
                 <option ng-repeat="branch in branches">{{branch}}</option>
             </select>
@@ -13,23 +14,32 @@
         <span class="glyphicon glyphicon-triangle-right"></span>
         <span>History for Test <strong><a href="#/tests/{{type}}/{{currentTest.rev_id}}">{{currentTest.id}}</a></strong></span>
     </div>
-    <div class="body">
+    <div  class="body">
         <alert ng-if="alert" type="{{alert.type}}" close="cancelAlert()">
             <p>{{alert.msg}}</p>
             <button type="button" class="btn btn-sm btn-default" ng-click="cancelAlert()">Cancel</button>
-            <button type="button" class="btn btn-sm btn-danger" ng-click="remove(alert.data)">Remove</button>
+            <button type="button" class="btn btn-sm btn-danger" ng-click="removeBranch(alert.data)">Remove</button>
         </alert>
         <div class="test"
              ng-class="{active: test.id == activeTest, inactive: (activeTest) && test.id != activeTest}"
              ng-repeat="test in tests">
 
-            <div class="testBody">
-                <h5>{{test.title}}
+            <div ng-attr-id="{{ 'rev-' + test.revision }}" class="testBody">
+                <h5 class="title">{{test.title}}
                     <a class="super editTest"
                        ng-if="! isCurrent(test.id, test.revision, test.branch)" href="" ng-click="makeCurrent(test)">
                         Use This Revision
                     </a>
                     <span class="right" ng-if="test.revision">Revision: {{test.revision}}/{{test.branch}}</span>
+                    <span class="right diff" ng-if="test.revision && diffMode && $index == 0" ng-click="reset()">Reset</span>
+                    <span class="right diff dropdown" dropdown ng-if="test.revision && !diffMode">
+                       <span class="dropdown-toggle" dropdown-toggle>Diff</span>
+                       <ul class="dropdown-menu">
+                           <li ng-repeat="t in getRevisions(test)">
+                               <a href ng-click="diffRevision($parent.test,t)">{{t.revision}}</a>
+                           </li>
+                       </ul>
+                    </span>
                 </h5>
                 <div class="summary">
                     {{test.instructions||"no instructions set."}}
@@ -40,18 +50,14 @@
                 <div class="details" ng-if="showDetails(test.id, test.revision, test.branch)">
                     <h6>Documentation</h6>
                     <div class="documentation small">
-                        <span ng-if="test.test_script">Script<br/><span class="small">{{test.test_script}}</span></span>
-                        <span>Test Config<br/><a class="nw" href="{{test.test_config_link}}" ng-if="test.test_config_link" target="_new"><span class="small">{{test.test_config_link | ellipsis:24:true }}</span></a></span>
-                        <a class="nw" href="{{test.meas_plan}}" ng-if="test.meas_plan" target="_new">Measurement Plan</a>
-                        <a class="nw" href="{{test.spotfire_template}}" ng-if="test.spotfire_template" target="_new">Spotfire Template</a>
+                        <span ng-if="test.test_script" class="test-script">Script<br/><span class="small">{{test.test_script}}</span></span>
+                        <span class="test-config">Test Config<br/><a class="nw" href="{{test.test_config_link}}" ng-if="test.test_config_link" target="_new"><span class="small">{{test.test_config_link | ellipsis:24:true }}</span></a></span>
+                        <a class="nw meas-plan" href="{{test.meas_plan}}" ng-if="test.meas_plan" target="_new">Measurement Plan</a>
+                        <a class="nw spotfire-template" href="{{test.spotfire_template}}" ng-if="test.spotfire_template" target="_new"><div class="circle"></div>Spotfire Template</a>
                     </div>
                     <h6>Paramaters</h6>
                     <div class="params">
                         <div class="param" ng-repeat="param in test.test_params">
-                            <div class="controls">
-                                <button class="btn btn-xs btn-success"><span class="glyphicon glyphicon-edit"></span></button>
-                                <button class="btn btn-xs btn-danger"><span class="glyphicon glyphicon-remove"></span></button>
-                            </div>
                             <div class="small">{{param.name}}</div>
                             <strong>{{param.value}}</strong>
                         </div>

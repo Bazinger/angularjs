@@ -1,4 +1,4 @@
-vprAppServices.factory 'dataSvc', [ '$log', '$q', '$http', 'configSvc', ($log, $q, $http, configSvc) ->
+vprAppServices.factory 'dataSvc', [ '$log', '$q', '$http', ($log, $q, $http) ->
 
   class DataSvc
 
@@ -19,7 +19,6 @@ vprAppServices.factory 'dataSvc', [ '$log', '$q', '$http', 'configSvc', ($log, $
     asyncFind: (collection, query) -> # return [ {}, {}, ... ]
 
       deferred = do $q.defer
-
       @_handlePost "/api/v1/findJson/#{collection}", query, deferred
 
       deferred.promise
@@ -57,14 +56,6 @@ vprAppServices.factory 'dataSvc', [ '$log', '$q', '$http', 'configSvc', ($log, $
 
       deferred.promise
 
-    asyncUpdate: (collection, query, update) ->
-
-      deferred = do $q.defer
-
-      @_handlePost "/api/v1/updateJson/#{collection}", { query: query, update: update }, deferred
-
-      deferred.promise
-
     asyncRemove: (collection, id) ->
 
       deferred = do $q.defer
@@ -83,7 +74,7 @@ vprAppServices.factory 'dataSvc', [ '$log', '$q', '$http', 'configSvc', ($log, $
 
     _handlePost: (path, data, deferred, resolveToPassedData = false) ->
 
-      $http.post "#{configSvc.cbaseServer}#{path}", data
+      $http.post "http://beta.web.cirrus.com:9002#{path}", data
       .success (result, status, headers, config) ->
         if resolveToPassedData then deferred.resolve data
         else deferred.resolve result
@@ -92,7 +83,7 @@ vprAppServices.factory 'dataSvc', [ '$log', '$q', '$http', 'configSvc', ($log, $
 
     _handleGet: (path, deferred) ->
 
-      $http.get "#{configSvc.cbaseServer}#{path}"
+      $http.get "http://beta.web.cirrus.com:9002#{path}"
       .success (result, status, headers, config) ->
         deferred.resolve result
       .error (result, status, headers, config) ->

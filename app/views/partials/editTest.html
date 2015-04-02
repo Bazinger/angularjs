@@ -22,6 +22,24 @@
                 <label for="tags">Tags</label>
                 <input type="text" class="form-control" tags id="tags" ng-model="editTest.tags"/>
             </div>
+            <div class="form-group plist">
+                <div class="plist-heading">Parameters</div>
+                <div class="field-heading">
+                    <button class="btn btn-xs btn-success" type="button" ng-click="paramAdd()">
+                        <span class="glyphicon glyphicon-plus"></span>
+                    </button>
+                    <div class="name-heading">Name</div>
+                    <div class="value-heading">Value</div>
+                </div>
+
+                <div class="plist-body" data-ng-repeat="param in editTest.test_params">
+                    <button class="btn btn-xs btn-danger" ng-click="paramRemove(editTest.test_params,param)">
+                        <span class="glyphicon glyphicon-remove"></span>
+                    </button>
+                    <input type="text" class="form-control name" required ng-model="param.name" ng-change="checkMultiples(editTest.test_params)"/>
+                    <input type="text" class="form-control value "  ng-model="param.value"/>
+                </div>
+            </div>
         </fieldset>
         <fieldset>
             <legend>Test Details</legend>
@@ -69,7 +87,7 @@
             <input type="text" placeholder="New Branch Name..." class="form-control" id="newBranchName" ng-model="branchObj.newBranch"/>
             <button type="button" class="btn btn-default" ng-click="cancelEditBranch()">Clear</button>
         </div>
-        <div class="form-group form-inline text-right">
+        <div class="form-group form-inline text-right controls">
             <div class="form-group text-left">
 
                 <label for="comments">Revision Comments</label>
@@ -79,7 +97,7 @@
             </div>
             <button class="btn btn-default"
                     ng-click="cancelEdit()">Cancel</button>
-            <button class="btn btn-primary" type="submit" ng-disabled="!testForm.$dirty"
+            <button class="btn btn-primary" type="submit" ng-disabled="!testForm.$dirty || multiples.length"
                     ng-click="validate() && testForm.$valid && submitTest(editTest)">Submit</button>
         </div>
     </form>

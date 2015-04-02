@@ -135,13 +135,15 @@ label:after {
         font-size: 12px;
         //font-weight: 400;
 
-        a {
-          color: orange;
+        .dropdown-menu a {
+          color: #337ab7;
         }
+
       }
 
       .details {
         margin-top: 10px;
+
 
         .documentation > a, .documentation > span  {
           display: inline-block;
@@ -178,6 +180,33 @@ label:after {
           }
         }
       }
+      .diff.right {
+        background-color: white;
+        color: #337ab7;
+      }
+
+      .updated { background-color: #C2D6FF;}
+      .updated-icon {
+        background-color: #C2D6FF;
+        border-radius: 50%;
+        width: 12px;
+        height: 12px;
+      }
+      .deleted {background-color: #FFC2B2;}
+      .deleted-icon {
+        background-color: #FFC2B2;
+        border-radius: 50%;
+        width: 12px;
+        height: 12px;
+      }
+      .created {background-color: #B2E0C2;}
+      .created-icon {
+        background-color: #B2E0C2;
+        border-radius: 50%;
+        width: 12px;
+        height: 12px;
+      }
+
     }
 
     .blockFooter {
@@ -200,6 +229,50 @@ label:after {
 
 .canvas.tests > *, .canvas.testEdit > * {
   width: @canvas-width + (@canvas-width );
+  .error {
+    border: 1px solid red;
+  }
+  .plist {
+
+
+
+    .plist-heading,
+    .field-heading{
+      max-width: 100%;
+      margin-bottom: 5px;
+      font-weight: bold;
+    }
+    .plist-heading:after {
+      content: ":"
+    }
+    .name-heading,
+    .value-heading {
+      display: inline-block;
+      width: 40%;
+    }
+    .name-heading {
+
+    }
+
+    .value-heading {
+
+    }
+    .name, .value {
+      display: inline-block;
+      width: 40%;
+    }
+//    .controls {
+//      position:relative;
+//      > div,
+//      > button {
+//        position: absolute;
+//        bottom: 0;
+//      }
+//    }
+//    display: inline-block;
+//    .name, .value { width: 40%; }
+//    .delete { width: 10%;}
+  }
 }
 
 .canvas.tests > div.statusbar, {
@@ -251,4 +324,6 @@ label:after {
   form.submitted select.ng-invalid, form.ng-dirty select.ng-invalid {
     border: 2px solid indianred;
   }
+
+
 
