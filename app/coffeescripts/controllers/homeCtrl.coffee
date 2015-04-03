@@ -1,9 +1,12 @@
 
 vprAppControllers.controller 'HomeCtrl', [
-  '$scope', 'blockSvc', ($scope, blockSvc) ->
+  '$scope', 'blockSvc','deviceSvc', ($scope, blockSvc,deviceSvc) ->
 
     blockSvc.asyncBlockCount().then (count) ->
      $scope.blockCount = count
 
-    $scope.deviceCount = 3
+    deviceSvc.asyncDeviceCount().then (count) ->
+      $scope.deviceCount = count
+
+
 ]

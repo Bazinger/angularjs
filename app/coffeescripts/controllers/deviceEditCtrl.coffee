@@ -1,26 +1,26 @@
-vprAppControllers.controller 'BlockEditCtrl', [ '$scope', '$routeParams', '$log', 'blockSvc', ($scope, $routeParams, $log, blockSvc) ->
+vprAppControllers.controller 'DeviceEditCtrl', [ '$scope', '$routeParams', '$log', 'deviceSvc', ($scope, $routeParams, $log, deviceSvc) ->
 
-  if $routeParams.blockId == 'new'
-    $scope.editBlock = {
+  if $routeParams.deviceId == 'new'
+    $scope.editDevice = {
       name: "",
-      owner: "",
+      number: "",
       description: "",
       tags: []
     }
   else
-    blockSvc.asyncBlock $routeParams.blockId
-      .then (block) -> $scope.editBlock = block
+    deviceSvc.asyncDevice $routeParams.deviceId
+      .then (device) -> $scope.editDevice = device
       #, (err) -> $scope.error = err
 
-  $scope.users = [ { username: "dnye", fullName: "Donovan Nye"}, { username: "tg", fullName: "That Guy"} ]
+  $scope.users = [ { username: "dnye", fullName: "Donovan Nye"}, { username: "tg", fullName: "That Guy"},{ username: "mrusso", fullName: "Michael Russo"} ]
 
   $scope.trySubmit = false
   $scope.validate = () ->
     $scope.trySubmit = true
 
-  $scope.submitBlock = (editForm) ->
-    blockSvc.asyncSaveBlock angular.copy editForm
-      .then () -> $scope.goto '/blocks'
+  $scope.submitDevice = (editForm) ->
+    deviceSvc.asyncSaveDevice angular.copy editForm
+      .then () -> $scope.goto '/devices'
 
 
 ]

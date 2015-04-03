@@ -1,4 +1,4 @@
-vprAppControllers.controller 'BlockRevisionEditCtrl', [ '$scope', '$routeParams', '$log', 'blockSvc', ($scope, $routeParams, $log, blockSvc) ->
+vprAppControllers.controller 'DeviceRevisionEditCtrl', [ '$scope', '$routeParams', '$log', 'deviceSvc', ($scope, $routeParams, $log, deviceSvc) ->
 
   $scope.nextRevision = (revisionType) ->
     mmr = Number($scope.mmr)
@@ -14,18 +14,18 @@ vprAppControllers.controller 'BlockRevisionEditCtrl', [ '$scope', '$routeParams'
     $scope.revision = $scope.nextRevision revisionType
 
   if $routeParams.revisionId == 'new'
-    $scope.editBlockRevision = {
-      block_id: $routeParams.blockId,
+    $scope.editDeviceRevision = {
+      device_id: $routeParams.deviceId,
       description: "",
       created_on: do Date.now
     }
 
     # we base our revision on the previous
     # highest revision. To get that we will
-    # load the parent block and all it's
+    # load the parent device and all it's
     # revisions
 
-    blockSvc.asyncRevisionsForBlock($routeParams.blockId).then (revisions) ->
+    deviceSvc.asyncRevisionsForDevice($routeParams.deviceId).then (revisions) ->
       if revisions.length? and revisions.length > 0
         $scope.mmr = _.max _.pluck(revisions, 'major_revision')
         this_mjr = (r) -> r.major_revision == $scope.mmr
@@ -41,24 +41,24 @@ vprAppControllers.controller 'BlockRevisionEditCtrl', [ '$scope', '$routeParams'
 
   else
     $scope.newRevision = false
-    blockSvc.asyncBlockRevision $routeParams.revisionId
+    deviceSvc.asyncDeviceRevision $routeParams.revisionId
     .then (revision) ->
-      $scope.editBlockRevision = revision
+      $scope.editDeviceRevision = revision
       $scope.revision = "#{revision.major_revision}.#{revision.minor_revision}"
 
   $scope.trySubmit = false
   $scope.validate = () ->
     $scope.trySubmit = true
 
-  $scope.submitBlockRevision = (editForm) ->
+  $scope.submitDeviceRevision = (editForm) ->
     revisionParts = $scope.revision.split '.'
     editForm.major_revision = revisionParts[0]
     editForm.minor_revision = revisionParts[1]
 
-    blockSvc.asyncSaveBlockRevision angular.copy editForm
-    .then () -> $scope.goto "/blocks/#{$scope.editBlockRevision.block_id}"
+    deviceSvc.asyncSaveDeviceRevision angular.copy editForm
+    .then () -> $scope.goto "/devices/#{$scope.editDeviceRevision.device_id}"
 
   $scope.cancelEdit = () ->
-    $scope.goto "/blocks/#{$scope.editBlockRevision.block_id}"
+    $scope.goto "/devices/#{$scope.editDeviceRevision.device_id}"
 
 ]
