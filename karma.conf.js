@@ -20,8 +20,7 @@ module.exports = function(config) {
       'bower_components/angular-mocks/angular-mocks.js',
       'bower_components/lodash/dist/lodash.js',
       'coffeescripts/**/*.coffee',
-      'tests/**/*.coffee',
-      //'test/**/*.coffee',
+      'test/**/*.coffee',
     ],
 
     // list of files to exclude
