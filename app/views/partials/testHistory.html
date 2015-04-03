@@ -3,8 +3,8 @@
     <div class="header">
 
         <div class="toolbar">
-            <a href ng-if="currentBranch != 'default'" ng-click="removeBranch()">Remove {{currentTest.branch}}</a>
-            Branch:
+            <a href ng-if="currentBranch != 'default'" ng-click="confirmRemoveBranch(currentBranch)">Remove
+                {{currentBranch}}</a>
             <select ng-model="currentBranch" ng-change="selectBranch()">
                 <option ng-repeat="branch in branches">{{branch}}</option>
             </select>
@@ -18,7 +18,7 @@
         <alert ng-if="alert" type="{{alert.type}}" close="cancelAlert()">
             <p>{{alert.msg}}</p>
             <button type="button" class="btn btn-sm btn-default" ng-click="cancelAlert()">Cancel</button>
-            <button type="button" class="btn btn-sm btn-danger" ng-click="remove(alert.data)">Remove</button>
+            <button type="button" class="btn btn-sm btn-danger" ng-click="removeBranch(alert.data)">Remove</button>
         </alert>
         <div class="test"
              ng-class="{active: test.id == activeTest, inactive: (activeTest) && test.id != activeTest}"
@@ -68,17 +68,6 @@
             <div class="blockFooter text-center">
                <a href="" ng-click="tglDetails(test.id, test.revision, test.branch)" ng-if="!showDetails(test.id, test.revision, test.branch)">Show Details</a>
                <a href="" ng-click="tglDetails(test.id, test.revision, test.branch)" ng-if="showDetails(test.id, test.revision, test.branch)">Hide Details</a>
-               <!--<span class="dropdown" dropdown ng-if="showDetails(test.id, test.revision, test.branch)">-->
-                   <!--<a href class="dropdown-toggle" dropdown-toggle>-->
-                       <!--Diff with revision-->
-                   <!--</a>-->
-                   <!--<ul class="dropdown-menu">-->
-                       <!--<li ng-repeat="t in getRevisions(test)">-->
-                           <!--<a href ng-click="diffRevision($parent.test,t)">{{t.revision}}</a>-->
-                       <!--</li>-->
-                   <!--</ul>-->
-                   <!--&lt;!&ndash;<select ng-model="diffTest" ng-change="diffRevision($parent.test,diffTest)" ng-options="t.revision for t in tests |filter:foo"></select>&ndash;&gt;-->
-               <!--</span>-->
             </div>
         </div>
     </div>

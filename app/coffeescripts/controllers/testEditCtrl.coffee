@@ -77,7 +77,7 @@ vprAppControllers.controller 'TestEditCtrl', [ '$scope', '$routeParams', '$log',
     editForm.modified_on = new Date().getTime()
     saveTest = () ->
 
-      testSvc.asyncSaveAndRevisionTest angular.copy( editForm ), $scope.branchObj.newBranch, $scope.branchObj.branchToChange
+      testSvc.asyncSaveAndRevisionTest angular.copy( editForm ), $scope.branchObj.newBranch
       .then () -> $scope.goto "/tests/#{type}/#{$scope.rev_id}"
 
     if $scope.branchObj.branchToChange? # then we have changed our branch name! so update everywhere before proceeding

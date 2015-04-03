@@ -1,5 +1,5 @@
 
-vprAppControllers.controller 'TestHistoryCtrl', [ '$scope', '$routeParams', '$q', 'blockSvc', 'testSvc', ($scope, $routeParams, $q, blockSvc, testSvc) ->
+vprAppControllers.controller 'TestHistoryCtrl', [ '$scope', '$routeParams', '$q', '$modal', 'blockSvc', 'testSvc', ($scope, $routeParams, $q, $modal, blockSvc, testSvc) ->
 
   testId        = $routeParams.testId
   $scope.type   = $routeParams.type
@@ -83,11 +83,24 @@ vprAppControllers.controller 'TestHistoryCtrl', [ '$scope', '$routeParams', '$q'
     $scope.diffMode = false
     do _init
 
-  $scope.removeBranch = () ->
-    testSvc.asyncRmBranch($scope.currentTest.rev_id, $scope.currentBranch)
-#    .then () ->
-#      console.log('all tests removed')
+  $scope.confirmRemoveBranch = (branch) ->
+    console.log('confirmRemove')
+    branchToRemove = _.find $scope.tests, (test) -> test.branch == branch
 
+    if branchToRemove? then $scope.alert = {
+      type: "warning",
+      msg: "Are you sure you want to remove branch: #{branch}"
+      data: branch
+    }
+
+  $scope.cancelAlert = () -> delete $scope.alert
+  $scope.removeBranch = (branch) ->
+    console.log 'removing branch',branch
+#    testSvc.asyncRmTest testId
+#    .then () ->
+#      $scope.tests = _.reject $scope.tests, (test) -> test.id == testId
+#      do $scope.cancelAlert
+    $scope.goto "/tests/#{$scope.type}/#{$scope.rev_id}"
 
   clearDiff = (rev1,rev2) ->
     $("#rev-"+rev1.revision).children().removeClass("updated created")
@@ -145,4 +158,10 @@ vprAppControllers.controller 'TestHistoryCtrl', [ '$scope', '$routeParams', '$q'
 
   do _init
 
+]
+.controller 'ModalRemoveBranchCtrl', [ '$scope','$modalInstance','branch',($scope, $modalInstance,branch) ->
+  $scope.branch = branch
+
+  $scope.ok = () -> $modalInstance.close $scope.branch
+  $scope.cancel = () -> $modalInstance.dismiss
 ]

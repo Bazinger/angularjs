@@ -2,9 +2,8 @@
   "name": "vapors-ui",
   "version": "0.0.1",
   "private": true,
-  "dependencies": {},
   "devDependencies": {
-    "coffee": "0.0.1",
+    "coffee": "^1.0.0",
     "coffee-script": "^1.7.1",
     "del": "^0.1.1",
     "gulp": "^3.8.5",
