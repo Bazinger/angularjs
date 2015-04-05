@@ -19,7 +19,6 @@ vprAppControllers.controller 'DeviceRevisionEditCtrl', [ '$scope', '$routeParams
       description: "",
       created_on: do Date.now
     }
-
     # we base our revision on the previous
     # highest revision. To get that we will
     # load the parent device and all it's
@@ -51,6 +50,7 @@ vprAppControllers.controller 'DeviceRevisionEditCtrl', [ '$scope', '$routeParams
     $scope.trySubmit = true
 
   $scope.submitDeviceRevision = (editForm) ->
+    console.log 'submitDeviceRevision'
     revisionParts = $scope.revision.split '.'
     editForm.major_revision = revisionParts[0]
     editForm.minor_revision = revisionParts[1]

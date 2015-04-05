@@ -1,6 +1,6 @@
 <div class="statusbar">
     <span class="glyphicon glyphicon-triangle-right"></span>
-    Editing: <strong ng-if="newRevision">New </strong>Block Revision
+    Editing: <strong ng-if="newRevision">New </strong>Device Revision
 </div>
 <form name="blockRevisionForm" class="form body" ng-class="{submitted:trySubmit}" novalidate>
     <div class="form-group form-inline">
@@ -15,24 +15,24 @@
                id="revision" value="{{revision}}" />
     </div>
     <div class="form-group">
-        <label for="parentBlockId">Parent Block Id (Read-Only)</label>
-        <input type="text" class="form-control" id="parentBlockId"
-               ng-model="editBlockRevision.block_id" disabled placeholder="System Generated"/>
+        <label for="parentDeviceId">Parent Device Id (Read-Only)</label>
+        <input type="text" class="form-control" id="parentDeviceId"
+               ng-model="editDeviceRevision.block_id" disabled placeholder="System Generated"/>
     </div>
     <div class="form-group">
         <label for="description">Description</label>
         <textarea class="form-control" id="description"
-                  ng-model="editBlockRevision.description" placeholder="Optional"></textarea>
+                  ng-model="editDeviceRevision.description" placeholder="Optional"></textarea>
     </div>
     <div class="form-group">
         <label for="createdOn">Created On</label>
         <input type="text" disabled class="form-control" id="createdOn"
-                  value="{{editBlockRevision.created_on | date: 'medium'}}"/>
+                  value="{{editDeviceRevision.created_on | date: 'medium'}}"/>
     </div>
     <div class="form-group text-right">
         <button class="btn btn-default"
                 ng-click="cancelEdit()">Cancel</button>
         <button class="btn btn-primary" type="submit"
-                ng-click="validate() && blockRevisionForm.$valid && submitBlockRevision(editBlockRevision)">Submit</button>
+                ng-click="validate() && blockRevisionForm.$valid && submitDeviceRevision(editDeviceRevision)">Submit</button>
     </div>
 </form>
