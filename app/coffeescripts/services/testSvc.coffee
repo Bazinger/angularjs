@@ -50,7 +50,6 @@ vprAppServices.factory 'testSvc', [ '$log', '$q', 'dataSvc', 'utilSvc',  ($log, 
 
     asyncMaxRevision: (test, branch) ->
       deferred = do $q.defer
-      console.log 'asyncMaxRevision',test,branch
       dataSvc.asyncFind "tests", { id: test.id, branch: branch }
         .then (tests) ->
           deferred.resolve if tests? and tests.length then _.max( tests, "revision" ).revision else 0
@@ -74,6 +73,9 @@ vprAppServices.factory 'testSvc', [ '$log', '$q', 'dataSvc', 'utilSvc',  ($log, 
 
     asyncTestsForRevAndBranch: (revId, branch) ->
       utilSvc.handleAsync dataSvc.asyncFind "tests", { "rev_id" : revId, "branch" : branch }
+
+    asyncTestsForTestAndBranch: (testId, branch) ->
+      utilSvc.handleAsync dataSvc.asyncFind "tests", { "id" : testId, "branch" : branch }
 
     asyncSaveTest: (test) ->
 
@@ -120,24 +122,24 @@ vprAppServices.factory 'testSvc', [ '$log', '$q', 'dataSvc', 'utilSvc',  ($log, 
 
       deferred.promise
 
-    asyncRmBranch: (revId,branch) ->
+    asyncRmBranch: (testId,branch) ->
       deferred = do $q.defer
       _that = this
       promises = []
-      @asyncTestsForRevAndBranch revId,branch
-      .then (tests) ->
-        _.forEach tests, (v) ->
-          promises.push _that.asyncRmTest(v.id)
-          #console.log('test',v)
-        console.log 'promises',promises
-        $q.all(promises)
-        .then(results) ->
-          deferred.resolve
+      @asyncTestsForTestAndBranch(testId,branch).then (tests) ->
+        _.forEach tests, (test) -> promises.push _that.asyncRmTest test.id
+
+      $q.all(promises).then () ->  do deferred.resolve
 
       return deferred.promise
 
     asyncRmTest: (testId) ->
-      utilSvc.handleAsync dataSvc.asyncRemove "tests", testId
+      deferred = do $q.defer
+
+      utilSvc.handleAsync (dataSvc.asyncRemove "tests", testId)
+      .then (() -> deferred.resolve)
+
+      deferred.promise
 
   new TestSvc()
 ]
