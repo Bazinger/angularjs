@@ -1,4 +1,4 @@
-vprAppServices.factory 'blockSvc', [ '$log', '$q', 'dataSvc', 'utilSvc',  ($log, $q, dataSvc, utilSvc) ->
+vprAppServices.factory 'blockSvc', [  '$q', 'dataSvc', 'utilSvc',  ( $q, dataSvc, utilSvc) ->
 
   class BlockSvc
 
@@ -15,6 +15,8 @@ vprAppServices.factory 'blockSvc', [ '$log', '$q', 'dataSvc', 'utilSvc',  ($log,
               deferred.resolve [block, rev]
 
       deferred.promise
+
+    foo: 'foo'
 
     asyncBlockCount: () ->
       deferred = do $q.defer

@@ -10,22 +10,23 @@ module.exports = function(config) {
 
     // frameworks to use
     // available frameworks: https://npmjs.org/browse/keyword/karma-adapter
-    frameworks: ['jasmine'],
+    frameworks: ['mocha','requirejs','sinon'],
 
 
     // list of files / patterns to load in the browser
     files: [
       'bower_components/angular/angular.js',
-      'bower_components/angular-route/angular-route.js',
       'bower_components/angular-mocks/angular-mocks.js',
+      'bower_components/angular-route/angular-route.js',
       'bower_components/lodash/dist/lodash.js',
       'coffeescripts/**/*.coffee',
-      'test/**/*.coffee',
+      'spec/**/*.coffee',
+      'spec/**/*.js'
     ],
 
     // list of files to exclude
     exclude: [
-      
+      'test/**/*.coffee',
     ],
 
 
@@ -68,7 +69,7 @@ module.exports = function(config) {
 
 
     // enable / disable watching file and executing tests whenever any file changes
-    autoWatch: false,
+    autoWatch: true,
 
 
     // start these browsers
