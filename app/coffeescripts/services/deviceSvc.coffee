@@ -42,6 +42,9 @@ vprAppServices.factory 'deviceSvc', [ '$log', '$q', 'dataSvc', 'utilSvc',  ($log
     asyncRevisionsForDevice: (device_id) ->
       utilSvc.handleAsync dataSvc.asyncFind "device_revisions", { device_id: device_id }
 
+    asyncBlocksForDeviceRevision: (device_revision_id) ->
+      utilSvc.handleAsync dataSvc.asyncFind "blocks", { device_revision_id: device_revision_id }
+
     asyncDeviceRevision: (id) ->
       utilSvc.handleAsync dataSvc.asyncFindOne "device_revisions", { id: id }
 

@@ -1,6 +1,5 @@
 <div class="devices canvas">
     <div class="header">
-
         <div class="toolbar" ng-if="!removeMode && !activeDevice">
             <a href="" ng-click="tglRemoveMode()">
                 <span class="glyphicon glyphicon-minus"></span> Remove Device
@@ -53,6 +52,7 @@
         </div>
     </div>
 </div>
+
 <div class="device-revisions canvas" ng-if="activeDevice">
     <div class="header">
 
@@ -76,7 +76,7 @@
         <span>Device Releases</span>
     </div>
     <div class="body">
-        <div class="device-revision" ng-repeat="revision in device_revisions">
+        <div class="device-revision"  ng-repeat="revision in device_revisions">
             <div class="deviceBody">
                 <h3>{{revision.major_revision}}.{{revision.minor_revision}}
                     <a class="super removeMode" ng-if="rev_removeMode && !revision.locked" href="" ng-click="removeRevision(revision.id)">
@@ -98,10 +98,77 @@
                     <span class="field">{{revision.modified_on | date: 'mediumDate' }}</span>
                 </div>
                 <div class="right">
+                    <a href="" ng-if="!activeDeviceRevision" ng-click="loadDeviceRevision(revision)"><span class="glyphicon glyphicon-menu-right"></span></a>
+                    <a ng-if="activeDeviceRevision" href="" ng-click="removeActiveDeviceRevision()">
+                        <span class="glyphicon glyphicon-menu-down"></span>
+                    </a>
+                </div>
+            </div>
+            <div class="device-test-header" ng-if="activeDeviceRevision" >
+                <h3>
+                    Device Tests
+                    <div class="right">
+                        <a href="#/tests/device/{{revision.id}}"><span class="glyphicon glyphicon-menu-right"></span></a>
+                    </div>
+                </h3>
+            </div>
+            <div class="device-blocks"  ng-if="activeDeviceRevision" >
+                <div class="device-block" ng-repeat="block in device_revision_blocks">
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="device-blocks canvas" ng-if="activeDeviceRevision">
+    <div class="header">
+
+        <div class="toolbar" ng-if="!deviceBlock_removeMode">
+            <a href="" ng-click="tglBlockRemoveMode()">
+                <span class="glyphicon glyphicon-minus"></span> Remove Block
+            </a>
+
+            <a href="#/editDeviceBlock/{{activeDevice}}/{{activeDeviceRevision}}/new">
+                <span class="glyphicon glyphicon-plus"></span> Add Block
+            </a>
+        </div>
+        <div class="toolbar" ng-if="deviceBlock_removeMode">
+            <a href="" ng-click="tglBlockRemoveMode()">
+                <span class="glyphicon glyphicon-menu-left"></span> Done
+            </a>
+        </div>
+    </div>
+    <div class="statusbar">
+        <span class="glyphicon glyphicon-triangle-right"></span>
+        <span>Release Blocks</span>
+    </div>
+    <div class="body">
+        <div class="device-revision" ng-repeat="block in device_revision_blocks">
+            <div class="deviceBody">
+                <h3>
+                    <a class="super removeMode" ng-if="block_removeMode && !block.locked" href="" ng-click="removeDeviceRevisionBlock(block.id)">
+                        <span class="glyphicon glyphicon-remove"></span>
+                    </a>
+                    <a href="#/editDeviceRevision/{{activeDevice}}/{{revision.id}}" class="super editDevice"
+                       ng-if="!block_removeMode && !block.locked">
+                        <span class="glyphicon glyphicon-edit"></span>
+                    </a>
+                    <span class="super" ng-if="revision.locked">(IN USE)</span>
+                </h3>
+                <div class="summary">
+                    {{block.description||"no description set."}}
+                </div>
+            </div>
+            <div class="deviceFooter">
+                <div class="left">
+                    <label>Last Updated</label>
+                    <span class="field">{{revision.modified_on | date: 'mediumDate' }}</span>
+                </div>
+                <div class="right">
                     <a href="#/tests/device/{{revision.id}}"><span class="glyphicon glyphicon-menu-right"></span></a>
                 </div>
             </div>
         </div>
-        </div>
     </div>
+</div>
 </div>

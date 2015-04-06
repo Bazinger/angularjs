@@ -6,10 +6,6 @@ vprApp.config ['$routeProvider', ($routeProvider) ->
       controller: 'DeviceCtrl'
       templateUrl: 'deviceList.template'
     }
-    .when '/device/listRevisions', {
-      controller: 'DeviceRevisionListCtrl',
-      templateUrl: 'deviceRevisionList.template'
-    }
     .when '/editDevice/:deviceId', {
       controller: 'DeviceEditCtrl'
       templateUrl: 'editDevice.template'
@@ -17,6 +13,10 @@ vprApp.config ['$routeProvider', ($routeProvider) ->
     .when '/editDeviceRevision/:deviceId/:revisionId', {
       controller: 'DeviceRevisionEditCtrl'
       templateUrl: 'editDeviceRevision.template'
+    }
+    .when '/editDeviceBlock/:deviceId/:revisionId/:blockId', {
+      controller: 'BlockEditCtrl'
+      templateUrl: 'editBlock.template'
     }
     .when '/blocks/:activeBlock?', {
       controller: 'BlockCtrl'

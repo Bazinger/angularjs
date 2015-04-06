@@ -28,13 +28,16 @@ vprAppServices.factory 'blockSvc', [ '$log', '$q', 'dataSvc', 'utilSvc',  ($log,
       deferred.promise
 
     asyncBlockList: () ->
-      utilSvc.handleAsync dataSvc.asyncFind "blocks", {}
+      utilSvc.handleAsync dataSvc.asyncFind "blocks", {device_revision_id: null}
 
     asyncBlock: (id) ->
       utilSvc.handleAsync dataSvc.asyncFindOne "blocks", { id: id }
 
     asyncSaveBlock: (block) ->
+
       utilSvc.handleAsync dataSvc.asyncSave "blocks", block
+        .then () ->
+          console.log 'saved block',block
 
     asyncRmBlock: (id) ->
       utilSvc.handleAsync dataSvc.asyncRemove "blocks", id
