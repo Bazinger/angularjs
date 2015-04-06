@@ -74,7 +74,7 @@ gulp.task 'coffee', () ->
     .pipe do sourcemaps.init
     .pipe coffee { bare: true }
     .on 'error', (err) ->
-      gutil.log(err)
+      gutil.log err
       do this.end
     .pipe do sourcemaps.write
     .pipe gulp.dest dests.js

@@ -1,24 +1,30 @@
 
-vprAppControllers.controller 'TestHistoryCtrl', [ '$scope', '$routeParams', '$q', '$modal', 'blockSvc', 'testSvc', ($scope, $routeParams, $q, $modal, blockSvc, testSvc) ->
+vprAppControllers.controller 'TestHistoryCtrl', [ '$scope', '$routeParams', '$q', '$modal', '$log', 'blockSvc', 'testSvc', ($scope, $routeParams, $q, $modal, $log, blockSvc, testSvc) ->
 
   testId        = $routeParams.testId
   $scope.type   = $routeParams.type
 
   _init = (forBranch) ->
+    # get all tests
     testSvc.asyncTestHistory testId
       .then (history) ->
+        # group tests by branch
         branchGroups = _.groupBy history, "branch"
+        # get first test for each branch
         $scope.branches = _.map(branchGroups, (group) ->
           group[0].branch
         )
-
+        #look for test with is_current set or grab the max revision for the default
+        # branch or the max revision for the first branch group if default doesn't exist
         $scope.currentTest = testSvc.getCurrentTest history
 
+        # set the scoped branch either to the current test's branch or the parameter branch
         if !forBranch?
           $scope.currentBranch = $scope.currentTest.branch
         else
           $scope.currentBranch = forBranch
 
+        # grab the test history for the current branch and reverse sort it
         $scope.tests = _.sortBy(_.find branchGroups, (group) ->
           group[0].branch == $scope.currentBranch
         , (test) -> test.revision).reverse()
@@ -84,7 +90,6 @@ vprAppControllers.controller 'TestHistoryCtrl', [ '$scope', '$routeParams', '$q'
     do _init
 
   $scope.confirmRemoveBranch = (branch) ->
-    console.log('confirmRemove')
     branchToRemove = _.find $scope.tests, (test) -> test.branch == branch
 
     if branchToRemove? then $scope.alert = {
@@ -94,13 +99,17 @@ vprAppControllers.controller 'TestHistoryCtrl', [ '$scope', '$routeParams', '$q'
     }
 
   $scope.cancelAlert = () -> delete $scope.alert
+
   $scope.removeBranch = (branch) ->
-    console.log 'removing branch',branch
-#    testSvc.asyncRmTest testId
-#    .then () ->
-#      $scope.tests = _.reject $scope.tests, (test) -> test.id == testId
-#      do $scope.cancelAlert
-    $scope.goto "/tests/#{$scope.type}/#{$scope.rev_id}"
+    testId = $scope.currentTest.id
+    revId = $scope.currentTest.rev_id
+    promise = testSvc.asyncRmBranch(testId,branch)
+
+    promise.then(() ->
+      $scope.tests = _.reject $scope.tests, (test) -> test.id == testId
+      do $scope.cancelAlert
+      $scope.goto "/tests/#{$scope.type}/#{revId}"
+    )
 
   clearDiff = (rev1,rev2) ->
     $("#rev-"+rev1.revision).children().removeClass("updated created")
@@ -110,7 +119,6 @@ vprAppControllers.controller 'TestHistoryCtrl', [ '$scope', '$routeParams', '$q'
 
 
   diffFields = (a,b) ->
-    console.log "a",a,"b",b
     spec = {"title":"title","instructions":"summary","test_config":"test-config","test_script":"test-script"}
     _.forIn (_.pick a,_.keys(spec)), (v,k) ->
       if a[k] isnt b[k]
@@ -123,11 +131,9 @@ vprAppControllers.controller 'TestHistoryCtrl', [ '$scope', '$routeParams', '$q'
       $("#rev-"+b.revision+" .test-script").addClass("deleted")
 
     if typeof a["meas_plan"] isnt 'undefined' and typeof b["meas_plan"] is 'undefined'
-      console.log "meas_plan created"
       $("#rev-"+a.revision+" .meas-plan").addClass("created")
 
     if typeof a["meas_plan"] is 'undefined' and typeof b["meas_plan"] isnt 'undefined'
-      console.log "meas_plan deleted"
       $("#rev-"+b.revision+" .meas-plan").addClass("deleted")
 
     if typeof a["spotfire_template"] isnt 'undefined' and typeof b["spotfire_template"] is 'undefined'
