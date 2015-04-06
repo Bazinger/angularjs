@@ -50,7 +50,7 @@ vprAppControllers.controller 'DeviceCtrl', [ '$scope', '$routeParams', 'deviceSv
     $scope.device_revisions=[]
     $scope.device_revisions.push deviceRevision
 
-    deviceSvc.asyncBlocksForDeviceRevision(deviceRevisionId)
+    deviceSvc.asyncBlocksForDeviceRevision(deviceRevision.id)
     .then (blocks) ->
       console.log('blocks',blocks)
       $scope.device_revision_blocks = do blocks.reverse
