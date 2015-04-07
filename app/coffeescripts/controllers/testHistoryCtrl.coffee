@@ -3,6 +3,7 @@ vprAppControllers.controller 'TestHistoryCtrl', [ '$scope', '$routeParams', '$q'
 
   testId        = $routeParams.testId
   $scope.type   = $routeParams.type
+  $scope.showDiffButton = true
 
   _init = (forBranch) ->
     # get all tests
@@ -28,6 +29,8 @@ vprAppControllers.controller 'TestHistoryCtrl', [ '$scope', '$routeParams', '$q'
         $scope.tests = _.sortBy(_.find branchGroups, (group) ->
           group[0].branch == $scope.currentBranch
         , (test) -> test.revision).reverse()
+
+        if $scope.tests.length > 1 then $scope.showDiffButton = true
 
 
   # show history for selected branch
