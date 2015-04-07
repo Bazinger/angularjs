@@ -17,12 +17,17 @@
     <div class="form-group">
         <label for="parentDeviceId">Parent Device Id (Read-Only)</label>
         <input type="text" class="form-control" id="parentDeviceId"
-               ng-model="editDeviceRevision.block_id" disabled placeholder="System Generated"/>
+               ng-model="editDeviceRevision.device_id" disabled placeholder="System Generated"/>
     </div>
     <div class="form-group">
         <label for="description">Description</label>
         <textarea class="form-control" id="description"
                   ng-model="editDeviceRevision.description" placeholder="Optional"></textarea>
+    </div>
+    <div class="form-group">
+        <span>Blocks</span>
+        <select ng-options="b.name for b in blocks track by b.id" ng-model="selectedBlock">
+        </select>
     </div>
     <div class="form-group">
         <label for="createdOn">Created On</label>

@@ -8,9 +8,6 @@ vprAppControllers.controller 'BlockEditCtrl', [ '$scope', '$routeParams', '$log'
       description: "",
       tags: []
     }
-    if $routeParams.deviceId and $routeParams.revisionId
-      _.assign($scope.editBlock,{'device_id':$routeParams.deviceId,'device_revision_id':$routeParams.revisionId})
-    console.log 'editBlock', $scope.editBlock
   else
     blockSvc.asyncBlock $routeParams.blockId
       .then (block) -> $scope.editBlock = block

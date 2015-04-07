@@ -1,4 +1,4 @@
-vprAppControllers.controller 'DeviceRevisionEditCtrl', [ '$scope', '$routeParams', '$log', 'deviceSvc', ($scope, $routeParams, $log, deviceSvc) ->
+vprAppControllers.controller 'DeviceRevisionEditCtrl', [ '$scope', '$routeParams', '$log', 'deviceSvc','blockSvc', ($scope, $routeParams, $log, deviceSvc,blockSvc) ->
 
   $scope.nextRevision = (revisionType) ->
     mmr = Number($scope.mmr)
@@ -12,6 +12,11 @@ vprAppControllers.controller 'DeviceRevisionEditCtrl', [ '$scope', '$routeParams
 
   $scope.changeRevision = (revisionType) ->
     $scope.revision = $scope.nextRevision revisionType
+
+  # get blocks
+  blockSvc.asyncBlockList()
+  .then (blocks) ->
+    $scope.blocks = blocks
 
   if $routeParams.revisionId == 'new'
     $scope.editDeviceRevision = {

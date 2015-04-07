@@ -28,7 +28,7 @@ vprAppServices.factory 'blockSvc', [ '$log', '$q', 'dataSvc', 'utilSvc',  ($log,
       deferred.promise
 
     asyncBlockList: () ->
-      utilSvc.handleAsync dataSvc.asyncFind "blocks", {device_revision_id: null}
+      utilSvc.handleAsync dataSvc.asyncFind "blocks", {}
 
     asyncBlock: (id) ->
       utilSvc.handleAsync dataSvc.asyncFindOne "blocks", { id: id }

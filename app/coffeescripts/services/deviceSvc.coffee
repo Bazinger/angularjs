@@ -50,6 +50,15 @@ vprAppServices.factory 'deviceSvc', [ '$log', '$q', 'dataSvc', 'utilSvc',  ($log
     asyncSaveDeviceRevision: (deviceRevision) ->
       utilSvc.handleAsync dataSvc.asyncSave "device_revisions", deviceRevision
 
+    asyncSaveBlockRevisionForDeviceRevison: (deviceRevision, blockRevision) ->
+      @asyncDeviceRevision deviceRevision
+      .then (deviceRevision) ->
+        if not deviceRevision.block_revisions
+          deviceRevision.block_revisions = [blockRevision]
+        else
+          deviceRevision.block_revisions.push blockRevision
+        @asyncSaveDeviceRevision deviceRevision
+
     asyncRmDeviceRevision: (deviceRevision) ->
       utilSvc.handleAsync dataSvc.asyncRemove "device_revisions", deviceRevision
 
