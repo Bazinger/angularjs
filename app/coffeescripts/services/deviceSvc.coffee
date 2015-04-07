@@ -3,7 +3,6 @@ vprAppServices.factory 'deviceSvc', [ '$log', '$q', 'dataSvc', 'utilSvc',  ($log
   class DeviceSvc
 
     asyncDeviceRevisionWithParent: (revId) ->
-
       deferred = do $q.defer
 
       _this = this

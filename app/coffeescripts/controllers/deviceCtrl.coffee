@@ -1,4 +1,4 @@
-vprAppControllers.controller 'DeviceCtrl', [ '$scope', '$routeParams', 'deviceSvc', ($scope, $routeParams, deviceSvc) ->
+vprAppControllers.controller 'DeviceCtrl', [ '$scope', '$routeParams', 'deviceSvc','testSvc' ,($scope, $routeParams, deviceSvc,testSvc) ->
 
 # if we are called with an active device,
 # lets set that up ...
@@ -49,6 +49,9 @@ vprAppControllers.controller 'DeviceCtrl', [ '$scope', '$routeParams', 'deviceSv
     $scope.activeDeviceRevision = deviceRevision.id
     $scope.device_revisions=[]
     $scope.device_revisions.push deviceRevision
+    testSvc.asyncTestsForRev deviceRevision.id
+    .then (tests) ->
+      $scope.testCount = tests.length
 
     deviceSvc.asyncBlocksForDeviceRevision(deviceRevision.id)
     .then (blocks) ->
@@ -58,6 +61,8 @@ vprAppControllers.controller 'DeviceCtrl', [ '$scope', '$routeParams', 'deviceSv
   $scope.removeActiveDeviceRevision = () ->
     delete $scope.activeDeviceRevision
     $scope.loadDevice $scope.activeDevice
+
+
 
   do init
 

@@ -55,6 +55,7 @@ vprAppControllers.controller 'DeviceRevisionEditCtrl', [ '$scope', '$routeParams
     editForm.major_revision = revisionParts[0]
     editForm.minor_revision = revisionParts[1]
 
+
     deviceSvc.asyncSaveDeviceRevision angular.copy editForm
     .then () -> $scope.goto "/devices/#{$scope.editDeviceRevision.device_id}"
 

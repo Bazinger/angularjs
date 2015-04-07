@@ -47,20 +47,19 @@
                         <span class="glyphicon glyphicon-menu-left"></span>
                     </a>
                 </div>
-
             </div>
+
         </div>
+
     </div>
 </div>
 
 <div class="device-revisions canvas" ng-if="activeDevice">
     <div class="header">
-
         <div class="toolbar" ng-if="!rev_removeMode">
             <a href="" ng-click="tglRevRemoveMode()">
                 <span class="glyphicon glyphicon-minus"></span> Remove Release
             </a>
-
             <a href="#/editDeviceRevision/{{activeDevice}}/new">
                 <span class="glyphicon glyphicon-plus"></span> Add Release
             </a>
@@ -104,32 +103,34 @@
                     </a>
                 </div>
             </div>
-            <div class="device-test-header" ng-if="activeDeviceRevision" >
-                <h3>
-                    Device Tests
-                    <div class="right">
-                        <a href="#/tests/device/{{revision.id}}"><span class="glyphicon glyphicon-menu-right"></span></a>
-                    </div>
-                </h3>
+        </div>
+        <div ng-if="activeDeviceRevision" >
+            <div class="deviceTestHeader"  >
+                <span class="left" >
+                    Device Tests <span class="testCount">({{testCount}} total)</span>
+                </span>
+                <span class="right">
+                    <a href="#/tests/device/{{activeDeviceRevision}}"><span class="glyphicon glyphicon-menu-right"></span></a>
+                </span>
+
             </div>
-            <div class="device-blocks"  ng-if="activeDeviceRevision" >
-                <div class="device-block" ng-repeat="block in device_revision_blocks">
-                    <h3 class="device-block-name">{{block.name}}</h3>
-                    <span class="description">
-                        {{block.description||"no description set."}}
-                    </span>
-                    <div class="summary left">
-                        Tests:<a href>{{block.test_count}}</a>
-                        Version: N/A
-                    </div>
-                    <div class="right">
-                        <a href="" ng-if="!activeDeviceRevisionBlock" ng-click="loadDeviceRevisionBlock(block)"><span class="glyphicon glyphicon-menu-right"></span></a>
-                        <a ng-if="activeDeviceRevisionBlock" href="" ng-click="removeActiveDeviceRevisionBlock()">
-                            <span class="glyphicon glyphicon-menu-left"></span>
-                        </a>
-                    </div>
-                </div>
-            </div>
+            <!--<div class="device-block" ng-repeat="block in device_revision_blocks">-->
+                <!--<h3 class="device-block-name">{{block.name}}</h3>-->
+                    <!--<span class="description">-->
+                        <!--{{block.description||"no description set."}}-->
+                    <!--</span>-->
+                <!--<div class="summary left">-->
+                    <!--Tests:<a href>{{block.test_count}}</a>-->
+                    <!--Version: N/A-->
+                <!--</div>-->
+                <!--<div class="right">-->
+
+                    <!--<a href="" ng-if="!activeDeviceRevisionBlock" ng-click="loadDeviceRevisionBlock(block)"><span class="glyphicon glyphicon-menu-right"></span></a>-->
+                    <!--<a ng-if="activeDeviceRevisionBlock" href="" ng-click="removeActiveDeviceRevisionBlock()">-->
+                        <!--<span class="glyphicon glyphicon-menu-left"></span>-->
+                    <!--</a>-->
+                <!--</div>-->
+            <!--</div>-->
         </div>
     </div>
 </div>

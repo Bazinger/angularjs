@@ -94,12 +94,23 @@ label:after {
   padding: 10px;
   width: @canvas-width;
 
-  .device-test-header {
+  .deviceTestHeader {
     background: #333;
     color: #fff;
-    font-size: 1em;
+
     padding: 10px;
     width: 100%;
+    min-height: 50px;
+    font-size: 1.7em;
+    .left {
+      float:left;
+    }
+    .right {
+      float: right;
+    }
+    .testCount {
+      font-size: .5em;
+    }
   }
   .device, .device-revision,
   .block, .block-revision, .test {
@@ -221,7 +232,7 @@ label:after {
     }
 
     .deviceFooter,
-    .blockFooter {
+    .blockFooter{
       height: 20px;
       .left { float: left; }
       .right {
