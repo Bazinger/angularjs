@@ -1,7 +1,7 @@
 vprAppControllers.controller 'TestEditCtrl', [ '$scope', '$routeParams', '$log', 'testSvc', 'dataSvc', ($scope, $routeParams, $log, testSvc, dataSvc) ->
 
   type = $routeParams.type
-
+  $scope.foo = 'foo'
 
   if $routeParams.testId == 'new'
     $scope.rev_id = $routeParams.revId

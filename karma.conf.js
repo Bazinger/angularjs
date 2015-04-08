@@ -10,7 +10,7 @@ module.exports = function(config) {
 
     // frameworks to use
     // available frameworks: https://npmjs.org/browse/keyword/karma-adapter
-    frameworks: ['mocha','requirejs','sinon'],
+    frameworks: ['jasmine'],
 
 
     // list of files / patterns to load in the browser
@@ -20,14 +20,13 @@ module.exports = function(config) {
       'bower_components/angular-route/angular-route.js',
       'bower_components/lodash/dist/lodash.js',
       'coffeescripts/**/*.coffee',
-      'spec/**/*.coffee',
-      'spec/**/*.js'
+      'spec/**/*.coffee'
     ],
 
-    // list of files to exclude
-    exclude: [
-      'test/**/*.coffee',
-    ],
+    //// list of files to exclude
+    //exclude: [
+    //  'test/**/*.coffee',
+    //],
 
 
     // preprocess matching files before serving them to the browser
@@ -75,7 +74,7 @@ module.exports = function(config) {
     // start these browsers
     // available browser launchers: https://npmjs.org/browse/keyword/karma-launcher
     //browsers: ['Chrome_small'],
-    browsers: ['PhantomJS'],
+    browsers: ['Chrome'],
 
     customLaunchers: {
       Chrome_small: {
