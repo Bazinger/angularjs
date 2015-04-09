@@ -24,7 +24,7 @@
     "angular-route": "^1.2.20",
     "angular-sanitize": "^1.2.20",
     "angular-bootstrap": "^0.12.1",
-    "lodash": "^2.4.1",
+    "lodash": "^3.6.0",
     "bootstrap": "^3.2.0",
     "showdown": "^0.3.1",
     "angular-markdown-directive": "^0.3.0",

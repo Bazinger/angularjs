@@ -8,11 +8,11 @@ vprAppServices.factory 'blockSvc', [ '$log', '$q', 'dataSvc', 'utilSvc',  ($log,
 
       _this = this
 
-      _this.asyncBlockRevision revId
-        .then (rev) ->
-          _this.asyncBlock rev.block_id
-            .then (block) ->
-              deferred.resolve [block, rev]
+      @asyncBlockRevision revId
+      .then (rev) ->
+        _this.asyncBlock rev.block_id
+        .then (block) ->
+          deferred.resolve [block, rev]
 
       deferred.promise
 
@@ -34,10 +34,7 @@ vprAppServices.factory 'blockSvc', [ '$log', '$q', 'dataSvc', 'utilSvc',  ($log,
       utilSvc.handleAsync dataSvc.asyncFindOne "blocks", { id: id }
 
     asyncSaveBlock: (block) ->
-
       utilSvc.handleAsync dataSvc.asyncSave "blocks", block
-        .then () ->
-          console.log 'saved block',block
 
     asyncRmBlock: (id) ->
       utilSvc.handleAsync dataSvc.asyncRemove "blocks", id

@@ -3,11 +3,9 @@ vprAppControllers.controller 'DeviceCtrl', [ '$scope', '$routeParams', 'deviceSv
 # if we are called with an active device,
 # lets set that up ...
 
-  console.log($routeParams)
 # Device Support
   init = () ->
     deviceSvc.asyncDeviceList().then (devices) ->
-      console.log 'devices',devices
       $scope.devices = devices
 
   $scope.removeMode = false;
@@ -35,7 +33,6 @@ vprAppControllers.controller 'DeviceCtrl', [ '$scope', '$routeParams', 'deviceSv
 
     deviceSvc.asyncRevisionsForDevice(device_id)
     .then (revisions) ->
-      console.log 'revisions',revisions
       $scope.device_revisions = do revisions.reverse
 
   $scope.removeActive = () ->
@@ -55,7 +52,6 @@ vprAppControllers.controller 'DeviceCtrl', [ '$scope', '$routeParams', 'deviceSv
 
     deviceSvc.asyncBlocksForDeviceRevision(deviceRevision.id)
     .then (blocks) ->
-      console.log('blocks',blocks)
       $scope.device_revision_blocks = do blocks.reverse
 
   $scope.removeActiveDeviceRevision = () ->

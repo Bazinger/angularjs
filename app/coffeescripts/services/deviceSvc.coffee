@@ -48,6 +48,7 @@ vprAppServices.factory 'deviceSvc', [ '$log', '$q', 'dataSvc', 'utilSvc',  ($log
       utilSvc.handleAsync dataSvc.asyncFindOne "device_revisions", { id: id }
 
     asyncSaveDeviceRevision: (deviceRevision) ->
+      console.log 'deviceRevision',deviceRevision
       utilSvc.handleAsync dataSvc.asyncSave "device_revisions", deviceRevision
 
     asyncSaveBlockRevisionForDeviceRevison: (deviceRevision, blockRevision) ->

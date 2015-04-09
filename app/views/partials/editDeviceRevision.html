@@ -31,7 +31,9 @@
         </select>
         <select ng-if="selectedBlock" ng-options='block_revision as fullRevision(block_revision) for block_revision in block_revisions track by block_revision.id' ng-model="$parent.selectedBlockRevision">
         </select>
-        <button class="btn btn-xs btn-success" ng-if="selectedBlockRevision" type="button" ng-click="blockRevisionAdd()">
+        <button class="btn btn-xs btn-success"
+                ng-if="selectedBlockRevision" type="button"
+                ng-click="blockRevisionAdd()">
             <span class="glyphicon glyphicon-plus"></span>
         </button>
     </div>
