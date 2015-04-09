@@ -102,6 +102,10 @@ label:after {
     width: 100%;
     min-height: 50px;
     font-size: 1.7em;
+    .glyphicon {
+      font-size: .75em;
+      margin-right: 3px;
+    }
     .left {
       float:left;
     }
@@ -124,7 +128,7 @@ label:after {
       margin: 9px 0px 0px 5px;
     }
     .glyphicon {
-      font-size: 1.7em;
+      font-size: 1.25em;
       margin-top: -10px;
     }
     .version {
@@ -136,7 +140,7 @@ label:after {
     }
 
   }
-  .device, .device-revision,
+  .device,.block, .device-revision,
    .block-revision, .test {
     border: 2px solid #333;
     margin: 3px 0px;
@@ -256,6 +260,9 @@ label:after {
     .deviceFooter,
     .blockFooter{
       height: 20px;
+      .blockCount {
+        margin-left:15px;
+      }
       .left { float: left; }
       .right {
         float: right;

@@ -92,9 +92,11 @@
                 </div>
             </div>
             <div class="deviceFooter">
-                <div class="left">
-                    <label>Last Updated</label>
-                    <span class="field">{{revision.modified_on | date: 'mediumDate' }}</span>
+                <div class="datasheet left">
+                    Datasheet
+                </div>
+                <div class="blockCount left">
+                    <strong>Blocks:</strong> {{revision.block_count}}
                 </div>
                 <div class="right">
                     <a href="" ng-if="!activeDeviceRevision" ng-click="setActiveDeviceRevision(revision) && loadTestCount(revision) && refreshDeviceRevision(revision) && loadBlockRevisions(revision)"><span class="glyphicon glyphicon-menu-right"></span></a>
