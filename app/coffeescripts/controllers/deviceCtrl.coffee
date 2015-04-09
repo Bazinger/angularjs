@@ -1,4 +1,4 @@
-vprAppControllers.controller 'DeviceCtrl', [ '$scope', '$routeParams', 'deviceSvc','testSvc' ,($scope, $routeParams, deviceSvc,testSvc) ->
+vprAppControllers.controller 'DeviceCtrl', [ '$scope', '$routeParams', 'deviceSvc','testSvc', 'blockSvc' ,($scope, $routeParams, deviceSvc,testSvc,blockSvc) ->
 
 # if we are called with an active device,
 # lets set that up ...
@@ -42,17 +42,35 @@ vprAppControllers.controller 'DeviceCtrl', [ '$scope', '$routeParams', 'deviceSv
   $scope.block_removeMode = false
   $scope.tglBlockRemoveMode = () -> $scope.block_removeMode = !$scope.block_removeMode
 
-  $scope.loadDeviceRevision = (deviceRevision) ->
-    $scope.activeDeviceRevision = deviceRevision.id
-    $scope.device_revisions=[]
-    $scope.device_revisions.push deviceRevision
-    testSvc.asyncTestsForRev deviceRevision.id
+  $scope.setActiveDeviceRevision = (revision) -> $scope.activeDeviceRevision = revision.id
+
+  $scope.loadTestCount = (revision) ->
+    testSvc.asyncTestsForRev revision.id
     .then (tests) ->
       $scope.testCount = tests.length
 
-    deviceSvc.asyncBlocksForDeviceRevision(deviceRevision.id)
-    .then (blocks) ->
-      $scope.device_revision_blocks = do blocks.reverse
+  $scope.refreshDeviceRevision = (revision) ->
+    $scope.device_revisions=[]
+    $scope.device_revisions.push revision
+
+  $scope.loadBlockRevisions = (revision) ->
+    console.log 'loadBlockRevisions',revision.block_revisions.reverse
+    block_revisions = do revision.block_revisions.reverse
+    for block_revision in block_revisions
+      $scope.block_revisions = []
+      blockSvc.asyncBlockRevisionWithParent block_revision
+      .then (results) ->
+        item = {
+          id: results[1].id
+          name: results[0].name
+          description: results[1].description
+          version: results[1].major_revision + '.' + results[1].minor_revision
+        }
+        testSvc.asyncTestsForRev results[1].id
+        .then (tests) ->
+          item.test_count = tests.length
+          $scope.block_revisions.push item
+
 
   $scope.removeActiveDeviceRevision = () ->
     delete $scope.activeDeviceRevision

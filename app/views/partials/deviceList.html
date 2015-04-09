@@ -97,7 +97,7 @@
                     <span class="field">{{revision.modified_on | date: 'mediumDate' }}</span>
                 </div>
                 <div class="right">
-                    <a href="" ng-if="!activeDeviceRevision" ng-click="loadDeviceRevision(revision)"><span class="glyphicon glyphicon-menu-right"></span></a>
+                    <a href="" ng-if="!activeDeviceRevision" ng-click="setActiveDeviceRevision(revision) && loadTestCount(revision) && refreshDeviceRevision(revision) && loadBlockRevisions(revision)"><span class="glyphicon glyphicon-menu-right"></span></a>
                     <a ng-if="activeDeviceRevision" href="" ng-click="removeActiveDeviceRevision()">
                         <span class="glyphicon glyphicon-menu-down"></span>
                     </a>
@@ -113,18 +113,20 @@
                     <a href="#/tests/device/{{activeDeviceRevision}}"><span class="glyphicon glyphicon-menu-right"></span></a>
                 </span>
             </div>
-            <div class="device-block" ng-repeat="block in device_revision_blocks">
-                <h3 class="device-block-name">{{block.name}}</h3>
-                    <span class="description">
-                        {{block.description||"no description set."}}
-                    </span>
-                <div class="summary left">
-                    Tests:<a href>{{block.test_count}}</a>
-                    Version: N/A
+            <div class="device-block" ng-repeat="item in block_revisions">
+                <h3 class="left">{{item.name}}</h3>
+                <div class="description left">
+                    {{item.description||"no description set."}}
+                </div>
+                <div class="tests left">
+                    Tests: <a href>{{item.test_count}}</a>
+                </div>
+                <div class="version left">
+                    Version: {{item.version}}
                 </div>
                 <div class="right">
 
-                    <a href="" ng-if="!activeDeviceRevisionBlock" ng-click="loadDeviceRevisionBlock(block)"><span class="glyphicon glyphicon-menu-right"></span></a>
+                    <a href="" ng-if="!activeDeviceRevisionBlock" ng-click="loadDeviceRevisionBlock(block)"><div class="glyphicon glyphicon-menu-right"></div></a>
                     <a ng-if="activeDeviceRevisionBlock" href="" ng-click="removeActiveDeviceRevisionBlock()">
                         <span class="glyphicon glyphicon-menu-left"></span>
                     </a>

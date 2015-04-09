@@ -112,16 +112,37 @@ label:after {
       font-size: .5em;
     }
   }
+  .device-block {
+    border: 2px solid #333;
+    margin: 0px;
+    padding: 0px 10px 10px 10px;
+    min-height: 60px;
+    h3 {
+      margin: 3px 0px 0px 0px;
+    }
+    .description {
+      margin: 9px 0px 0px 5px;
+    }
+    .glyphicon {
+      font-size: 1.7em;
+      margin-top: -10px;
+    }
+    .version {
+      margin-left: 10px;
+    }
+    .left { float: left; }
+    .right {
+      float: right;
+    }
+
+  }
   .device, .device-revision,
-  .block, .block-revision, .test {
+   .block-revision, .test {
     border: 2px solid #333;
     margin: 3px 0px;
     padding: 10px;
-
     min-height: 120px;
-    .device-block-name {
-      display: inline-block;
-    }
+
     &.active {
       background: #E7F1FE;
 
@@ -230,6 +251,7 @@ label:after {
       }
 
     }
+
 
     .deviceFooter,
     .blockFooter{
