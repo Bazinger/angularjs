@@ -14,7 +14,3 @@ describe "Unit: Testing Controllers", () ->
   describe 'TestEditCtrl', () ->
     it 'should have scope defined', () ->
       expect($scope).toBeDefined
-
-    it 'should not throw an error', () ->
-      controller = $controller 'TestEditCtrl',{$scope: $scope}
-      expect($scope.foo).toEqual 'foo'
