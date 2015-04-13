@@ -17,6 +17,10 @@ describe "Unit: Testing DataSvc", () ->
       expect(dataSvc).toBeDefined
 
   describe '#_handlePost', () ->
-    path = 'foo/bar'
-    it 'should append path to URL', () ->
-      #dataSvc._handlePost(path,)
+    returnData = {foo: true}
+    path = 'api/v1/foo'
+    httpBackend.expectPOST(path).respond(returnData)
+    returnedPromise = dataSvc.then (response) ->
+      result = response
+    httpBackend.flush()
+    expect(result).toEqual(returnData)
