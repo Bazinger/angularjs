@@ -28,12 +28,12 @@ vprAppControllers.controller 'DeviceCtrl', [ '$scope', '$routeParams', 'deviceSv
   $scope.tglRevRemoveMode = () -> $scope.rev_removeMode = !$scope.rev_removeMode
 
   $scope.loadDevice = (device_id) ->
-
     $scope.activeDevice = device_id
-
     deviceSvc.asyncRevisionsForDevice(device_id)
     .then (revisions) ->
       $scope.device_revisions = do revisions.reverse
+
+
 
   $scope.removeActive = () ->
     delete $scope.activeDevice

@@ -96,7 +96,7 @@
                     Datasheet
                 </div>
                 <div class="blockCount left">
-                    <strong>Blocks:</strong> {{revision.block_count}}
+                    <strong>Blocks:</strong> {{revision.block_revisions.length}}
                 </div>
                 <div class="right">
                     <a href="" ng-if="!activeDeviceRevision" ng-click="setActiveDeviceRevision(revision) && loadTestCount(revision) && refreshDeviceRevision(revision) && loadBlockRevisions(revision)"><span class="glyphicon glyphicon-menu-right"></span></a>
