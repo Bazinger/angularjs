@@ -42,7 +42,7 @@
                     <span class="field">{{device.owner}}</span>
                 </div>
                 <div class="right">
-                    <a href="" ng-if="!activeDevice" ng-click="loadDevice(device.id)"><span class="glyphicon glyphicon-menu-right"></span></a>
+                    <a href="" ng-if="!activeDevice" ng-click="loadDevice(device)"><span class="glyphicon glyphicon-menu-right"></span></a>
                     <a ng-if="activeDevice" href="" ng-click="removeActive()">
                         <span class="glyphicon glyphicon-menu-left"></span>
                     </a>
@@ -77,7 +77,7 @@
     <div class="body">
         <div class="device-revision"  ng-repeat="revision in device_revisions">
             <div class="deviceBody">
-                <h3>{{revision.major_revision}}.{{revision.minor_revision}}
+                <h3>{{revision.name}}&nbsp;{{revision.major_revision}}.{{revision.minor_revision}}
                     <a class="super removeMode" ng-if="rev_removeMode && !revision.locked" href="" ng-click="removeRevision(revision.id)">
                         <span class="glyphicon glyphicon-remove"></span>
                     </a>
