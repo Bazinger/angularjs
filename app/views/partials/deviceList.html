@@ -92,12 +92,14 @@
                 </div>
             </div>
             <div class="deviceFooter">
-                <div class="left">
-                    <label>Last Updated</label>
-                    <span class="field">{{revision.modified_on | date: 'mediumDate' }}</span>
+                <div class="datasheet left">
+                    Datasheet
+                </div>
+                <div class="blockCount left">
+                    <strong>Blocks:</strong> {{revision.block_count}}
                 </div>
                 <div class="right">
-                    <a href="" ng-if="!activeDeviceRevision" ng-click="loadDeviceRevision(revision)"><span class="glyphicon glyphicon-menu-right"></span></a>
+                    <a href="" ng-if="!activeDeviceRevision" ng-click="setActiveDeviceRevision(revision) && loadTestCount(revision) && refreshDeviceRevision(revision) && loadBlockRevisions(revision)"><span class="glyphicon glyphicon-menu-right"></span></a>
                     <a ng-if="activeDeviceRevision" href="" ng-click="removeActiveDeviceRevision()">
                         <span class="glyphicon glyphicon-menu-down"></span>
                     </a>
@@ -112,25 +114,26 @@
                 <span class="right">
                     <a href="#/tests/device/{{activeDeviceRevision}}"><span class="glyphicon glyphicon-menu-right"></span></a>
                 </span>
-
             </div>
-            <!--<div class="device-block" ng-repeat="block in device_revision_blocks">-->
-                <!--<h3 class="device-block-name">{{block.name}}</h3>-->
-                    <!--<span class="description">-->
-                        <!--{{block.description||"no description set."}}-->
-                    <!--</span>-->
-                <!--<div class="summary left">-->
-                    <!--Tests:<a href>{{block.test_count}}</a>-->
-                    <!--Version: N/A-->
-                <!--</div>-->
-                <!--<div class="right">-->
+            <div class="device-block" ng-repeat="item in block_revisions">
+                <h3>{{item.name}}</h3>
+                <div class="description">
+                    {{item.description||"no description set."}}
+                </div>
+                <div class="tests left">
+                    Tests: <a href>{{item.test_count}}</a>
+                </div>
+                <div class="version left">
+                    Version: {{item.version}}
+                </div>
+                <div class="right">
 
-                    <!--<a href="" ng-if="!activeDeviceRevisionBlock" ng-click="loadDeviceRevisionBlock(block)"><span class="glyphicon glyphicon-menu-right"></span></a>-->
-                    <!--<a ng-if="activeDeviceRevisionBlock" href="" ng-click="removeActiveDeviceRevisionBlock()">-->
-                        <!--<span class="glyphicon glyphicon-menu-left"></span>-->
-                    <!--</a>-->
-                <!--</div>-->
-            <!--</div>-->
+                    <a href="" ng-if="!activeDeviceRevisionBlock" ng-click="loadDeviceRevisionBlock(block)"><div class="glyphicon glyphicon-menu-right"></div></a>
+                    <a ng-if="activeDeviceRevisionBlock" href="" ng-click="removeActiveDeviceRevisionBlock()">
+                        <span class="glyphicon glyphicon-menu-left"></span>
+                    </a>
+                </div>
+            </div>
         </div>
     </div>
 </div>

@@ -102,6 +102,10 @@ label:after {
     width: 100%;
     min-height: 50px;
     font-size: 1.7em;
+    .glyphicon {
+      font-size: .75em;
+      margin-right: 3px;
+    }
     .left {
       float:left;
     }
@@ -112,16 +116,37 @@ label:after {
       font-size: .5em;
     }
   }
-  .device, .device-revision,
-  .block, .block-revision, .test {
+  .device-block {
+    border: 2px solid #333;
+    margin: 0px;
+    padding: 0px 10px 10px 10px;
+    min-height: 75px;
+    h3 {
+      margin: 3px 0px 0px 0px;
+    }
+    .description {
+      margin: 0;
+    }
+    .glyphicon {
+      font-size: 1.25em;
+      margin-top: -10px;
+    }
+    .version {
+      margin-left: 10px;
+    }
+    .left { float: left; }
+    .right {
+      float: right;
+    }
+
+  }
+  .device,.block, .device-revision,
+   .block-revision, .test {
     border: 2px solid #333;
     margin: 3px 0px;
     padding: 10px;
-
     min-height: 120px;
-    .device-block-name {
-      display: inline-block;
-    }
+
     &.active {
       background: #E7F1FE;
 
@@ -231,9 +256,13 @@ label:after {
 
     }
 
+
     .deviceFooter,
     .blockFooter{
       height: 20px;
+      .blockCount {
+        margin-left:15px;
+      }
       .left { float: left; }
       .right {
         float: right;

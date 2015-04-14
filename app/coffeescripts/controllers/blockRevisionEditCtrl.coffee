@@ -14,10 +14,12 @@ vprAppControllers.controller 'BlockRevisionEditCtrl', [ '$scope', '$routeParams'
     $scope.revision = $scope.nextRevision revisionType
 
   if $routeParams.revisionId == 'new'
+    created_on = do Date.now
+    console.log created_on
     $scope.editBlockRevision = {
       block_id: $routeParams.blockId,
       description: "",
-      created_on: do Date.now
+      created_on:  created_on
     }
 
     # we base our revision on the previous

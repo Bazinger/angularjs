@@ -25,9 +25,26 @@
                   ng-model="editDeviceRevision.description" placeholder="Optional"></textarea>
     </div>
     <div class="form-group">
-        <span>Blocks</span>
-        <select ng-options="b.name for b in blocks track by b.id" ng-model="selectedBlock">
+        <label for="block">Blocks</label>
+        <select id="block" ng-options="b.name for b in blocks track by b.id" ng-change="getBlockRevisions()"
+                ng-model="selectedBlock">
         </select>
+        <select ng-if="selectedBlock" ng-options='block_revision as fullRevision(block_revision) for block_revision in block_revisions track by block_revision.id' ng-model="$parent.selectedBlockRevision">
+        </select>
+        <button class="btn btn-xs btn-success"
+                ng-if="selectedBlockRevision" type="button"
+                ng-click="blockRevisionAdd()">
+            <span class="glyphicon glyphicon-plus"></span>
+        </button>
+    </div>
+    <div class="form-group">
+        <label >Block Revisions</label>
+        <div data-ng-repeat="item in block_revisions_list">
+            <button class="btn btn-xs btn-danger" ng-click="blockRevisionRemove(item)" >
+                <span class="glyphicon glyphicon-remove"></span>
+            </button>
+            <span>{{item.name}}</span>
+        </div>
     </div>
     <div class="form-group">
         <label for="createdOn">Created On</label>

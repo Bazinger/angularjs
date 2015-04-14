@@ -8,11 +8,11 @@ vprAppServices.factory 'blockSvc', [ '$log', '$q', 'dataSvc', 'utilSvc',  ($log,
 
       _this = this
 
-      _this.asyncBlockRevision revId
-        .then (rev) ->
-          _this.asyncBlock rev.block_id
-            .then (block) ->
-              deferred.resolve [block, rev]
+      @asyncBlockRevision revId
+      .then (rev) ->
+        _this.asyncBlock rev.block_id
+        .then (block) ->
+          deferred.resolve [block, rev]
 
       deferred.promise
 
@@ -34,10 +34,7 @@ vprAppServices.factory 'blockSvc', [ '$log', '$q', 'dataSvc', 'utilSvc',  ($log,
       utilSvc.handleAsync dataSvc.asyncFindOne "blocks", { id: id }
 
     asyncSaveBlock: (block) ->
-
       utilSvc.handleAsync dataSvc.asyncSave "blocks", block
-        .then () ->
-          console.log 'saved block',block
 
     asyncRmBlock: (id) ->
       utilSvc.handleAsync dataSvc.asyncRemove "blocks", id
@@ -53,6 +50,34 @@ vprAppServices.factory 'blockSvc', [ '$log', '$q', 'dataSvc', 'utilSvc',  ($log,
 
     asyncRmBlockRevision: (blockRevision) ->
       utilSvc.handleAsync dataSvc.asyncRemove "block_revisions", blockRevision
+
+#    asyncBlockRevisionsForDeviceRevision: (revision)
+#    asyncBlockRevisionNames: () ->
+#      #console.log 'asyncBlockRevisionNames'
+#      deferred = do $q.defer
+#      _that = this
+#      @asyncBlockList()
+#      .then (blocks) ->
+#        console.log 'blocks',blocks
+#        names = []
+#        for block in blocks
+#          deferred = do $q.defer
+#          _that.asyncRevisionsForBlock(block.id)
+#          .then (revisions) ->
+#            for r in revisions
+#              name = {id: r.id,name: block.name + ' ' + r.major_revision + '.' + r.minor_revision}
+#              console.log 'name',name
+#              names.push name
+#            deferred.resolve names
+#          deferred.promise
+#          .then (results) ->
+#            console.log 'results',results
+#            names = names.concat n
+#            console.log names
+#            deferred.resolve names
+#      deferred.promise
+#      .then () ->
+#        console.log 'names',names
 
   new BlockSvc()
 ]
