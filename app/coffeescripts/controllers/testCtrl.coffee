@@ -1,5 +1,5 @@
 
-vprAppControllers.controller 'TestCtrl', [ '$scope', '$routeParams', 'blockSvc', 'testSvc', 'deviceSvc',($scope, $routeParams, blockSvc, testSvc, deviceSvc) ->
+vprAppControllers.controller 'TestCtrl', [ '$scope', '$routeParams', '$log','blockSvc', 'testSvc', 'deviceSvc','utilSvc',($scope, $routeParams, $log, blockSvc, testSvc, deviceSvc,utilSvc) ->
 
   $scope.type      = $routeParams.type
   revId     = $routeParams.revisionId
@@ -43,11 +43,12 @@ vprAppControllers.controller 'TestCtrl', [ '$scope', '$routeParams', 'blockSvc',
       data: testId
     }
 
-  $scope.cancelAlert = () -> delete $scope.alert
+  $scope.cancelAlert = () ->
+    delete $scope.alert
   $scope.remove = (testId) ->
     testSvc.asyncRmTest testId
-      .then () ->
-        $scope.tests = _.reject $scope.tests, (test) -> test.id == testId
-        do $scope.cancelAlert
+    .then () ->
+      $scope.tests = _.reject $scope.tests, (test) -> test.id == testId
+      do $scope.cancelAlert
 
 ]

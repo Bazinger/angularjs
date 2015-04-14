@@ -135,9 +135,9 @@ vprAppServices.factory 'testSvc', [ '$log', '$q', 'dataSvc', 'utilSvc',  ($log, 
 
     asyncRmTest: (testId) ->
       deferred = do $q.defer
-
-      utilSvc.handleAsync (dataSvc.asyncRemove "tests", testId)
-      .then (() -> deferred.resolve)
+      utilSvc.handleAsync(dataSvc.asyncRemove "tests", testId)
+      .then () ->
+        do deferred.resolve
 
       deferred.promise
 
