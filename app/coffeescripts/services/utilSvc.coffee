@@ -6,8 +6,7 @@ vprAppServices.factory 'utilSvc', [ '$log', '$q', ($log, $q) ->
 
     # Support Functions
     handleAsync: (promise) ->
-
-      deferred = do $q.defer
+      deferred = $q.defer()
 
       promise.then (response) ->
         deferred.resolve response

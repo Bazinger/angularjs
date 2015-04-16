@@ -46,8 +46,8 @@ vprAppControllers.controller 'TestCtrl', [ '$scope', '$routeParams', 'blockSvc',
   $scope.cancelAlert = () -> delete $scope.alert
   $scope.remove = (testId) ->
     testSvc.asyncRmTest testId
-      .then () ->
-        $scope.tests = _.reject $scope.tests, (test) -> test.id == testId
-        do $scope.cancelAlert
+    .then () ->
+      $scope.tests = _.reject $scope.tests, (test) -> test.id == testId
+      $scope.cancelAlert()
 
 ]
