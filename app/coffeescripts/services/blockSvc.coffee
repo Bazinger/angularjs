@@ -51,33 +51,7 @@ vprAppServices.factory 'blockSvc', [ '$log', '$q', 'dataSvc', 'utilSvc',  ($log,
     asyncRmBlockRevision: (blockRevision) ->
       utilSvc.handleAsync dataSvc.asyncRemove "block_revisions", blockRevision
 
-#    asyncBlockRevisionsForDeviceRevision: (revision)
-#    asyncBlockRevisionNames: () ->
-#      #console.log 'asyncBlockRevisionNames'
-#      deferred = do $q.defer
-#      _that = this
-#      @asyncBlockList()
-#      .then (blocks) ->
-#        console.log 'blocks',blocks
-#        names = []
-#        for block in blocks
-#          deferred = do $q.defer
-#          _that.asyncRevisionsForBlock(block.id)
-#          .then (revisions) ->
-#            for r in revisions
-#              name = {id: r.id,name: block.name + ' ' + r.major_revision + '.' + r.minor_revision}
-#              console.log 'name',name
-#              names.push name
-#            deferred.resolve names
-#          deferred.promise
-#          .then (results) ->
-#            console.log 'results',results
-#            names = names.concat n
-#            console.log names
-#            deferred.resolve names
-#      deferred.promise
-#      .then () ->
-#        console.log 'names',names
+
 
   new BlockSvc()
 ]
