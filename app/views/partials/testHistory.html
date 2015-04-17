@@ -25,7 +25,8 @@
              ng-repeat="test in tests">
 
             <div ng-attr-id="{{ 'rev-' + test.revision }}" class="testBody">
-                <h5 class="title">{{test.title}}
+                <h5 >
+                    <span class="title">{{test.title}}</span>
                     <a class="super editTest"
                        ng-if="! isCurrent(test.id, test.revision, test.branch)" href="" ng-click="makeCurrent(test)">
                         Use This Revision

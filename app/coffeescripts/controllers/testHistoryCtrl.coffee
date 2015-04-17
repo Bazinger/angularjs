@@ -122,7 +122,7 @@ vprAppControllers.controller 'TestHistoryCtrl', [ '$scope', '$routeParams', '$q'
 
 
   diffFields = (a,b) ->
-    spec = {"title":"title","instructions":"summary","test_config":"test-config","test_script":"test-script"}
+    spec = {"title":"title","instructions":"summary","test_config_link":"test-config","test_script":"test-script"}
     _.forIn (_.pick a,_.keys(spec)), (v,k) ->
       if a[k] isnt b[k]
         $("#rev-"+a.revision+" ."+spec[k]).addClass("updated")
@@ -133,17 +133,26 @@ vprAppControllers.controller 'TestHistoryCtrl', [ '$scope', '$routeParams', '$q'
     if typeof a["test_script"] is 'undefined' and typeof b["test_script"] isnt 'undefined'
       $("#rev-"+b.revision+" .test-script").addClass("deleted")
 
+    if a["test_script"] isnt b["test_script"]
+      $("#rev-"+a.revision+" .test-script").addClass("updated")
+
     if typeof a["meas_plan"] isnt 'undefined' and typeof b["meas_plan"] is 'undefined'
       $("#rev-"+a.revision+" .meas-plan").addClass("created")
 
     if typeof a["meas_plan"] is 'undefined' and typeof b["meas_plan"] isnt 'undefined'
       $("#rev-"+b.revision+" .meas-plan").addClass("deleted")
 
+    if a["meas_plan"] isnt b["meas_plan"]
+      $("#rev-"+a.revision+" .meas-plan").addClass("updated")
+
     if typeof a["spotfire_template"] isnt 'undefined' and typeof b["spotfire_template"] is 'undefined'
       $("#rev-"+a.revision+" .spotfire-template").addClass("created")
 
     if typeof a["spotfire_template"] is 'undefined' and typeof b["spotfire_template"] isnt 'undefined'
       $("#rev-"+b.revision+" .spotfire-template").addClass("deleted")
+
+    if a["spotfire_template"] isnt b["spotfire_template"]
+      $("#rev-"+a.revision+" .spotfire-template").addClass("updated")
 
   diffTags = (a,b) ->
     if not (a.tags.length is b.tags.length and a.tags.every (el, i) -> el is b.tags[i])
