@@ -96,7 +96,8 @@
                     <strong>Blocks:</strong> {{revision.block_revisions.length}}
                 </div>
                 <div class="right">
-                    <a href="" ng-if="!activeDeviceRevision" ng-click="setActiveDeviceRevision(revision) && loadTestCount(revision) && refreshDeviceRevision(revision) && loadBlockRevisions(revision)"><span class="glyphicon glyphicon-menu-right"></span></a>
+                    <a href="" ng-if="!activeDeviceRevision"
+                       ng-click="loadActiveDeviceRevision(revision) && loadTestCount(revision) && refreshDeviceRevision(revision) && loadBlockRevisions(revision)"><span class="glyphicon glyphicon-menu-right"></span></a>
                     <a ng-if="activeDeviceRevision" href="" ng-click="removeActiveDeviceRevision()">
                         <span class="glyphicon glyphicon-menu-down"></span>
                     </a>
@@ -106,7 +107,7 @@
         <div ng-if="activeDeviceRevision" >
             <div class="deviceTestHeader"  >
                 <span class="left" >
-                    Device Tests <span class="testCount">({{testCount}} total)</span>
+                    Device Tests <span class="testCount">({{activeDeviceRevisionTestCount}} total)</span>
                 </span>
                 <span class="right">
                     <a href="#/tests/device/{{activeDeviceRevision}}"><span class="glyphicon glyphicon-menu-right"></span></a>

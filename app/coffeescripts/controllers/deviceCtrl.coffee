@@ -36,7 +36,6 @@ vprAppControllers.controller 'DeviceCtrl', [ '$scope', '$routeParams', 'deviceSv
       $scope.device_revisions = do revisions.reverse
 
 
-
   $scope.removeActive = () ->
     delete $scope.activeDevice
 
@@ -44,7 +43,13 @@ vprAppControllers.controller 'DeviceCtrl', [ '$scope', '$routeParams', 'deviceSv
   $scope.block_removeMode = false
   $scope.tglBlockRemoveMode = () -> $scope.block_removeMode = !$scope.block_removeMode
 
-  $scope.setActiveDeviceRevision = (revision) -> $scope.activeDeviceRevision = revision.id
+  $scope.loadActiveDeviceRevision = (revision) ->
+    $scope.activeDeviceRevision = revision.id
+    testSvc.asyncTestsForRev revision.id
+    .then (tests) ->
+      $scope.activeDeviceRevisionTestCount = 0
+      for test in tests
+        if test.is_current then $scope.activeDeviceRevisionTestCount++
 
   $scope.loadTestCount = (revision) ->
     testSvc.asyncTestsForRev revision.id
@@ -56,6 +61,7 @@ vprAppControllers.controller 'DeviceCtrl', [ '$scope', '$routeParams', 'deviceSv
     $scope.device_revisions.push revision
 
   $scope.loadBlockRevisions = (revision) ->
+    console.log 'loadBlockRevisions'
     block_revisions = do revision.block_revisions.reverse
     for block_revision in block_revisions
       $scope.block_revisions = []
@@ -67,10 +73,7 @@ vprAppControllers.controller 'DeviceCtrl', [ '$scope', '$routeParams', 'deviceSv
           description: results[1].description
           version: results[1].major_revision + '.' + results[1].minor_revision
         }
-        testSvc.asyncTestsForRev results[1].id
-        .then (tests) ->
-          item.test_count = tests.length
-          $scope.block_revisions.push item
+        $scope.block_revisions.push item
 
 
   $scope.removeActiveDeviceRevision = () ->
