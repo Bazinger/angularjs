@@ -48,9 +48,10 @@ vprAppServices.factory 'testSvc', [ '$log', '$q', 'dataSvc', 'utilSvc',  ($log, 
           deferred.reject( { msg: "At least a testId is required when getting a test" })
           deferred.promise
 
-    asyncMaxRevision: (test, branch) ->
+    asyncMaxRevision: (test_id, branch) ->
       deferred = do $q.defer
-      dataSvc.asyncFind "tests", { id: test.id, branch: branch }
+
+      dataSvc.asyncFind "tests", { id: test_id, branch: branch }
         .then (tests) ->
           deferred.resolve if tests? and tests.length then _.max( tests, "revision" ).revision else 0
 
@@ -85,11 +86,11 @@ vprAppServices.factory 'testSvc', [ '$log', '$q', 'dataSvc', 'utilSvc',  ($log, 
         [ "string", "int", "string" ], test
 
     asyncSaveAndRevisionTest: (test, newBranch) ->
-
       deferred = do $q.defer
 
       # copy and sanitize the new test
       newTest = angular.copy test
+
       delete newTest._id
       newTest.is_current = true
       if newBranch? then newTest.branch = newBranch

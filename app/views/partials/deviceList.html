@@ -118,14 +118,14 @@
                     {{item.description||"no description set."}}
                 </div>
                 <div class="tests left">
-                    Tests: <a href="#/tests/block/{{item.id}}">{{item.test_count}}</a>
+                    Tests: {{item.test_count}}
                 </div>
                 <div class="version left">
                     Version: {{item.version}}
                 </div>
                 <div class="right">
 
-                    <a href="" ng-if="!activeDeviceRevisionBlock" ng-click="loadDeviceRevisionBlock(block)"><div class="glyphicon glyphicon-menu-right"></div></a>
+                    <a  href="#/tests/block/{{item.id}}" ng-if="!activeDeviceRevisionBlock" ng-click="loadDeviceRevisionBlock(block)"><div class="glyphicon glyphicon-menu-right"></div></a>
                     <a ng-if="activeDeviceRevisionBlock" href="" ng-click="removeActiveDeviceRevisionBlock()">
                         <span class="glyphicon glyphicon-menu-left"></span>
                     </a>

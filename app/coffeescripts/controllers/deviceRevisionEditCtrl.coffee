@@ -63,19 +63,6 @@ vprAppControllers.controller 'DeviceRevisionEditCtrl', [ '$scope', '$routeParams
   $scope.fullRevision = (block_revision) ->
     block_revision.major_revision + '.' + block_revision.minor_revision
 
-#  $scope.isBlockRevisionAdded = (revision) ->
-#    console.log 'revision', revision
-#    #console.log 'block_revisions_list',$scope.block_revisions_list
-#    exists = _.findIndex $scope.block_revisions_list, (revision) ->
-#      console.log 'checking revision',revision, $scope.selectedBlockRevision
-#      revision.id is $scope.selectedBlockRevision.id
-#    if exists is not -1
-#      console.log 'block revision exists'
-#      return true
-#    else
-#      console.log 'block revision doesn\'t exist'
-#      return false
-
   $scope.blockRevisionAdd = () ->
     item = $scope.createBlockRevisionItem $scope.selectedBlockRevision.id,$scope.selectedBlock.name,$scope.selectedBlockRevision.major_revision,$scope.selectedBlockRevision.minor_revision
     $scope.block_revisions_list.push item

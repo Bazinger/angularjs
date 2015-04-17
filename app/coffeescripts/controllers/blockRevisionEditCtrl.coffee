@@ -15,7 +15,7 @@ vprAppControllers.controller 'BlockRevisionEditCtrl', [ '$scope', '$routeParams'
 
   if $routeParams.revisionId == 'new'
     created_on = do Date.now
-    console.log created_on
+
     $scope.editBlockRevision = {
       block_id: $routeParams.blockId,
       description: "",
