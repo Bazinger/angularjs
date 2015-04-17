@@ -17,7 +17,6 @@ vprAppServices.factory 'dataSvc', [ '$log', '$q', '$http', ($log, $q, $http) ->
       deferred.promise
 
     asyncFind: (collection, query) -> # return [ {}, {}, ... ]
-
       deferred = do $q.defer
       @_handlePost "/api/v1/findJson/#{collection}", query, deferred
 

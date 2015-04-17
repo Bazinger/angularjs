@@ -92,9 +92,6 @@
                 </div>
             </div>
             <div class="deviceFooter">
-                <div class="datasheet left">
-                    Datasheet
-                </div>
                 <div class="blockCount left">
                     <strong>Blocks:</strong> {{revision.block_revisions.length}}
                 </div>
@@ -115,20 +112,20 @@
                     <a href="#/tests/device/{{activeDeviceRevision}}"><span class="glyphicon glyphicon-menu-right"></span></a>
                 </span>
             </div>
-            <div class="device-block" ng-repeat="item in block_revisions">
+            <div class="device-block clearfix" ng-repeat="item in block_revisions">
                 <h3>{{item.name}}</h3>
                 <div class="description">
                     {{item.description||"no description set."}}
                 </div>
                 <div class="tests left">
-                    Tests: <a href>{{item.test_count}}</a>
+                    Tests: {{item.test_count}}
                 </div>
                 <div class="version left">
                     Version: {{item.version}}
                 </div>
                 <div class="right">
 
-                    <a href="" ng-if="!activeDeviceRevisionBlock" ng-click="loadDeviceRevisionBlock(block)"><div class="glyphicon glyphicon-menu-right"></div></a>
+                    <a  href="#/tests/block/{{item.id}}" ng-if="!activeDeviceRevisionBlock" ng-click="loadDeviceRevisionBlock(block)"><div class="glyphicon glyphicon-menu-right"></div></a>
                     <a ng-if="activeDeviceRevisionBlock" href="" ng-click="removeActiveDeviceRevisionBlock()">
                         <span class="glyphicon glyphicon-menu-left"></span>
                     </a>

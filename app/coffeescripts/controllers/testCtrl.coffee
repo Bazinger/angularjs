@@ -5,8 +5,12 @@ vprAppControllers.controller 'TestCtrl', [ '$scope', '$routeParams', '$log','blo
   revId     = $routeParams.revisionId
 
   switch $scope.type
-    when "block" then initPromise = blockSvc.asyncBlockRevisionWithParent revId
-    when "device" then initPromise = deviceSvc.asyncDeviceRevisionWithParent revId
+    when "block"
+      initPromise = blockSvc.asyncBlockRevisionWithParent revId
+      $scope.linkType = "blocks"
+    when "device"
+      initPromise = deviceSvc.asyncDeviceRevisionWithParent revId
+      $scope.linkType = $scope.type
     else null
 
   initPromise.then (result) ->
@@ -18,8 +22,6 @@ vprAppControllers.controller 'TestCtrl', [ '$scope', '$routeParams', '$log','blo
         currentTests = _.map(_.groupBy( tests, "id" ), (testGroup) ->
           testSvc.getCurrentTest testGroup
         )
-
-
         currentTests.forEach (test) -> test.showDetails = false
         $scope.tests = currentTests
 
@@ -49,6 +51,8 @@ vprAppControllers.controller 'TestCtrl', [ '$scope', '$routeParams', '$log','blo
     testSvc.asyncRmTest testId
     .then () ->
       $scope.tests = _.reject $scope.tests, (test) -> test.id == testId
-      do $scope.cancelAlert
+
+      $scope.cancelAlert()
+
 
 ]
