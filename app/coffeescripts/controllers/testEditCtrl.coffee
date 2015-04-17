@@ -4,6 +4,7 @@ vprAppControllers.controller 'TestEditCtrl', [ '$scope', '$routeParams', '$log',
 
 
   if $routeParams.testId == 'new'
+    $scope.newTest = true
     $scope.rev_id = $routeParams.revId
     dataSvc.asyncNewId().then (id) ->
       $scope.editTest = {
@@ -14,6 +15,7 @@ vprAppControllers.controller 'TestEditCtrl', [ '$scope', '$routeParams', '$log',
         test_params: []
       }
   else
+    $scope.newTest = false
     testSvc.asyncTest $routeParams.testId
       .then (test) ->
         $scope.rev_id = test.rev_id
