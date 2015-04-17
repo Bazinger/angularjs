@@ -14,7 +14,6 @@ vprAppServices.factory 'testSvc', [ '$log', '$q', 'dataSvc', 'utilSvc',  ($log, 
       # the default branch max if it exists
       # or the max in the first branch in the group
       # by array
-
       findFromBranches = (_tests) ->
         branchGroups = _.groupBy _tests, "branch"
         branchTests = _.find branchGroups, (ba) -> ba[0].branch == "default" || branchGroups[0]
