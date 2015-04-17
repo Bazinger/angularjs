@@ -61,7 +61,6 @@ vprAppControllers.controller 'DeviceCtrl', [ '$scope', '$routeParams', 'deviceSv
     $scope.device_revisions.push revision
 
   $scope.loadBlockRevisions = (revision) ->
-    console.log 'loadBlockRevisions'
     block_revisions = do revision.block_revisions.reverse
     for block_revision in block_revisions
       $scope.block_revisions = []
