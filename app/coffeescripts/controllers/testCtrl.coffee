@@ -7,10 +7,8 @@ vprAppControllers.controller 'TestCtrl', [ '$scope', '$routeParams', '$log','blo
   switch $scope.type
     when "block"
       initPromise = blockSvc.asyncBlockRevisionWithParent revId
-      $scope.linkType = "blocks"
     when "device"
       initPromise = deviceSvc.asyncDeviceRevisionWithParent revId
-      $scope.linkType = $scope.type
     else null
 
   initPromise.then (result) ->

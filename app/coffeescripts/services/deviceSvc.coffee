@@ -36,10 +36,35 @@ vprAppServices.factory 'deviceSvc', [ '$log', '$q', 'dataSvc', 'utilSvc',  ($log
       utilSvc.handleAsync dataSvc.asyncSave "devices", device
 
     asyncRmDevice: (id) ->
-      utilSvc.handleAsync dataSvc.asyncRemove "devices", id
+      deferred = $q.defer()
+      @asyncRemoveRevisionsForDevice id
+      .then () ->
+        utilSvc.handleAsync dataSvc.asyncRemove "devices", id
+        .then () ->
+          deferred.resolve()
+
+      deferred.promise
 
     asyncRevisionsForDevice: (device_id) ->
       utilSvc.handleAsync dataSvc.asyncFind "device_revisions", { device_id: device_id }
+
+    asyncRemoveRevisionsForDevice: (device_id) ->
+      deferred = $q.defer()
+      that = this
+      @asyncRevisionsForDevice device_id
+      .then (revisions) ->
+        if revisions.length
+          promises = []
+          for revision in revisions
+            promises.push that.asyncRmDeviceRevision revision.id
+          $q.all promises
+          .then () ->
+            console.log "finished removing all revisions"
+            deferred.resolve()
+        else
+          deferred.resolve()
+
+      deferred.promise
 
     asyncDeviceRevision: (id) ->
       utilSvc.handleAsync dataSvc.asyncFindOne "device_revisions", { id: id }

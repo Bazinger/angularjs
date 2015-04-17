@@ -8,20 +8,34 @@ vprAppControllers.controller 'DeviceCtrl', [ '$scope', '$routeParams', 'deviceSv
     deviceSvc.asyncDeviceList().then (devices) ->
       $scope.devices = devices
 
+
+
   $scope.removeMode = false;
   $scope.tglRemoveMode = () -> $scope.removeMode = !$scope.removeMode
 
-  $scope.removeDevice = (deviceId) ->
-    deviceSvc.asyncRmDevice deviceId
-    .then do init
-
-  $scope.removeRevision = (deviceRevisionId) ->
-    deviceSvc.asyncRmDeviceRevision deviceRevisionId
+#  $scope.removeDevice = (id) ->
+#    deviceSvc.asyncRmDevice id
+#    .then () ->
+#      do init
+#
+#      if $scope.activeDevice? then $scope.loadDevice($scope.activeDevice)
+  $scope.removeDevice = (id) ->
+    deviceSvc.asyncRmDevice id
     .then () ->
-      do init
+      $scope.devices = _.reject $scope.devices, (device) -> device.id == id
+      $scope.cancelDeviceAlert()
 
-      if $scope.activeDevice? then $scope.loadDevice($scope.activeDevice)
+  $scope.confirmRemoveDevice = (id) ->
+    deviceToRemove = _.find $scope.devices, (device) -> device.id == id
+    console.log deviceToRemove
+    if deviceToRemove? then $scope.deviceAlert = {
+      type: "warning",
+      msg: "Are you sure you want to remove #{deviceToRemove.name}?"
+      data: id
+    }
 
+  $scope.cancelDeviceAlert = () ->
+    delete $scope.deviceAlert
 
   # Device Revision Support
   $scope.rev_removeMode = false
@@ -31,6 +45,7 @@ vprAppControllers.controller 'DeviceCtrl', [ '$scope', '$routeParams', 'deviceSv
     $scope.activeDevice = device.id
     deviceSvc.asyncRevisionsForDevice(device.id)
     .then (revisions) ->
+      console.log revisions
       for revision in revisions
         revision.name = device.name
       $scope.device_revisions = do revisions.reverse
@@ -79,9 +94,29 @@ vprAppControllers.controller 'DeviceCtrl', [ '$scope', '$routeParams', 'deviceSv
     delete $scope.activeDeviceRevision
     $scope.loadDevice $scope.activeDevice
 
+  $scope.removeRevision = (id) ->
+    deviceSvc.asyncRmDeviceRevision id
+    .then () ->
+      $scope.device_revisions = _.reject $scope.device_revisions, (revision) -> revision.id == id
+      $scope.cancelRevisionAlert()
+
+  $scope.confirmRemoveRevision = (id) ->
+    revisionToRemove = _.find $scope.device_revisions, (revision) -> revision.id == id
+
+    if revisionToRemove? then $scope.revisionAlert = {
+      type: "warning",
+      msg: "Are you sure you want to remove #{revisionToRemove.major_revision}.#{revisionToRemove.minor_revision}?"
+      data: id
+    }
+
+  $scope.cancelRevisionAlert = () ->
+    delete $scope.revisionAlert
+
 
 
   do init
 
-  if $routeParams.activeDevice then $scope.loadDevice($routeParams.activeDevice)
+  if $routeParams.activeDevice
+    $scope.loadDevice($routeParams.activeDevice)
+    $scope.activeDevice = $routeParams.activeDevice
 ]

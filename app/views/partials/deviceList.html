@@ -21,11 +21,16 @@
         <span>Devices</span>
     </div>
     <div class="body">
+        <alert ng-if="deviceAlert" type="{{deviceAlert.type}}" close="cancelDeviceAlert()">
+            <p>{{deviceAlert.msg}}</p>
+            <button type="button" class="btn btn-sm btn-default" ng-click="cancelDeviceAlert()">Cancel</button>
+            <button type="button" class="btn btn-sm btn-danger" ng-click="removeDevice(deviceAlert.data)">Remove</button>
+        </alert>
         <div class="device" ng-class="{active: device.id == activeDevice, inactive: (activeDevice) && device.id != activeDevice}" ng-repeat="device in devices">
 
             <div class="deviceBody">
                 <h3>{{device.name}}
-                    <a class="super removeMode" ng-if="removeMode" href="" ng-click="removeDevice(device.id)">
+                    <a class="super removeMode" ng-if="removeMode" href="" ng-click="confirmRemoveDevice(device.id)">
                         <span class="glyphicon glyphicon-remove"></span>
                     </a>
                     <a class="super editDevice" ng-if="!removeMode" href="#/editDevice/{{device.id}}">
@@ -75,10 +80,15 @@
         <span>Device Releases</span>
     </div>
     <div class="body">
+        <alert ng-if="revisionAlert" type="{{revisionAlert.type}}" close="cancelRevisionAlert()">
+            <p>{{revisionAlert.msg}}</p>
+            <button type="button" class="btn btn-sm btn-default" ng-click="cancelRevisionAlert()">Cancel</button>
+            <button type="button" class="btn btn-sm btn-danger" ng-click="removeRevision(revisionAlert.data)">Remove</button>
+        </alert>
         <div class="device-revision"  ng-repeat="revision in device_revisions">
             <div class="deviceBody">
                 <h3>{{revision.name}}&nbsp;{{revision.major_revision}}.{{revision.minor_revision}}
-                    <a class="super removeMode" ng-if="rev_removeMode && !revision.locked" href="" ng-click="removeRevision(revision.id)">
+                    <a class="super removeMode" ng-if="rev_removeMode && !revision.locked" href="" ng-click="confirmRemoveRevision(revision.id)">
                         <span class="glyphicon glyphicon-remove"></span>
                     </a>
                     <a href="#/editDeviceRevision/{{activeDevice}}/{{revision.id}}" class="super editDevice"

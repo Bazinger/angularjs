@@ -79,7 +79,6 @@ vprAppServices.factory 'dataSvc', [ '$log', '$q', '$http', ($log, $q, $http) ->
         deferred.reject result
 
     _handleGet: (path, deferred) ->
-      $log.info 'calling path',path
       $http.get "http://beta.web.cirrus.com:9002#{path}"
       .success (result, status, headers, config) ->
         deferred.resolve result

@@ -39,6 +39,16 @@ vprAppServices.factory 'blockSvc', [ '$log', '$q', 'dataSvc', 'utilSvc',  ($log,
     asyncRmBlock: (id) ->
       utilSvc.handleAsync dataSvc.asyncRemove "blocks", id
 
+    asyncRmBlock: (id) ->
+      deferred = $q.defer()
+      @asyncRemoveRevisionsForBlock id
+      .then () ->
+        utilSvc.handleAsync dataSvc.asyncRemove "blocks", id
+        .then () ->
+          deferred.resolve()
+
+      deferred.promise
+
     asyncRevisionsForBlock: (block_id) ->
       utilSvc.handleAsync dataSvc.asyncFind "block_revisions", { block_id: block_id }
 
@@ -51,7 +61,22 @@ vprAppServices.factory 'blockSvc', [ '$log', '$q', 'dataSvc', 'utilSvc',  ($log,
     asyncRmBlockRevision: (blockRevision) ->
       utilSvc.handleAsync dataSvc.asyncRemove "block_revisions", blockRevision
 
+    asyncRemoveRevisionsForBlock: (id) ->
+      deferred = $q.defer()
+      that = this
+      @asyncRevisionsForBlock id
+      .then (revisions) ->
+        if revisions.length
+          promises = []
+          for revision in revisions
+            promises.push that.asyncRmBlockRevision revision.id
+          $q.all promises
+          .then () ->
+            deferred.resolve()
+        else
+          deferred.resolve()
 
+      deferred.promise
 
   new BlockSvc()
 ]
