@@ -1,4 +1,4 @@
-vprAppServices.factory 'dataSvc', [ '$log', '$q', '$http', ($log, $q, $http) ->
+vprAppServices.factory 'dataSvc', [ '$log', '$q', '$http','configSvc', ($log, $q, $http, configSvc) ->
 
   class DataSvc
 
@@ -71,7 +71,7 @@ vprAppServices.factory 'dataSvc', [ '$log', '$q', '$http', ($log, $q, $http) ->
 
     _handlePost: (path, data, deferred, resolveToPassedData = false) ->
 
-      $http.post "http://beta.web.cirrus.com:9002#{path}", data
+      $http.post configSvc.cbaseServer + "#{path}", data
       .success (result, status, headers, config) ->
         if resolveToPassedData then deferred.resolve data
         else deferred.resolve result
@@ -79,7 +79,7 @@ vprAppServices.factory 'dataSvc', [ '$log', '$q', '$http', ($log, $q, $http) ->
         deferred.reject result
 
     _handleGet: (path, deferred) ->
-      $http.get "http://beta.web.cirrus.com:9002#{path}"
+      $http.get configSvc.cbaseServer + "#{path}"
       .success (result, status, headers, config) ->
         deferred.resolve result
       .error (result, status, headers, config) ->

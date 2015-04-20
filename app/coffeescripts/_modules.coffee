@@ -18,6 +18,6 @@ vprAppServices.value 'storageSvc', sessionStorage
 
 # the config value tells us where we get things
 vprAppServices.value 'configSvc', {
-  cbaseServer : "http://beta.web.cirrus.com:9002"
+  cbaseServer : "http://localhost:9000"
 }
 
