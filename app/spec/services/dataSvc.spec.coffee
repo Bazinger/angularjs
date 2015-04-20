@@ -14,14 +14,14 @@ describe "Unit: Testing DataSvc", () ->
 
   describe 'dataSvc', () ->
     it 'should be defined', () ->
-      expect(dataSvc).toBeDefined
+      expect(dataSvc).toBeDefined()
 
 
   #describe '#_handlePost', () ->
-  it 'should return a response', () ->
-    returnData = {foo: true}
-    path = 'api/v1/foo'
-    $httpBackend.expectPost(path).respond(returnData)
+#  it 'should return a response', () ->
+#    returnData = {foo: true}
+#    path = 'api/v1/foo'
+#    $httpBackend.expectPost(path).respond(returnData)
 #      returnedPromise = dataSvc.then (response) ->
 #        result = response
 #      httpBackend.flush()
