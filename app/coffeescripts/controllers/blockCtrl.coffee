@@ -12,16 +12,26 @@ vprAppControllers.controller 'BlockCtrl', [ '$scope', '$routeParams', 'blockSvc'
     $scope.removeMode = false;
     $scope.tglRemoveMode = () -> $scope.removeMode = !$scope.removeMode
 
-    $scope.removeBlock = (blockId) ->
-      blockSvc.asyncRmBlock blockId
-        .then do init
-
-    $scope.removeRevision = (revisionId) ->
-      blockSvc.asyncRmBlockRevision revisionId
+    $scope.removeBlock = (id) ->
+      blockSvc.asyncRmBlock id
       .then () ->
-        do init
+        console.log  $scope.blocks
+        $scope.blocks = _.reject $scope.blocks, (block) -> block.id == id
+        console.log  $scope.blocks
+        $scope.cancelBlockAlert()
 
-        if $scope.activeBlock? then $scope.loadBlock($scope.activeBlock)
+    $scope.confirmRemoveBlock = (id) ->
+      blockToRemove = _.find $scope.blocks, (block) -> block.id == id
+
+      if blockToRemove? then $scope.blockAlert = {
+        type: "warning",
+        msg: "Are you sure you want to remove #{blockToRemove.name}?"
+        data: id
+      }
+
+
+    $scope.cancelBlockAlert = () ->
+      delete $scope.blockAlert
 
     # Block Revision Support
     $scope.rev_removeMode = false;
@@ -38,7 +48,23 @@ vprAppControllers.controller 'BlockCtrl', [ '$scope', '$routeParams', 'blockSvc'
     $scope.removeActive = () ->
       delete $scope.activeBlock
 
+    $scope.removeRevision = (id) ->
+      blockSvc.asyncRmBlockRevision id
+      .then () ->
+        $scope.block_revisions = _.reject $scope.block_revisions, (revision) -> revision.id == id
+        $scope.cancelRevisionAlert()
 
+    $scope.confirmRemoveRevision = (id) ->
+      revisionToRemove = _.find $scope.block_revisions, (revision) -> revision.id == id
+
+      if revisionToRemove? then $scope.revisionAlert = {
+        type: "warning",
+        msg: "Are you sure you want to remove #{revisionToRemove.major_revision}.#{revisionToRemove.minor_revision}?"
+        data: id
+      }
+
+    $scope.cancelRevisionAlert = () ->
+      delete $scope.revisionAlert
     do init
 
     if $routeParams.activeBlock then $scope.loadBlock($routeParams.activeBlock)

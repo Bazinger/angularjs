@@ -1,0 +1,148 @@
+<div class="devices canvas">
+    <div class="header">
+        <div class="toolbar" ng-if="!removeMode && !activeDevice">
+            <a href="" ng-click="tglRemoveMode()">
+                <span class="glyphicon glyphicon-minus"></span> Remove Device
+            </a>
+
+            <a href="#/editDevice/new" ng-click="newDevice()">
+                <span class="glyphicon glyphicon-plus"></span> Add Device
+            </a>
+        </div>
+        <div class="toolbar" ng-if="removeMode">
+            <a href="" ng-click="tglRemoveMode()">
+                <span class="glyphicon glyphicon-menu-left"></span> Done
+            </a>
+        </div>
+
+    </div>
+    <div class="statusbar">
+        <span class="glyphicon glyphicon-triangle-right"></span>
+        <span>Devices</span>
+    </div>
+    <div class="body">
+        <alert ng-if="deviceAlert" type="{{deviceAlert.type}}" close="cancelDeviceAlert()">
+            <p>{{deviceAlert.msg}}</p>
+            <button type="button" class="btn btn-sm btn-default" ng-click="cancelDeviceAlert()">Cancel</button>
+            <button type="button" class="btn btn-sm btn-danger" ng-click="removeDevice(deviceAlert.data)">Remove</button>
+        </alert>
+        <div class="device" ng-class="{active: device.id == activeDevice, inactive: (activeDevice) && device.id != activeDevice}" ng-repeat="device in devices">
+
+            <div class="deviceBody">
+                <h3>{{device.name}}
+                    <a class="super removeMode" ng-if="removeMode" href="" ng-click="confirmRemoveDevice(device.id)">
+                        <span class="glyphicon glyphicon-remove"></span>
+                    </a>
+                    <a class="super editDevice" ng-if="!removeMode" href="#/editDevice/{{device.id}}">
+                        <span class="glyphicon glyphicon-edit"></span>
+                    </a>
+                </h3>
+                <div class="summary">
+                    {{device.description||"no description set."}}
+                </div>
+            </div>
+            <div class="deviceFooter">
+                <div class="left">
+                    <label>Owner</label>
+                    <span class="field">{{device.owner}}</span>
+                </div>
+                <div class="right">
+                    <a href="" ng-if="!activeDevice" ng-click="loadDevice(device)"><span class="glyphicon glyphicon-menu-right"></span></a>
+                    <a ng-if="activeDevice" href="" ng-click="removeActive()">
+                        <span class="glyphicon glyphicon-menu-left"></span>
+                    </a>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+</div>
+
+<div class="device-revisions canvas" ng-if="activeDevice">
+    <div class="header">
+        <div class="toolbar" ng-if="!rev_removeMode">
+            <a href="" ng-click="tglRevRemoveMode()">
+                <span class="glyphicon glyphicon-minus"></span> Remove Release
+            </a>
+            <a href="#/editDeviceRevision/{{activeDevice}}/new">
+                <span class="glyphicon glyphicon-plus"></span> Add Release
+            </a>
+        </div>
+        <div class="toolbar" ng-if="rev_removeMode">
+            <a href="" ng-click="tglRevRemoveMode()">
+                <span class="glyphicon glyphicon-menu-left"></span> Done
+            </a>
+        </div>
+    </div>
+    <div class="statusbar">
+        <span class="glyphicon glyphicon-triangle-right"></span>
+        <span>Device Releases</span>
+    </div>
+    <div class="body">
+        <alert ng-if="revisionAlert" type="{{revisionAlert.type}}" close="cancelRevisionAlert()">
+            <p>{{revisionAlert.msg}}</p>
+            <button type="button" class="btn btn-sm btn-default" ng-click="cancelRevisionAlert()">Cancel</button>
+            <button type="button" class="btn btn-sm btn-danger" ng-click="removeRevision(revisionAlert.data)">Remove</button>
+        </alert>
+        <div class="device-revision"  ng-repeat="revision in device_revisions">
+            <div class="deviceBody">
+                <h3>{{revision.name}}&nbsp;{{revision.major_revision}}.{{revision.minor_revision}}
+                    <a class="super removeMode" ng-if="rev_removeMode && !revision.locked" href="" ng-click="confirmRemoveRevision(revision.id)">
+                        <span class="glyphicon glyphicon-remove"></span>
+                    </a>
+                    <a href="#/editDeviceRevision/{{activeDevice}}/{{revision.id}}" class="super editDevice"
+                       ng-if="!rev_removeMode && !revision.locked">
+                        <span class="glyphicon glyphicon-edit"></span>
+                    </a>
+                    <span class="super" ng-if="revision.locked">(IN USE)</span>
+                </h3>
+                <div class="summary">
+                    {{revision.description||"no description set."}}
+                </div>
+            </div>
+            <div class="deviceFooter">
+                <div class="blockCount left">
+                    <strong>Blocks:</strong> {{revision.block_revisions.length}}
+                </div>
+                <div class="right">
+                    <a href="" ng-if="!activeDeviceRevision"
+                       ng-click="loadActiveDeviceRevision(revision) && loadTestCount(revision) && refreshDeviceRevision(revision) && loadBlockRevisions(revision)"><span class="glyphicon glyphicon-menu-right"></span></a>
+                    <a ng-if="activeDeviceRevision" href="" ng-click="removeActiveDeviceRevision()">
+                        <span class="glyphicon glyphicon-menu-down"></span>
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div ng-if="activeDeviceRevision" >
+            <div class="deviceTestHeader"  >
+                <span class="left" >
+                    Device Tests <span class="testCount">({{activeDeviceRevisionTestCount}} total)</span>
+                </span>
+                <span class="right">
+                    <a href="#/tests/device/{{activeDeviceRevision}}"><span class="glyphicon glyphicon-menu-right"></span></a>
+                </span>
+            </div>
+            <div class="device-block clearfix" ng-repeat="item in block_revisions">
+                <h3>{{item.name}}</h3>
+                <div class="description">
+                    {{item.description||"no description set."}}
+                </div>
+                <div class="tests left">
+                    Tests: {{item.test_count}}
+                </div>
+                <div class="version left">
+                    Version: {{item.version}}
+                </div>
+                <div class="right">
+
+                    <a  href="#/tests/block/{{item.id}}" ng-if="!activeDeviceRevisionBlock" ng-click="loadDeviceRevisionBlock(block)"><div class="glyphicon glyphicon-menu-right"></div></a>
+                    <a ng-if="activeDeviceRevisionBlock" href="" ng-click="removeActiveDeviceRevisionBlock()">
+                        <span class="glyphicon glyphicon-menu-left"></span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

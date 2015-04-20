@@ -2,6 +2,22 @@
 vprApp.config ['$routeProvider', ($routeProvider) ->
 
   $routeProvider
+    .when '/devices/:activeDevice?', {
+      controller: 'DeviceCtrl'
+      templateUrl: 'deviceList.template'
+    }
+    .when '/editDevice/:deviceId', {
+      controller: 'DeviceEditCtrl'
+      templateUrl: 'editDevice.template'
+    }
+    .when '/editDeviceRevision/:deviceId/:revisionId', {
+      controller: 'DeviceRevisionEditCtrl'
+      templateUrl: 'editDeviceRevision.template'
+    }
+    .when '/editDeviceBlock/:deviceId/:revisionId/:blockId', {
+      controller: 'BlockEditCtrl'
+      templateUrl: 'editBlock.template'
+    }
     .when '/blocks/:activeBlock?', {
       controller: 'BlockCtrl'
       templateUrl: 'blockList.template'

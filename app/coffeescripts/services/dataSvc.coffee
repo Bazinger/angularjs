@@ -17,7 +17,6 @@ vprAppServices.factory 'dataSvc', [ '$log', '$q', '$http', ($log, $q, $http) ->
       deferred.promise
 
     asyncFind: (collection, query) -> # return [ {}, {}, ... ]
-
       deferred = do $q.defer
       @_handlePost "/api/v1/findJson/#{collection}", query, deferred
 
@@ -57,9 +56,7 @@ vprAppServices.factory 'dataSvc', [ '$log', '$q', '$http', ($log, $q, $http) ->
       deferred.promise
 
     asyncRemove: (collection, id) ->
-
       deferred = do $q.defer
-
       @_handleGet "/api/v1/rmJson/#{collection}/#{id}", deferred
 
       deferred.promise
@@ -82,7 +79,6 @@ vprAppServices.factory 'dataSvc', [ '$log', '$q', '$http', ($log, $q, $http) ->
         deferred.reject result
 
     _handleGet: (path, deferred) ->
-
       $http.get "http://beta.web.cirrus.com:9002#{path}"
       .success (result, status, headers, config) ->
         deferred.resolve result

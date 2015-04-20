@@ -25,14 +25,16 @@
              ng-repeat="test in tests">
 
             <div ng-attr-id="{{ 'rev-' + test.revision }}" class="testBody">
-                <h5 class="title">{{test.title}}
+                <h5 >
+                    <span class="title">{{test.title}}</span>
                     <a class="super editTest"
                        ng-if="! isCurrent(test.id, test.revision, test.branch)" href="" ng-click="makeCurrent(test)">
                         Use This Revision
                     </a>
                     <span class="right" ng-if="test.revision">Revision: {{test.revision}}/{{test.branch}}</span>
                     <span class="right diff" ng-if="test.revision && diffMode && $index == 0" ng-click="reset()">Reset</span>
-                    <span class="right diff dropdown" dropdown ng-if="test.revision && !diffMode">
+
+                    <span class="right diff dropdown" dropdown ng-if="test.revision && !diffMode && tests.length > 1">
                        <span class="dropdown-toggle" dropdown-toggle>Diff</span>
                        <ul class="dropdown-menu">
                            <li ng-repeat="t in getRevisions(test)">

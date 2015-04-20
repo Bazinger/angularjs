@@ -9,7 +9,8 @@
     </div>
     <div class="statusbar">
         <span class="glyphicon glyphicon-triangle-right"></span>
-        <span>Tests for <strong><a href="#/blocks/{{currentParent.id}}">{{currentParent.name}} {{currentRev.major_revision}}.{{currentRev.minor_revision}}</a></strong></span>
+        <span>Tests for <strong><a href="#/{{type}}s/{{currentParent.id}}">{{currentParent.name}}
+            {{currentRev.major_revision}}.{{currentRev.minor_revision}}</a></strong></span>
     </div>
     <div class="body">
         <alert ng-if="alert" type="{{alert.type}}" close="cancelAlert()">

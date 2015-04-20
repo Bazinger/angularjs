@@ -3,6 +3,7 @@ vprAppControllers.controller 'TestEditCtrl', [ '$scope', '$routeParams', '$log',
   type = $routeParams.type
 
   if $routeParams.testId == 'new'
+    $scope.newTest = true
     $scope.rev_id = $routeParams.revId
     dataSvc.asyncNewId().then (id) ->
       $scope.editTest = {
@@ -13,6 +14,7 @@ vprAppControllers.controller 'TestEditCtrl', [ '$scope', '$routeParams', '$log',
         test_params: []
       }
   else
+    $scope.newTest = false
     testSvc.asyncTest $routeParams.testId
       .then (test) ->
         $scope.rev_id = test.rev_id
@@ -75,7 +77,6 @@ vprAppControllers.controller 'TestEditCtrl', [ '$scope', '$routeParams', '$log',
   $scope.submitTest= (editForm) ->
     editForm.modified_on = new Date().getTime()
     saveTest = () ->
-
       testSvc.asyncSaveAndRevisionTest angular.copy( editForm ), $scope.branchObj.newBranch
       .then () -> $scope.goto "/tests/#{type}/#{$scope.rev_id}"
 

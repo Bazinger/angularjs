@@ -94,11 +94,57 @@ label:after {
   padding: 10px;
   width: @canvas-width;
 
-  .block, .block-revision, .test {
+  .deviceTestHeader {
+    background: #333;
+    color: #fff;
+
+    padding: 10px;
+    width: 100%;
+    min-height: 50px;
+    font-size: 1.7em;
+    .glyphicon {
+      font-size: .75em;
+      margin-right: 3px;
+    }
+    .left {
+      float:left;
+    }
+    .right {
+      float: right;
+    }
+    .testCount {
+      font-size: .5em;
+    }
+  }
+  .device-block {
+    border: 2px solid #333;
+    margin: 0px;
+    padding: 0px 10px 10px 10px;
+    min-height: 75px;
+    h3 {
+      margin: 3px 0px 0px 0px;
+    }
+    .description {
+      margin: 0;
+    }
+    .glyphicon {
+      font-size: 1.25em;
+      margin-top: -10px;
+    }
+    .version {
+      margin-left: 10px;
+    }
+    .left { float: left; }
+    .right {
+      float: right;
+    }
+
+  }
+  .device,.block, .device-revision,
+   .block-revision, .test {
     border: 2px solid #333;
     margin: 3px 0px;
     padding: 10px;
-
     min-height: 120px;
 
     &.active {
@@ -115,6 +161,7 @@ label:after {
       margin: 0px 0px 10px 0px;
     }
 
+    .deviceBody,
     .blockBody {
       min-height: 90px;
 
@@ -209,8 +256,13 @@ label:after {
 
     }
 
-    .blockFooter {
+
+    .deviceFooter,
+    .blockFooter{
       height: 20px;
+      .blockCount {
+        margin-left:15px;
+      }
       .left { float: left; }
       .right {
         float: right;

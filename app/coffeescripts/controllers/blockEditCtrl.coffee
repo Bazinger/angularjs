@@ -1,5 +1,6 @@
 vprAppControllers.controller 'BlockEditCtrl', [ '$scope', '$routeParams', '$log', 'blockSvc', ($scope, $routeParams, $log, blockSvc) ->
 
+
   if $routeParams.blockId == 'new'
     $scope.editBlock = {
       name: "",
@@ -18,9 +19,20 @@ vprAppControllers.controller 'BlockEditCtrl', [ '$scope', '$routeParams', '$log'
   $scope.validate = () ->
     $scope.trySubmit = true
 
+  $scope.cancelEditBlock = () ->
+    if $routeParams.deviceId and $routeParams.revisionId
+      $scope.goto('/devices')
+    else
+      $scope.goto('/blocks')
+
   $scope.submitBlock = (editForm) ->
     blockSvc.asyncSaveBlock angular.copy editForm
-      .then () -> $scope.goto '/blocks'
+      .then () ->
+        if $routeParams.deviceId and $routeParams.revisionId
+          $scope.goto('/devices')
+        else
+          $scope.goto('/blocks')
+
 
 
 ]

@@ -22,11 +22,16 @@
         <span>IP Blocks</span>
     </div>
     <div class="body">
+        <alert ng-if="blockAlert" type="{{blockAlert.type}}" close="cancelBlockAlert()">
+            <p>{{blockAlert.msg}}</p>
+            <button type="button" class="btn btn-sm btn-default" ng-click="cancelBlockAlert()">Cancel</button>
+            <button type="button" class="btn btn-sm btn-danger" ng-click="removeBlock(blockAlert.data)">Remove</button>
+        </alert>
         <div class="block" ng-class="{active: block.id == activeBlock, inactive: (activeBlock) && block.id != activeBlock}" ng-repeat="block in blocks">
 
             <div class="blockBody">
                 <h3>{{block.name}}
-                    <a class="super removeMode" ng-if="removeMode" href="" ng-click="removeBlock(block.id)">
+                    <a class="super removeMode" ng-if="removeMode" href="" ng-click="confirmRemoveBlock(block.id)">
                         <span class="glyphicon glyphicon-remove"></span>
                     </a>
                     <a class="super editBlock" ng-if="!removeMode" href="#/editBlock/{{block.id}}">
@@ -76,10 +81,16 @@
         <span>Test Plan Releases</span>
     </div>
     <div class="body">
+        <alert ng-if="revisionAlert" type="{{revisionAlert.type}}" close="cancelRevisionAlert()">
+            <p>{{revisionAlert.msg}}</p>
+            <button type="button" class="btn btn-sm btn-default" ng-click="cancelRevisionAlert()">Cancel</button>
+            <button type="button" class="btn btn-sm btn-danger" ng-click="removeRevision(revisionAlert.data)">Remove</button>
+        </alert>
         <div class="block-revision" ng-repeat="revision in block_revisions">
             <div class="blockBody">
                 <h3>{{revision.major_revision}}.{{revision.minor_revision}}
-                    <a class="super removeMode" ng-if="rev_removeMode && !revision.locked" href="" ng-click="removeRevision(revision.id)">
+                    <a class="super removeMode" ng-if="rev_removeMode && !revision.locked" href=""
+                       ng-click="confirmRemoveRevision(revision.id)">
                         <span class="glyphicon glyphicon-remove"></span>
                     </a>
                     <a href="#/editBlockRevision/{{activeBlock}}/{{revision.id}}" class="super editBlock"

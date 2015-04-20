@@ -1,0 +1,60 @@
+<div class="statusbar">
+    <span class="glyphicon glyphicon-triangle-right"></span>
+    Editing: <strong ng-if="newRevision">New </strong>Device Revision
+</div>
+<form name="blockRevisionForm" class="form body" ng-class="{submitted:trySubmit}" novalidate>
+    <div class="form-group form-inline">
+        <label for="revision">Revision</label>
+        <div ng-if="newRevision" class="revisionTypeSelect">
+            <input type="radio" name="revisionType" ng-change="changeRevision('M')"
+                   value="M" ng-model="revisionType" id="revisionType_M" /> Major
+            <input type="radio" name="revisionType" ng-change="changeRevision('i')"
+                   value="i" ng-model="revisionType" id="revisionType_i" /> Minor
+        </div>
+        <input type="text" class="form-control" disabled
+               id="revision" value="{{revision}}" />
+    </div>
+    <div class="form-group">
+        <label for="parentDeviceId">Parent Device Id (Read-Only)</label>
+        <input type="text" class="form-control" id="parentDeviceId"
+               ng-model="editDeviceRevision.device_id" disabled placeholder="System Generated"/>
+    </div>
+    <div class="form-group">
+        <label for="description">Description</label>
+        <textarea class="form-control" id="description"
+                  ng-model="editDeviceRevision.description" placeholder="Optional"></textarea>
+    </div>
+    <div class="form-group">
+        <label for="block">Blocks</label>
+        <select id="block" ng-options="b.name for b in blocks track by b.id" ng-change="getBlockRevisions()"
+                ng-model="selectedBlock">
+        </select>
+        <select ng-if="selectedBlock" ng-options='block_revision as fullRevision(block_revision) for block_revision in block_revisions track by block_revision.id' ng-model="$parent.selectedBlockRevision">
+        </select>
+        <button class="btn btn-xs btn-success"
+                ng-if="selectedBlockRevision" type="button"
+                ng-click="blockRevisionAdd()">
+            <span class="glyphicon glyphicon-plus"></span>
+        </button>
+    </div>
+    <div class="form-group">
+        <label >Block Revisions</label>
+        <div data-ng-repeat="item in block_revisions_list">
+            <button class="btn btn-xs btn-danger" ng-click="blockRevisionRemove(item)" >
+                <span class="glyphicon glyphicon-remove"></span>
+            </button>
+            <span>{{item.name}}</span>
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="createdOn">Created On</label>
+        <input type="text" disabled class="form-control" id="createdOn"
+                  value="{{editDeviceRevision.created_on | date: 'medium'}}"/>
+    </div>
+    <div class="form-group text-right">
+        <button class="btn btn-default"
+                ng-click="cancelEdit()">Cancel</button>
+        <button class="btn btn-primary" type="submit"
+                ng-click="validate() && blockRevisionForm.$valid && submitDeviceRevision(editDeviceRevision)">Submit</button>
+    </div>
+</form>

@@ -62,7 +62,7 @@ vendor = {
     "#{vroot}/angular-route/angular-route.min.js",
     "#{vroot}/angular-sanitize/angular-sanitize.min.js",
     "#{vroot}/angular-bootstrap/ui-bootstrap-tpls.min.js",
-    "#{vroot}/lodash/dist/lodash.min.js"
+    "#{vroot}/lodash/lodash.min.js"
   ]
 }
 
@@ -74,7 +74,7 @@ gulp.task 'coffee', () ->
     .pipe do sourcemaps.init
     .pipe coffee { bare: true }
     .on 'error', (err) ->
-      gutil.log(err)
+      gutil.log err
       do this.end
     .pipe do sourcemaps.write
     .pipe gulp.dest dests.js

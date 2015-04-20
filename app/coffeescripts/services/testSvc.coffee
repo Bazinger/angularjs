@@ -14,7 +14,6 @@ vprAppServices.factory 'testSvc', [ '$log', '$q', 'dataSvc', 'utilSvc',  ($log, 
       # the default branch max if it exists
       # or the max in the first branch in the group
       # by array
-
       findFromBranches = (_tests) ->
         branchGroups = _.groupBy _tests, "branch"
         branchTests = _.find branchGroups, (ba) -> ba[0].branch == "default" || branchGroups[0]
@@ -48,10 +47,10 @@ vprAppServices.factory 'testSvc', [ '$log', '$q', 'dataSvc', 'utilSvc',  ($log, 
           deferred.reject( { msg: "At least a testId is required when getting a test" })
           deferred.promise
 
-    asyncMaxRevision: (test, branch) ->
+    asyncMaxRevision: (test_id, branch) ->
       deferred = do $q.defer
-      console.log 'asyncMaxRevision',test,branch
-      dataSvc.asyncFind "tests", { id: test.id, branch: branch }
+
+      dataSvc.asyncFind "tests", { id: test_id, branch: branch }
         .then (tests) ->
           deferred.resolve if tests? and tests.length then _.max( tests, "revision" ).revision else 0
 
@@ -75,6 +74,9 @@ vprAppServices.factory 'testSvc', [ '$log', '$q', 'dataSvc', 'utilSvc',  ($log, 
     asyncTestsForRevAndBranch: (revId, branch) ->
       utilSvc.handleAsync dataSvc.asyncFind "tests", { "rev_id" : revId, "branch" : branch }
 
+    asyncTestsForTestAndBranch: (testId, branch) ->
+      utilSvc.handleAsync dataSvc.asyncFind "tests", { "id" : testId, "branch" : branch }
+
     asyncSaveTest: (test) ->
 
       utilSvc.handleAsync dataSvc.asyncComplexSave "tests",
@@ -83,11 +85,11 @@ vprAppServices.factory 'testSvc', [ '$log', '$q', 'dataSvc', 'utilSvc',  ($log, 
         [ "string", "int", "string" ], test
 
     asyncSaveAndRevisionTest: (test, newBranch) ->
-
       deferred = do $q.defer
 
       # copy and sanitize the new test
       newTest = angular.copy test
+
       delete newTest._id
       newTest.is_current = true
       if newBranch? then newTest.branch = newBranch
@@ -120,24 +122,23 @@ vprAppServices.factory 'testSvc', [ '$log', '$q', 'dataSvc', 'utilSvc',  ($log, 
 
       deferred.promise
 
-    asyncRmBranch: (revId,branch) ->
+    asyncRmBranch: (testId,branch) ->
       deferred = do $q.defer
       _that = this
       promises = []
-      @asyncTestsForRevAndBranch revId,branch
-      .then (tests) ->
-        _.forEach tests, (v) ->
-          promises.push _that.asyncRmTest(v.id)
-          #console.log('test',v)
-        console.log 'promises',promises
-        $q.all(promises)
-        .then(results) ->
-          deferred.resolve
+      @asyncTestsForTestAndBranch(testId,branch).then (tests) ->
+        _.forEach tests, (test) -> promises.push _that.asyncRmTest test.id
+
+      $q.all(promises).then () ->  do deferred.resolve
 
       return deferred.promise
 
     asyncRmTest: (testId) ->
-      utilSvc.handleAsync dataSvc.asyncRemove "tests", testId
+      deferred = do $q.defer
+      utilSvc.handleAsync(dataSvc.asyncRemove "tests", testId)
+      .then () -> do deferred.resolve
+
+      deferred.promise
 
   new TestSvc()
 ]
