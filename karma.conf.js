@@ -5,7 +5,7 @@ module.exports = function(config) {
   config.set({
 
     // base path that will be used to resolve all patterns (eg. files, exclude)
-    basePath: 'apps/apapp',
+    basePath: 'app',
 
 
     // frameworks to use
@@ -16,17 +16,17 @@ module.exports = function(config) {
     // list of files / patterns to load in the browser
     files: [
       'bower_components/angular/angular.js',
-      'bower_components/angular-route/angular-route.js',
       'bower_components/angular-mocks/angular-mocks.js',
-      'bower_components/lodash/dist/lodash.js',
+      'bower_components/angular-route/angular-route.js',
+      'bower_components/lodash/lodash.js',
       'coffeescripts/**/*.coffee',
-      'test/**/*.coffee',
+      'spec/**/*.coffee'
     ],
 
-    // list of files to exclude
-    exclude: [
-      
-    ],
+    //// list of files to exclude
+    //exclude: [
+    //  'test/**/*.coffee',
+    //],
 
 
     // preprocess matching files before serving them to the browser
@@ -74,7 +74,7 @@ module.exports = function(config) {
     // start these browsers
     // available browser launchers: https://npmjs.org/browse/keyword/karma-launcher
     //browsers: ['Chrome_small'],
-    browsers: ['PhantomJS'],
+    browsers: ['Chrome'],
 
     customLaunchers: {
       Chrome_small: {
