@@ -71,6 +71,20 @@ label:after {
 
 }
 
+form#deviceRevisionForm {
+  width: 768px;
+}
+#deviceRevisionForm .col1,
+#deviceRevisionForm .col2 {
+  float:left;
+}
+#deviceRevisionForm .col1 {
+  width:300px;
+}
+#deviceRevisionForm .col2 {
+  margin-left:10px;
+  width: 400px;
+}
 .statusbar {
   clear: both;
   width: @canvas-width;
@@ -271,19 +285,6 @@ label:after {
     }
   }
 
-}
-
-.canvas .tags {
-  margin-top: 10px;
-  text-transform: uppercase;
-  font-size: 11px;
-}
-
-.canvas.tests > *, .canvas.testEdit > * {
-  width: @canvas-width + (@canvas-width );
-  .error {
-    border: 1px solid red;
-  }
   .plist {
 
 
@@ -297,39 +298,34 @@ label:after {
     .plist-heading:after {
       content: ":"
     }
-    .name-heading,
-    .value-heading {
+    .name, .value,
+    .name-heading,.value-heading {
       display: inline-block;
-      width: 40%;
     }
-    .name-heading {
+    .name, .name-heading { width:48%}
+    .value, .value-heading { width:32%}
 
-    }
-
-    .value-heading {
-
-    }
-    .name, .value {
-      display: inline-block;
-      width: 40%;
-    }
-//    .controls {
-//      position:relative;
-//      > div,
-//      > button {
-//        position: absolute;
-//        bottom: 0;
-//      }
-//    }
-//    display: inline-block;
-//    .name, .value { width: 40%; }
-//    .delete { width: 10%;}
   }
+}
+
+.canvas .tags {
+  margin-top: 10px;
+  text-transform: uppercase;
+  font-size: 11px;
+}
+
+.canvas.tests > *, .canvas.testEdit > * {
+  width: @canvas-width + (@canvas-width );
+  .error {
+    border: 1px solid red;
+  }
+
 }
 
 .canvas.tests > div.statusbar, {
   width: (@canvas-width * 2) + 40; // accounting for the padding
 }
+
 .canvas.testEdit > div.statusbar {
 
   width: (@canvas-width * 2) - 20; // accounting for the padding

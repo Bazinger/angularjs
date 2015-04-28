@@ -5,7 +5,8 @@ describe "Unit: Testing Controllers", () ->
   $controller = undefined
   $scope = undefined
   TestEditCtrl = undefined
-
+  dataSvc = undefined
+  testSvc = undefined
   mockTest = {
     id : "1"
     rev_id : "111"
@@ -42,6 +43,7 @@ describe "Unit: Testing Controllers", () ->
     spyOn(testSvc,'asyncChangeBranch').and.returnValue d4.promise
 
 
+    $controller = _$controller_
 #    $controller = (routeParams) ->
 #      _$controller_('TestEditCtrl',{$scope:$scope,$routeParams: routeParams,testSvc:testSvc,dataSvc:dataSvc})
     $scope.$digest()

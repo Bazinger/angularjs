@@ -140,5 +140,29 @@ vprAppServices.factory 'testSvc', [ '$log', '$q', 'dataSvc', 'utilSvc',  ($log, 
 
       deferred.promise
 
+
+
+
+    asyncDeviceParamsForRev: (rev) ->
+      deferred = $q.defer()
+      that = this
+      @asyncTestsForRev rev.id
+      .then (tests) ->
+        results = []
+        for test in tests
+          if test.is_current
+            #console.log 'grabbing device params for test',test
+            # if test is current test, grab parameters with placeholder
+            deviceParams = that.getDeviceParamsForTest(test)
+            for param in deviceParams
+              obj = {name:param, value:'',default: true,rev_id:test.rev_id, test_id:test.id}
+              # if device revision already has this parameter, use the existing value
+              item = _.find(rev.device_params, (p) -> p.name == param)
+              if item and item.value.length then obj.value = item.value
+              results.push obj
+        deferred.resolve results
+
+      deferred.promise
+
   new TestSvc()
 ]

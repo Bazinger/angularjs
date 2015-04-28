@@ -1,4 +1,4 @@
-vprAppServices.factory 'blockSvc', [  '$q', 'dataSvc', 'utilSvc',  ( $q, dataSvc, utilSvc) ->
+vprAppServices.factory 'blockSvc', [  '$q', '$log', 'dataSvc', 'testSvc','utilSvc',  ( $q, $log, dataSvc, testSvc,utilSvc) ->
 
   class BlockSvc
 
@@ -15,8 +15,6 @@ vprAppServices.factory 'blockSvc', [  '$q', 'dataSvc', 'utilSvc',  ( $q, dataSvc
           deferred.resolve [block, rev]
 
       deferred.promise
-
-    foo: 'foo'
 
     asyncBlockCount: () ->
       deferred = do $q.defer
@@ -60,8 +58,24 @@ vprAppServices.factory 'blockSvc', [  '$q', 'dataSvc', 'utilSvc',  ( $q, dataSvc
     asyncSaveBlockRevision: (blockRevision) ->
       utilSvc.handleAsync dataSvc.asyncSave "block_revisions", blockRevision
 
-    asyncRmBlockRevision: (blockRevision) ->
-      utilSvc.handleAsync dataSvc.asyncRemove "block_revisions", blockRevision
+    asyncRmBlockRevision: (id) ->
+      deferred = $q.defer()
+      # get tests linked to block revision and delete them
+      testSvc.asyncTestsForRev id
+      .then (tests) ->
+        if tests.length
+          promises = []
+          for test in tests
+            promises.push testSvc.asyncRmTest test.id
+          $q.all promises
+          .then () ->
+            deferred.resolve()
+        else
+          deferred.resolve()
+
+      deferred.promise
+      .then () ->
+        utilSvc.handleAsync dataSvc.asyncRemove "block_revisions", id
 
     asyncRemoveRevisionsForBlock: (id) ->
       deferred = $q.defer()
@@ -77,6 +91,34 @@ vprAppServices.factory 'blockSvc', [  '$q', 'dataSvc', 'utilSvc',  ( $q, dataSvc
             deferred.resolve()
         else
           deferred.resolve()
+
+      deferred.promise
+
+    getOptionalDeviceParamsForBlockRevision: (rev) ->
+      results = []
+      for param in rev.device_params
+        if not param.default then results.push param
+
+      results
+
+    asyncDeviceParamsForBlockRevision: (id) ->
+      console.log 'asyncDeviceParamsForBlockRevision',id
+      # parse test params and return test_params that have a placeholder token
+      getDeviceParamsFromTest = (test) ->
+        results = []
+        for param in test.test_params
+          param.value.replace /#{(.*?)}/g, (s,match) ->
+            results.push { name: param.name, value: match, default:true}
+        return results
+
+      deferred = $q.defer()
+      testSvc.asyncTestsForRev id
+      .then (tests) ->
+        device_params = []
+        for test in tests
+          if test.is_current
+            device_params = device_params.concat getDeviceParamsFromTest test
+        deferred.resolve device_params
 
       deferred.promise
 

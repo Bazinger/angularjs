@@ -16,7 +16,6 @@ describe "Unit: Testing DataSvc", () ->
     it 'should be defined', () ->
       expect(dataSvc).toBeDefined()
 
-
   #describe '#_handlePost', () ->
 #  it 'should return a response', () ->
 #    returnData = {foo: true}
