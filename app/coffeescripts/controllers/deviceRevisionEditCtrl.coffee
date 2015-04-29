@@ -4,41 +4,7 @@ vprAppControllers.controller 'DeviceRevisionEditCtrl', [ '$scope', '$routeParams
 #    testSvc.asyncDeviceParamsForRev $routeParams.revisionId
 
   $scope.block_revisions_list = []
-  $scope.block_revision_device_params = []
 
-#  $scope.block_revision_device_params = [{
-#    rev_id: '1'
-#    rev_name: 'block 1.0'
-#    device_params: [{
-#      name: 'param1'
-#      value: 'PARAM1_VAL'
-#      default: true
-#    },{
-#      name: 'param2'
-#      value: 'PARAM2_VAL'
-#      default: true
-#    },{
-#      name: 'param3'
-#      value: 'PARAM3_VAL'
-#      default: true
-#    }]
-#  },{
-#    rev_id: '21'
-#    rev_name: 'block 3.2'
-#    device_params: [{
-#      name: 'param4'
-#      value: 'PARAM4_VAL'
-#      default: true
-#    },{
-#      name: 'param5'
-#      value: 'PARAM5_VAL'
-#      default: true
-#    },{
-#      name: 'param6'
-#      value: 'PARAM6_VAL'
-#      default: true
-#    }]
-#  }]
 
   if $routeParams.revisionId == 'new'
     $scope.editDeviceRevision = {
@@ -130,18 +96,14 @@ vprAppControllers.controller 'DeviceRevisionEditCtrl', [ '$scope', '$routeParams
      $("form .plist .plist-body:nth-child("+(v.index+3)+") .name").removeClass("ng-invalid")
    $scope.multiples = multiples
 
-  $scope.filterBlockRevisions = () ->
-    console.log 'filterBlockRevisions',$scope.selectedBlockRevision
-    console.log 'block revisions list',$scope.block_revisions_list
-    console.log 'block revisions',$scope.block_revisions
-
   $scope.blockRevisionAdd = () ->
     item =  _.find $scope.editDeviceRevision.block_revisions, (val) -> val.id is $scope.selectedBlockRevision.id
     if typeof item is 'undefined'
+      # adding a blockRevisionItem with default device parameter values
       $scope.createBlockRevisionItem $scope.selectedBlockRevision.id
         .then (item) ->
-          console.log 'item', item
           $scope.editDeviceRevision.block_revisions.push item
+
 
   $scope.blockRevisionRemove = (item) ->
     $scope.editDeviceRevision.block_revisions = _.reject $scope.editDeviceRevision.block_revisions,(i) -> i.id is item.id
@@ -154,9 +116,6 @@ vprAppControllers.controller 'DeviceRevisionEditCtrl', [ '$scope', '$routeParams
     revisionParts = $scope.revision.split '.'
     editForm.major_revision = revisionParts[0]
     editForm.minor_revision = revisionParts[1]
-    #editForm.block_revisions = _.pluck($scope.block_revisions_list,'id')
-    #editForm.block_revisions = $scope.block_revisions_list
-    console.log 'saving',editForm
     deviceSvc.asyncSaveDeviceRevision angular.copy editForm
     .then () -> $scope.goto "/devices/#{$scope.editDeviceRevision.device_id}"
 
@@ -182,60 +141,4 @@ vprAppControllers.controller 'DeviceRevisionEditCtrl', [ '$scope', '$routeParams
 
     deferred.promise
 
-
-
-  $scope.refreshDeviceParameters = () ->
-    # get default params
-    # apply overrides, if any
-    # add new default params, if any
-
-    console.log "block_revisions has changed, update deviceParameters"
-    $scope.block_revision_device_params = []
-#    device_params = $scope.editDeviceRevision.device_params
-#
-    deferred = $q.defer()
-    promises = []
-    device_params = []
-
-    for rev in $scope.editDeviceRevision.block_revisions
-      d = $q.defer()
-      promises.push d.promise
-      blockSvc.asyncDeviceParamsForBlockRevision rev.id
-      .then (results) ->
-
-        # process overrides
-        for override in rev.device_params
-          item=_.find results, (v) -> v.name == override.name
-          if item? then device_params.push override
-
-        # add new defaults
-        for default_param in results
-          item=_.find rev.device_params, (v) ->
-            v.name == default_param.name
-          if typeof item is "undefined"
-            device_params.push default_param
-
-        rev.device_params = device_params
-        d.resolve()
-
-    $q.all promises
-    .then () ->
-      deferred.resolve
-
-    deferred.promise
-
-  $scope.$watchCollection('block_revision_device_params', (newVal, oldVal) ->
-    if newVal isnt oldVal
-      console.log 'watch: block_revision_device_params',newVal, oldVal
-  )
-
-
-  $scope.$watchCollection('editDeviceRevision.block_revisions', (newVal, oldVal) ->
-    if newVal isnt oldVal
-#      console.log 'watch: refreshDeviceParameters newVal',newVal
-#      console.log 'oldVal',oldVal
-      $scope.refreshDeviceParameters()
-  )
-
-  console.log 'scope',$scope
 ]

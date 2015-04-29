@@ -94,15 +94,8 @@ vprAppServices.factory 'blockSvc', [  '$q', '$log', 'dataSvc', 'testSvc','utilSv
 
       deferred.promise
 
-    getOptionalDeviceParamsForBlockRevision: (rev) ->
-      results = []
-      for param in rev.device_params
-        if not param.default then results.push param
-
-      results
-
     asyncDeviceParamsForBlockRevision: (id) ->
-      console.log 'asyncDeviceParamsForBlockRevision',id
+
       # parse test params and return test_params that have a placeholder token
       getDeviceParamsFromTest = (test) ->
         results = []
