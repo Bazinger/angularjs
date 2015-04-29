@@ -1,4 +1,4 @@
-vprAppControllers.controller 'DeviceRevisionEditCtrl', [ '$scope', '$routeParams', '$log', '$q','deviceSvc','blockSvc','testSvc', ($scope, $routeParams, $log,$q, deviceSvc,blockSvc,testSvc) ->
+vprAppControllers.controller 'DeviceRevisionEditCtrl', [ '$scope', '$routeParams', '$log', '$q','deviceSvc','blockSvc', ($scope, $routeParams, $log,$q, deviceSvc,blockSvc) ->
 
 
   $scope.block_revisions_list = []
