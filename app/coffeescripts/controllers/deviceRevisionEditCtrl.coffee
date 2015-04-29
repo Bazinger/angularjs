@@ -1,7 +1,5 @@
 vprAppControllers.controller 'DeviceRevisionEditCtrl', [ '$scope', '$routeParams', '$log', '$q','deviceSvc','blockSvc','testSvc', ($scope, $routeParams, $log,$q, deviceSvc,blockSvc,testSvc) ->
 
-#  if $routeParams.revisionId != 'new' and typeof $routeParams.revisionId isnt 'undefined'
-#    testSvc.asyncDeviceParamsForRev $routeParams.revisionId
 
   $scope.block_revisions_list = []
 

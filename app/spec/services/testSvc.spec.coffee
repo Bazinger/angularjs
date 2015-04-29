@@ -65,31 +65,31 @@ describe "Unit: Testing TestSvc", () ->
     it 'should be defined', () ->
       expect(testSvc).toBeDefined()
 
-    describe "getDeviceParamsForTest", () ->
-
-      it "should return a list of device parameters", () ->
-
-        expect(testSvc.getDeviceParamsForTest(mockTests[0])).toBeNull()
-        result = testSvc.getDeviceParamsForTest(mockTests[1])
-        expect(result.length).toBe 2
-        expect(result[0].name).toBe "baz"
-        expect(result[0].params.length).toBe 1
-        expect(result[0].params).toContain "boo"
-        expect(result[1].name).toBe "blee"
-        expect(result[1].params.length).toBe 2
-        expect(result[1].params).toContain "blark"
-        expect(result[1].params).toContain "blizz"
-
-    describe 'asyncDeviceParamsForRev', () ->
-      result = undefined
-      beforeEach () ->
-        d1=$q.defer()
-        d1.resolve testsForRev
-        spyOn(testSvc,'asyncTestsForRev').and.returnValue d1.promise
-        #spyOn(testSvc,'getDeviceParamsForTest').and.callThrough()
-        $scope.$digest()
-
-      it "should call 'asyncTestsForRev' ", () ->
-        result = testSvc.asyncDeviceParamsForRev(revId)
-        expect(testSvc.asyncTestsForRev).toHaveBeenCalled()
-        console.log result
+#    describe "getDeviceParamsForTest", () ->
+#
+#      it "should return a list of device parameters", () ->
+#
+#        expect(testSvc.getDeviceParamsForTest(mockTests[0])).toBeNull()
+#        result = testSvc.getDeviceParamsForTest(mockTests[1])
+#        expect(result.length).toBe 2
+#        expect(result[0].name).toBe "baz"
+#        expect(result[0].params.length).toBe 1
+#        expect(result[0].params).toContain "boo"
+#        expect(result[1].name).toBe "blee"
+#        expect(result[1].params.length).toBe 2
+#        expect(result[1].params).toContain "blark"
+#        expect(result[1].params).toContain "blizz"
+#
+#    describe 'asyncDeviceParamsForRev', () ->
+#      result = undefined
+#      beforeEach () ->
+#        d1=$q.defer()
+#        d1.resolve testsForRev
+#        spyOn(testSvc,'asyncTestsForRev').and.returnValue d1.promise
+#        #spyOn(testSvc,'getDeviceParamsForTest').and.callThrough()
+#        $scope.$digest()
+#
+#      it "should call 'asyncTestsForRev' ", () ->
+#        result = testSvc.asyncDeviceParamsForRev(revId)
+#        expect(testSvc.asyncTestsForRev).toHaveBeenCalled()
+#        console.log result
