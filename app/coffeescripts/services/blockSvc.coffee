@@ -94,6 +94,30 @@ vprAppServices.factory 'blockSvc', [  '$q', '$log', 'dataSvc', 'testSvc','utilSv
 
       deferred.promise
 
+    asyncDefaultParamsForBlockRevision: (revId) ->
+      default_params = []
+
+      deferred = $q.defer()
+      testSvc.asyncTestsForRev id
+      .then (tests) ->
+        device_params = []
+        for test in tests
+          if test.is_current
+            device_params = device_params.concat getDeviceParamsFromTest test
+            console.log 'device_params',device_params
+        deferred.resolve device_params
+
+      deferred.promise
+
+    parseDeviceParams: (test) ->
+      results = []
+      for param in test.test_params
+        param.value.replace /#{(.*?)}/g, (s,match) ->
+          #results.push { name: param.name, value: match, default: true}
+          #results.push {placeholder: match}
+          console.log 'param',param,'args',arguments
+      return results
+
     asyncDeviceParamsForBlockRevision: (id) ->
 
       # parse test params and return test_params that have a placeholder token
@@ -111,6 +135,7 @@ vprAppServices.factory 'blockSvc', [  '$q', '$log', 'dataSvc', 'testSvc','utilSv
         for test in tests
           if test.is_current
             device_params = device_params.concat getDeviceParamsFromTest test
+            console.log 'device_params',device_params
         deferred.resolve device_params
 
       deferred.promise

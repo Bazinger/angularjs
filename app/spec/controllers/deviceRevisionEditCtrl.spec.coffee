@@ -30,16 +30,16 @@ describe "Unit: Testing Controllers", () ->
 
     $scope.$digest()
 
-  describe 'deviceRevisionEditCtrl create new deviceRevision', () ->
-    beforeEach () ->
-      DeviceRevisionEditCtrl = $controller('DeviceRevisionEditCtrl',{$scope:$scope,$routeParams: {testId:"new",revId:"rev1",type:"tests"},testSvc:testSvc,dataSvc:dataSvc})
-
-    it 'should be defined', () ->
-      expect(TestEditCtrl).toBeDefined()
-
-    it 'should have scope defined', () ->
-      expect($scope).toBeDefined()
-
-    describe 'create a new test', () ->
-      it 'should set newTest to true', () ->
-        expect($scope.newTest).toBeTruthy()
+#  describe 'deviceRevisionEditCtrl create new deviceRevision', () ->
+#    beforeEach () ->
+#      DeviceRevisionEditCtrl = $controller('DeviceRevisionEditCtrl',{$scope:$scope,$routeParams: {testId:"new",revId:"rev1",type:"tests"},testSvc:testSvc,dataSvc:dataSvc})
+#
+#    it 'should be defined', () ->
+#      expect(TestEditCtrl).toBeDefined()
+#
+#    it 'should have scope defined', () ->
+#      expect($scope).toBeDefined()
+#
+#    describe 'create a new test', () ->
+#      it 'should set newTest to true', () ->
+#        expect($scope.newTest).toBeTruthy()
