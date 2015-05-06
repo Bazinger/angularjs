@@ -2,6 +2,10 @@
 vprApp.config ['$routeProvider', ($routeProvider) ->
 
   $routeProvider
+    .when '/foo', {
+      controller: 'FooCtrl',
+      templateUrl: 'foo.template'
+    }
     .when '/devices/:activeDevice?', {
       controller: 'DeviceCtrl'
       templateUrl: 'deviceList.template'

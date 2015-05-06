@@ -3,7 +3,7 @@ vprAppServices.factory 'testSvc', [ '$log', '$q', 'dataSvc', 'utilSvc',  ($log, 
   class TestSvc
 
     asyncTestsForRev: (revId) ->
-      utilSvc.handleAsync dataSvc.asyncFind "tests", { "rev_id" : revId }
+      utilSvc.handleAsync dataSvc.asyncFind "tests", { "rev_id" : revId } 
 
     asyncTestHistory: (testId) ->
       utilSvc.handleAsync dataSvc.asyncFind "tests", { "id" : testId }
