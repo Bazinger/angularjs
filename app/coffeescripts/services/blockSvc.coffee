@@ -94,55 +94,6 @@ vprAppServices.factory 'blockSvc', [  '$q', '$log', 'dataSvc', 'testSvc','utilSv
 
       deferred.promise
 
-    asyncDefaultParamsForBlockRevision: (revId) ->
-      default_params = []
-
-      deferred = $q.defer()
-      testSvc.asyncTestsForRev id
-      .then (tests) ->
-        device_params = []
-        for test in tests
-          if test.is_current
-            device_params = device_params.concat getDeviceParamsFromTest test
-            console.log 'device_params',device_params
-        deferred.resolve device_params
-
-      deferred.promise
-
-#    parseDeviceParams: (test) ->
-#      results = []
-#      for test in tests
-#        for param in
-#        param.value.replace /#{(.*?)}/g, (s,match) ->
-#          if typeof results[match] is 'undefined' then results.push
-#          results[match].push param.value
-#          #console.log (results)
-#          #results.push { name: param.name, value: match, default: true}
-#          #results.push {placeholder: match}
-#          #console.log 'param.value: ',param.value,'s: ',s,'match: ',match
-#        console.log 'results',results[match]
-#      return results
-
-    getAllDefaultParameters: (revs) ->
-      console.log 'food'
-      results = []
-      for rev in revs
-        testSvc.asyncTestsForRev rev
-        .then (tests) ->
-          console.log 'tests',tests
-          for test in tests
-            for param in test.test_params
-              param.value.replace /#{(.*?)}/g, (str,match,start, usage) ->
-                item=_.find results, (v) -> v.placeholder == match
-                if typeof item is "undefined"
-                  obj = {placeholder: match, usage: []}
-                  obj.usage.push usage
-                  results.push obj
-
-
-
-
-
     asyncCreateBlockRevisionItem:  (rev_id) ->
       deferred = $q.defer()
 
@@ -156,19 +107,6 @@ vprAppServices.factory 'blockSvc', [  '$q', '$log', 'dataSvc', 'testSvc','utilSv
           minor_revision: results[1].minor_revision
         }
         deferred.resolve item
-
-      deferred.promise
-
-    asyncDeviceParamsForBlockRevision: (id) ->
-
-      deferred = $q.defer()
-      testSvc.asyncTestsForRev id
-      .then (tests) ->
-        device_params = []
-        for test in tests
-          if test.is_current
-            device_params = device_params.concat getDeviceParamsFromTest test
-        deferred.resolve device_params
 
       deferred.promise
 

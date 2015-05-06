@@ -26,6 +26,7 @@ describe "Unit: Testing UtilSvc", () ->
   describe '#mergeDeviceParameters', () ->
     it "should be defined", () ->
       expect(angular.isFunction(utilSvc.mergeDeviceParameters)).toBe true
+      
     it "should merge N sets of device parameters into one set", () ->
       set = []
       params1 = [

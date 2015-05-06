@@ -96,14 +96,11 @@ vprAppControllers.controller 'DeviceRevisionEditCtrl', [ '$scope', '$routeParams
    $scope.multiples = multiples
 
   $scope.blockRevisionAdd = () ->
-    #console.log 'adding a block revision'
     item =  _.find $scope.editDeviceRevision.block_revisions, (val) -> val.id is $scope.selectedBlockRevision.id
-    if not item?
-      #console.log 'adding new block revision'
+    if not item?      
        # adding a blockRevisionItem with default device parameter values
       blockSvc.asyncCreateBlockRevisionItem $scope.selectedBlockRevision.id
         .then (item) ->
-          #console.log 'new block revision item',item
           $scope.editDeviceRevision.block_revisions.push item
           $scope.loadDeviceParams()
 
@@ -117,12 +114,7 @@ vprAppControllers.controller 'DeviceRevisionEditCtrl', [ '$scope', '$routeParams
 
     for rev in block_revisions
       do (rev) ->
-        deferred = $q.defer()
-        promises.push deferred.promise
-        #console.log 'processing rev',rev        
-        testSvc.asyncTestsForRev rev.id
-        .then (tests) ->
-
+        promises.push testSvc.asyncTestsForRev(rev.id).then (tests) ->
           # get default device parameters for all current tests that belong to this rev
           default_params = utilSvc.parseDeviceParams tests
 
@@ -133,28 +125,25 @@ vprAppControllers.controller 'DeviceRevisionEditCtrl', [ '$scope', '$routeParams
               if item?                
                 item.value = param.value
 
-          deferred.resolve default_params
+          return default_params
 
     $q.all promises
     .then (results) ->
       $scope.device_params_list = utilSvc.mergeDeviceParameters results
-      console.log '$scope.device_params_list',$scope.device_params_list
 
   $scope.blockRevisionRemove = (item) ->
     $scope.editDeviceRevision.block_revisions = _.reject $scope.editDeviceRevision.block_revisions,(i) -> i.id is item.id
     $scope.loadDeviceParams()
-    
+
   $scope.trySubmit = false
   $scope.validate = () ->
     $scope.trySubmit = true
 
   $scope.processDeviceParams = () ->
     for param in $scope.device_params_list
-      #console.log 'processing param',param
       if param.value.trim() is ''
         # remove parameter from device revision
         $scope.editDeviceRevision.device_params = _.reject $scope.editDeviceRevision.device_params, (v) -> 
-          #console.log v,param
           v.placeholder is param.placeholder
       else
         # add or update device revision parameters
@@ -167,11 +156,11 @@ vprAppControllers.controller 'DeviceRevisionEditCtrl', [ '$scope', '$routeParams
     revisionParts = $scope.revision.split '.'
     editForm.major_revision = revisionParts[0]
     editForm.minor_revision = revisionParts[1]
-    #console.log 'device_params', $scope.device_params_list
+
     $scope.processDeviceParams()
-    console.log 'editForm',editForm
-    #deviceSvc.asyncSaveDeviceRevision angular.copy editForm
-    #.then () -> $scope.goto "/devices/#{$scope.editDeviceRevision.device_id}"
+    #console.log 'editForm',editForm
+    deviceSvc.asyncSaveDeviceRevision angular.copy editForm
+    .then () -> $scope.goto "/devices/#{$scope.editDeviceRevision.device_id}"
 
   $scope.cancelEdit = () ->
     $scope.goto "/devices/#{$scope.editDeviceRevision.device_id}"
